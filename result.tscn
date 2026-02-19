@@ -1,0 +1,351 @@
+[gd_scene format=3 uid="uid://bxqn50l366o2q"]
+
+[ext_resource type="Script" uid="uid://1yptq7msbhxp" path="res://result.gd" id="1_1xs4h"]
+[ext_resource type="Texture2D" uid="uid://demcavp0vstbd" path="res://assets/icone/1.webp" id="2_0t31f"]
+[ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="2_55jci"]
+[ext_resource type="Texture2D" uid="uid://vcohqkjwjaaf" path="res://assets/profil/or.webp" id="4_wierg"]
+[ext_resource type="Texture2D" uid="uid://dc2nloh7qpaq3" path="res://assets/icone/2.webp" id="5_mgphi"]
+[ext_resource type="Texture2D" uid="uid://dvoho76ux16is" path="res://assets/icone/3.webp" id="6_y4w2m"]
+[ext_resource type="Texture2D" uid="uid://dptbm6pit7o00" path="res://assets/icone/4.webp" id="7_vnrpp"]
+[ext_resource type="Texture2D" uid="uid://b5rvx4867ip50" path="res://assets/icone/piocher.webp" id="8_kjqr0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk788"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Result" type="Control" unique_id=1012725942]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_1xs4h")
+
+[node name="Panel" type="Panel" parent="." unique_id=971310284]
+layout_mode = 0
+offset_right = 1135.0
+offset_bottom = 1068.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mk788")
+
+[node name="Label" type="Label" parent="." unique_id=660370046]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 0
+offset_left = 407.0
+offset_top = 26.0
+offset_right = 743.0
+offset_bottom = 129.0
+theme_override_font_sizes/font_size = 75
+text = "Résultats"
+
+[node name="Label2" type="Label" parent="." unique_id=111993789]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 0
+offset_left = 177.0
+offset_top = 136.0
+offset_right = 993.0
+offset_bottom = 185.0
+theme_override_font_sizes/font_size = 35
+text = "Le premier vole une carte de la main du premier"
+
+[node name="Control" type="Control" parent="." unique_id=764897820]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 1133.0
+offset_bottom = 921.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=899204135]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 206.0
+offset_right = -89.5
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="1er" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1314634993]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 72
+
+[node name="Rank" type="TextureRect" parent="Control/VBoxContainer/1er" unique_id=796609406]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("2_0t31f")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Icon" type="TextureRect" parent="Control/VBoxContainer/1er" unique_id=451943839]
+layout_mode = 2
+texture = ExtResource("2_55jci")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Time" type="Label" parent="Control/VBoxContainer/1er" unique_id=1698171616]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "12.66s"
+
+[node name="Prix" type="Label" parent="Control/VBoxContainer/1er" unique_id=1756031874]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+5"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/1er/Prix" unique_id=382323549]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("4_wierg")
+expand_mode = 1
+
+[node name="Carte" type="Label" parent="Control/VBoxContainer/1er" unique_id=451310100]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+4"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/1er/Carte" unique_id=1080033648]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 9.999996
+offset_top = -11.999999
+offset_right = 50.0
+offset_bottom = 37.81132
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("8_kjqr0")
+expand_mode = 5
+
+[node name="2eme" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=486098587]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 72
+
+[node name="Rank" type="TextureRect" parent="Control/VBoxContainer/2eme" unique_id=989484964]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("5_mgphi")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Icon" type="TextureRect" parent="Control/VBoxContainer/2eme" unique_id=1139795419]
+layout_mode = 2
+texture = ExtResource("2_55jci")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Time" type="Label" parent="Control/VBoxContainer/2eme" unique_id=70537055]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "12.66s"
+
+[node name="Prix" type="Label" parent="Control/VBoxContainer/2eme" unique_id=1811118646]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+3"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/2eme/Prix" unique_id=1424621124]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("4_wierg")
+expand_mode = 1
+
+[node name="Carte" type="Label" parent="Control/VBoxContainer/2eme" unique_id=959361717]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+3"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/2eme/Carte" unique_id=919146823]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 9.999996
+offset_top = -11.999999
+offset_right = 50.0
+offset_bottom = 37.81132
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("8_kjqr0")
+expand_mode = 5
+
+[node name="3eme" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=10127562]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 72
+
+[node name="Rank" type="TextureRect" parent="Control/VBoxContainer/3eme" unique_id=435842685]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("6_y4w2m")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Icon" type="TextureRect" parent="Control/VBoxContainer/3eme" unique_id=1454376114]
+layout_mode = 2
+texture = ExtResource("2_55jci")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Time" type="Label" parent="Control/VBoxContainer/3eme" unique_id=63308159]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "12.66s"
+
+[node name="Prix" type="Label" parent="Control/VBoxContainer/3eme" unique_id=1730472235]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+2"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/3eme/Prix" unique_id=1737031996]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("4_wierg")
+expand_mode = 1
+
+[node name="Carte" type="Label" parent="Control/VBoxContainer/3eme" unique_id=1880520630]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+2"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/3eme/Carte" unique_id=1428767376]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 9.999996
+offset_top = -11.999999
+offset_right = 50.0
+offset_bottom = 37.81132
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("8_kjqr0")
+expand_mode = 5
+
+[node name="4eme" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=2018726911]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 72
+
+[node name="Rank" type="TextureRect" parent="Control/VBoxContainer/4eme" unique_id=497789310]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("7_vnrpp")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Icon" type="TextureRect" parent="Control/VBoxContainer/4eme" unique_id=117735027]
+layout_mode = 2
+texture = ExtResource("2_55jci")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Time" type="Label" parent="Control/VBoxContainer/4eme" unique_id=392968805]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "12.66s"
+
+[node name="Prix2" type="Label" parent="Control/VBoxContainer/4eme" unique_id=750033688]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "+0"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/4eme/Prix2" unique_id=564210294]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("4_wierg")
+expand_mode = 1
+
+[node name="Carte" type="Label" parent="Control/VBoxContainer/4eme" unique_id=1041011227]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "-1"
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/4eme/Carte" unique_id=2060424490]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 9.999996
+offset_top = -11.999999
+offset_right = 50.0
+offset_bottom = 37.81132
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("8_kjqr0")
+expand_mode = 5
+
+[node name="FinMiniJeu" type="Button" parent="." unique_id=1586381380]
+layout_mode = 0
+offset_left = 334.0
+offset_top = 935.0
+offset_right = 856.0
+offset_bottom = 1045.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
+text = "Récupérer les récompenses"
+
+[connection signal="pressed" from="FinMiniJeu" to="." method="_on_fin_mini_jeu_pressed"]

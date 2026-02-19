@@ -1,0 +1,2630 @@
+[gd_scene format=3 uid="uid://c63j8pcxbtd7f"]
+
+[ext_resource type="Script" uid="uid://cssb83qdnrq6u" path="res://scripts/principal.gd" id="1_awm7n"]
+[ext_resource type="PackedScene" uid="uid://cse5t0hgk5hjb" path="res://scenes/interactive_circle.tscn" id="2_iylmw"]
+[ext_resource type="Script" uid="uid://dpasr7vmxwkll" path="res://scripts/places.gd" id="2_l2a8t"]
+[ext_resource type="Texture2D" uid="uid://375a5j6h2crd" path="res://assets/plateau.webp" id="2_srya7"]
+[ext_resource type="PackedScene" uid="uid://co2fegnxpibon" path="res://scenes/dice.tscn" id="3_g3ehx"]
+[ext_resource type="Script" uid="uid://dsec2qiqxhgmk" path="res://scripts/dice.gd" id="4_6ndk6"]
+[ext_resource type="PackedScene" uid="uid://dejcflq75wrbx" path="res://animation/roll_dice_animation.tscn" id="6_1xbp8"]
+[ext_resource type="PackedScene" uid="uid://bul75wbhcq0hr" path="res://animation/roll_dice_animation_2.tscn" id="7_2jxo5"]
+[ext_resource type="Script" uid="uid://ct54k77ngvy4p" path="res://scripts/saloon_shop.gd" id="7_l2a8t"]
+[ext_resource type="Script" uid="uid://boka4heiwao03" path="res://scripts/restaurant_shop.gd" id="8_0at3r"]
+[ext_resource type="Script" uid="uid://bwib1drxiulqp" path="res://scripts/armory.gd" id="8_v2y4t"]
+[ext_resource type="PackedScene" uid="uid://dxvc5gry51wxq" path="res://scenes/bank.tscn" id="9_ckosc"]
+[ext_resource type="PackedScene" uid="uid://ckv603t1ewodj" path="res://scenes/duel.tscn" id="9_v2y4t"]
+[ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="10_t8783"]
+[ext_resource type="Script" uid="uid://2e700233qs4k" path="res://scripts/profil.gd" id="11_t8783"]
+[ext_resource type="Texture2D" uid="uid://7nrwkrwc1tok" path="res://assets/profil/coeur.webp" id="12_x2ui6"]
+[ext_resource type="Texture2D" uid="uid://btlu4r2ley4ww" path="res://assets/profil/alcool.webp" id="13_v2y4t"]
+[ext_resource type="Texture2D" uid="uid://jpvdd31q8et" path="res://assets/profil/nourriture.webp" id="14_aojn8"]
+[ext_resource type="Texture2D" uid="uid://b7mfhv7byc41k" path="res://assets/profil/personnage/profil_bill.webp" id="15_n46oe"]
+[ext_resource type="Texture2D" uid="uid://dwg03ruoyaydt" path="res://assets/profil/niv1Icon.webp" id="15_x2ui6"]
+[ext_resource type="Texture2D" uid="uid://jhtn7blget3s" path="res://assets/profil/pavePrototype_v2.webp" id="16_dynj2"]
+[ext_resource type="Texture2D" uid="uid://vcohqkjwjaaf" path="res://assets/profil/or.webp" id="17_1xbp8"]
+[ext_resource type="PackedScene" uid="uid://btox5acdq18om" path="res://scenes/keypad.tscn" id="18_2jxo5"]
+[ext_resource type="Script" uid="uid://dic10dttg35st" path="res://scripts/giveCard.gd" id="21_srya7"]
+[ext_resource type="Shader" uid="uid://6bmmgs1kn515" path="res://ennemyselect.gdshader" id="22_dynj2"]
+[ext_resource type="PackedScene" uid="uid://b3xr1tqch4x8m" path="res://scenes/manches.tscn" id="25_2jxo5"]
+[ext_resource type="VideoStream" uid="uid://d8e8bwbm3nh6" path="res://animation/Manche.ogv" id="25_nexnj"]
+[ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scenes/error.gd" id="26_dyk5w"]
+[ext_resource type="Script" uid="uid://bkh7kd8symyl6" path="res://scripts/settings.gd" id="27_pmure"]
+[ext_resource type="Texture2D" uid="uid://vg54pksbl74s" path="res://assets/icone/parametre.webp" id="28_etfdl"]
+[ext_resource type="Texture2D" uid="uid://cipx6kvt7xgce" path="res://assets/icone/reset.webp" id="29_vdtr1"]
+[ext_resource type="Texture2D" uid="uid://bqspcwu3db8kt" path="res://assets/icone/son.webp" id="30_yd7e0"]
+[ext_resource type="Texture2D" uid="uid://b2sbq33egsir7" path="res://assets/icone/video.webp" id="31_nexnj"]
+[ext_resource type="PackedScene" uid="uid://c6oiyw3qtp8i" path="res://scenes/start_action.tscn" id="32_etfdl"]
+[ext_resource type="PackedScene" uid="uid://cvjvuytfbacf8" path="res://scenes/mine.tscn" id="33_vdtr1"]
+[ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
+[ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
+[ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://result.tscn" id="38_dwjdh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3ehx"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_6ndk6"]
+sky_material = SubResource("ProceduralSkyMaterial_g3ehx")
+
+[sub_resource type="Environment" id="Environment_l1yxy"]
+background_mode = 2
+sky = SubResource("Sky_6ndk6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g3ehx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd7e0"]
+bg_color = Color(0.1882353, 0.12156863, 0.09411765, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b72to"]
+shader = ExtResource("22_dynj2")
+shader_parameter/thickness = 0.0
+shader_parameter/ring_count = 60
+shader_parameter/ring_offset = 0.0
+shader_parameter/outline_color = Color(0.7567149, 0.45344824, 5.7756904e-07, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/max_or_add = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mgajk"]
+shader = ExtResource("22_dynj2")
+shader_parameter/thickness = 0.0
+shader_parameter/ring_count = 50
+shader_parameter/ring_offset = 0.0
+shader_parameter/outline_color = Color(0.7567149, 0.45344824, 5.7756904e-07, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/max_or_add = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7teeq"]
+shader = ExtResource("22_dynj2")
+shader_parameter/thickness = 0.0
+shader_parameter/ring_count = 60
+shader_parameter/ring_offset = 0.0
+shader_parameter/outline_color = Color(0.7567149, 0.45344824, 5.7756904e-07, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/max_or_add = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwvs3"]
+bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jao0"]
+bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pmure"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu1kw"]
+bg_color = Color(0.48829013, 0.28945515, 0.118414946, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0ah0u"]
+blend_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aarkv"]
+blend_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6k428"]
+blend_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n46oe"]
+blend_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_011ta"]
+blend_mode = 2
+
+[node name="Principal" type="Control" unique_id=684752956]
+layout_mode = 3
+anchor_right = 1.667
+anchor_bottom = 1.667
+offset_right = -0.3840332
+offset_bottom = -0.21606445
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_awm7n")
+
+[node name="Map" type="Control" parent="." unique_id=1190129692]
+layout_mode = 1
+anchor_right = 0.601
+anchor_bottom = 0.601
+offset_top = 0.00033173594
+offset_right = -3.354004
+offset_bottom = -1.8862305
+rotation = 6.2831855
+pivot_offset = Vector2(960, 540)
+
+[node name="Panel2" type="Panel" parent="Map" unique_id=457074055]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Map/Panel2" unique_id=983415223]
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_srya7")
+
+[node name="Places" type="Node2D" parent="Map" unique_id=389570062]
+position = Vector2(923.99994, 629)
+scale = Vector2(1.16, 1.16)
+script = ExtResource("2_l2a8t")
+
+[node name="Saloon" type="Button" parent="Map/Places" unique_id=401545555]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -54.31028
+offset_top = -240.51724
+offset_right = -14.836586
+offset_bottom = -199.72777
+
+[node name="Saloon" parent="Map/Places/Saloon" unique_id=1026230234 instance=ExtResource("2_iylmw")]
+position = Vector2(19.736847, 21.052628)
+
+[node name="Mine" type="Button" parent="Map/Places" unique_id=1696777131]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 661.20703
+offset_top = -4.3103414
+offset_right = 700.6807
+offset_bottom = 36.47912
+
+[node name="Mine" parent="Map/Places/Mine" unique_id=2132945549 instance=ExtResource("2_iylmw")]
+position = Vector2(19.473755, 20.473671)
+
+[node name="Restaurant" type="Button" parent="Map/Places" unique_id=265307941]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -393.1034
+offset_top = -142.2414
+offset_right = -352.3139
+offset_bottom = -101.45191
+
+[node name="Restaurant" parent="Map/Places/Restaurant" unique_id=1471051336 instance=ExtResource("2_iylmw")]
+position = Vector2(20.526314, 19.894753)
+
+[node name="Armory" type="Button" parent="Map/Places" unique_id=514647060]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 256.03455
+offset_top = 184.48274
+offset_right = 296.824
+offset_bottom = 225.27222
+
+[node name="Armurerie" parent="Map/Places/Armory" unique_id=1925101364 instance=ExtResource("2_iylmw")]
+position = Vector2(19.894745, 20.526321)
+
+[node name="Bank" type="Button" parent="Map/Places" unique_id=1020479236]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 10
+offset_left = 372.41382
+offset_top = -144.82759
+offset_right = 413.20328
+offset_bottom = -104.03812
+
+[node name="Banque" parent="Map/Places/Bank" unique_id=687670684 instance=ExtResource("2_iylmw")]
+z_as_relative = false
+position = Vector2(21.052582, 21.052628)
+
+[node name="Duel" type="Button" parent="Map/Places" unique_id=1635877723]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -244.82755
+offset_top = 250.00002
+offset_right = -204.03807
+offset_bottom = 290.7895
+scale = Vector2(0.97888863, 0.92170674)
+
+[node name="Duel" parent="Map/Places/Duel" unique_id=2129529942 instance=ExtResource("2_iylmw")]
+position = Vector2(20.052631, 19.947388)
+
+[node name="Dés" type="Control" parent="Map" unique_id=986222176]
+visible = false
+anchors_preset = 0
+offset_left = 753.0
+offset_top = 440.99973
+offset_right = 1006.125
+offset_bottom = 631.17834
+scale = Vector2(1.6400027, 1.6400027)
+
+[node name="Panel" type="Panel" parent="Map/Dés" unique_id=1332219352]
+layout_mode = 0
+offset_left = 4.4285316
+offset_top = 1.7857151
+offset_right = 250.42853
+offset_bottom = 184.78572
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Map/Dés" unique_id=761849960]
+layout_mode = 0
+offset_left = -3.571434
+offset_top = 57.785736
+offset_right = 849.0427
+offset_bottom = 610.7865
+scale = Vector2(0.30399907, 0.30399907)
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Map/Dés/SubViewportContainer" unique_id=2047702395]
+transparent_bg = true
+handle_input_locally = false
+physics_object_picking = true
+physics_object_picking_sort = true
+physics_object_picking_first_only = true
+size = Vector2i(852, 553)
+render_target_update_mode = 0
+
+[node name="Node3D" type="Node3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=1695860777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, 0)
+
+[node name="D6" parent="Map/Dés/SubViewportContainer/SubViewport/Node3D" unique_id=1787158400 instance=ExtResource("3_g3ehx")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+rotation_order = 0
+
+[node name="RollDiceAnimation" parent="Map/Dés/SubViewportContainer/SubViewport/Node3D" unique_id=1561401649 instance=ExtResource("6_1xbp8")]
+
+[node name="Node3D2" type="Node3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=792333186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, 0)
+
+[node name="D2" parent="Map/Dés/SubViewportContainer/SubViewport/Node3D2" unique_id=552249671 instance=ExtResource("3_g3ehx")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="RollDiceAnimation2" parent="Map/Dés/SubViewportContainer/SubViewport/Node3D2" unique_id=1165671951 instance=ExtResource("7_2jxo5")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=54301494]
+environment = SubResource("Environment_l1yxy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=1569754254]
+transform = Transform3D(0.83997047, -0.39022505, -0.3770598, 0, -0.6948718, 0.7191337, -0.54263216, -0.60405105, -0.58367175, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=1748908290]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Dés/SubViewportContainer/SubViewport/StaticBody3D" unique_id=1183476198]
+shape = SubResource("WorldBoundaryShape3D_g3ehx")
+
+[node name="CameraDice" type="Camera3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=782732862]
+transform = Transform3D(1, 0, 0, 0, 0.022006782, 0.9997578, 0, -0.9997578, 0.022006782, 0, 4.867, 0)
+current = true
+
+[node name="RollDiceButton" type="Button" parent="Map/Dés" unique_id=2094645663]
+layout_mode = 0
+offset_left = 39.428528
+offset_top = 13.785715
+offset_right = 285.4286
+offset_bottom = 70.78571
+scale = Vector2(0.7203803, 0.7653786)
+theme_override_font_sizes/font_size = 35
+text = "Lancer les dés"
+script = ExtResource("4_6ndk6")
+
+[node name="DiceResultLabel" type="Label" parent="Map/Dés" unique_id=1428810630]
+layout_mode = 0
+offset_left = 103.42853
+offset_top = 53.785736
+offset_right = 160.42853
+offset_bottom = 122.785736
+scale = Vector2(0.8377734, 0.8554982)
+theme_override_font_sizes/font_size = 50
+text = "10"
+
+[node name="Restaurant" type="Control" parent="Map" unique_id=718299353]
+visible = false
+anchors_preset = 0
+offset_left = 604.9999
+offset_top = 393.9997
+offset_right = 604.9999
+offset_bottom = 393.9997
+scale = Vector2(0.6123316, 0.6123316)
+
+[node name="Panel" type="Panel" parent="Map/Restaurant" unique_id=1705846929]
+modulate = Color(0.827451, 0.22745098, 0.40784314, 1)
+layout_mode = 0
+offset_left = 249.0
+offset_top = 69.0
+offset_right = 851.0
+offset_bottom = 567.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/Restaurant" unique_id=1441516783]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 109.0
+offset_right = 852.0
+offset_bottom = 482.0
+theme_override_constants/separation = 29
+
+[node name="Label" type="Label" parent="Map/Restaurant/VBoxContainer" unique_id=555113155]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 75
+text = "Taverne"
+
+[node name="RestaurantUseCard" type="Button" parent="Map/Restaurant/VBoxContainer" unique_id=1331140267]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Utiliser une carte"
+
+[node name="RestaurantGiveCard" type="Button" parent="Map/Restaurant/VBoxContainer" unique_id=1695504744]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Donner une carte"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/Restaurant/VBoxContainer" unique_id=560388059]
+layout_mode = 2
+alignment = 1
+
+[node name="FoodBuyCard" type="Button" parent="Map/Restaurant/VBoxContainer/HBoxContainer" unique_id=626690792]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Acheter une carte"
+
+[node name="Prix" type="Label" parent="Map/Restaurant/VBoxContainer/HBoxContainer" unique_id=928036117]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "1"
+
+[node name="TextureRect" type="TextureRect" parent="Map/Restaurant/VBoxContainer/HBoxContainer/Prix" unique_id=1100692261]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("17_1xbp8")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Map/Restaurant/VBoxContainer" unique_id=2023448666]
+modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "À vos risque et périls"
+
+[node name="RestaurantShop" type="Control" parent="Map" unique_id=253302142]
+visible = false
+anchors_preset = 0
+offset_left = 598.99994
+offset_top = 390.99976
+offset_right = 598.99994
+offset_bottom = 390.99976
+scale = Vector2(0.6626349, 0.6626349)
+script = ExtResource("8_0at3r")
+
+[node name="Panel" type="Panel" parent="Map/RestaurantShop" unique_id=996172716]
+modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
+layout_mode = 0
+offset_left = 249.0
+offset_top = 69.0
+offset_right = 851.0
+offset_bottom = 589.095
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/RestaurantShop" unique_id=123672786]
+layout_mode = 0
+offset_left = 249.00589
+offset_top = 90.54758
+offset_right = 852.00586
+offset_bottom = 499.54758
+theme_override_constants/separation = 40
+
+[node name="Saloon" type="Label" parent="Map/RestaurantShop/VBoxContainer" unique_id=170875098]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 75
+text = "Taverne"
+
+[node name="FoodRoller" type="TextureRect" parent="Map/RestaurantShop/VBoxContainer" unique_id=1982238036]
+layout_mode = 2
+size_flags_vertical = 6
+expand_mode = 1
+stretch_mode = 3
+
+[node name="FoodName" type="Label" parent="Map/RestaurantShop/VBoxContainer" unique_id=2133068724]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+
+[node name="FoodDescription" type="Label" parent="Map/RestaurantShop/VBoxContainer" unique_id=1567450442]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+
+[node name="GetFoodReceive" type="Button" parent="Map/RestaurantShop" unique_id=1026148313]
+layout_mode = 0
+offset_left = 392.37305
+offset_top = 516.1212
+offset_right = 724.64417
+offset_bottom = 560.1212
+theme_override_font_sizes/font_size = 26
+text = "Récupéré"
+
+[node name="Armory" type="Control" parent="Map" unique_id=1680406120]
+visible = false
+anchors_preset = 0
+offset_left = 725.99994
+offset_top = 483.99976
+offset_right = 725.99994
+offset_bottom = 483.99976
+scale = Vector2(0.4224615, 0.4224615)
+script = ExtResource("8_v2y4t")
+
+[node name="Panel" type="Panel" parent="Map/Armory" unique_id=1663753145]
+modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
+layout_mode = 0
+offset_left = 214.0
+offset_top = 31.0
+offset_right = 930.0
+offset_bottom = 633.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/Armory" unique_id=297704797]
+layout_mode = 0
+offset_left = 308.0
+offset_top = 63.0
+offset_right = 830.0
+offset_bottom = 578.0
+theme_override_constants/separation = 40
+
+[node name="Titre" type="Label" parent="Map/Armory/VBoxContainer" unique_id=1172683732]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 75
+text = "Armurerie"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/Armory/VBoxContainer" unique_id=1430104715]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=1927451088]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 50
+text = "Munitions"
+
+[node name="moins" type="Button" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=1757239059]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "  -  "
+
+[node name="Count" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=918983646]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "1"
+
+[node name="plus" type="Button" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=632050188]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "  +  "
+
+[node name="Prix" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=318143626]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "2"
+
+[node name="TextureRect" type="TextureRect" parent="Map/Armory/VBoxContainer/HBoxContainer/Prix" unique_id=1197600260]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("17_1xbp8")
+expand_mode = 1
+
+[node name="ArmoryBuyCard" type="Button" parent="Map/Armory/VBoxContainer" unique_id=1302460776]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_font_sizes/font_size = 38
+text = "Acheter une munition"
+
+[node name="ArmoryUseCard" type="Button" parent="Map/Armory/VBoxContainer" unique_id=1362764953]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 38
+text = "Utiliser une carte armurerie"
+
+[node name="Mine" parent="Map" unique_id=970763158 instance=ExtResource("33_vdtr1")]
+visible = false
+layout_mode = 0
+offset_left = 793.0
+offset_top = 467.9997
+offset_right = 793.0
+offset_bottom = 557.9997
+scale = Vector2(0.6400012, 0.6400012)
+
+[node name="Duel" parent="Map" unique_id=1497874943 instance=ExtResource("9_v2y4t")]
+visible = false
+layout_mode = 1
+offset_left = 702.0
+offset_top = 432.99973
+offset_right = 675.55994
+offset_bottom = 404.1198
+scale = Vector2(0.64000183, 0.64000183)
+mouse_filter = 1
+
+[node name="Saloon" type="Control" parent="Map" unique_id=2083360927]
+visible = false
+anchors_preset = 0
+offset_left = 608.0
+offset_top = 398.99973
+offset_right = 608.0
+offset_bottom = 398.99973
+scale = Vector2(0.62141335, 0.62141335)
+
+[node name="Panel" type="Panel" parent="Map/Saloon" unique_id=537473098]
+modulate = Color(1, 0.27999997, 0.4960001, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 249.0
+offset_top = 69.0
+offset_right = 851.0
+offset_bottom = 567.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/Saloon" unique_id=1955415373]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 112.0
+offset_right = 852.0
+offset_bottom = 452.0
+theme_override_constants/separation = 29
+
+[node name="Label" type="Label" parent="Map/Saloon/VBoxContainer" unique_id=1252461336]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 75
+text = "Saloon"
+
+[node name="SaloonUseCard" type="Button" parent="Map/Saloon/VBoxContainer" unique_id=2073720106]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Utiliser une carte"
+
+[node name="SaloonGiveCard" type="Button" parent="Map/Saloon/VBoxContainer" unique_id=1665502334]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Donner une carte"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/Saloon/VBoxContainer" unique_id=1540477837]
+layout_mode = 2
+alignment = 1
+
+[node name="DrinkBuyCard" type="Button" parent="Map/Saloon/VBoxContainer/HBoxContainer" unique_id=1165614999]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Acheter une carte"
+
+[node name="Prix" type="Label" parent="Map/Saloon/VBoxContainer/HBoxContainer" unique_id=506808374]
+modulate = Color(1, 0.64705884, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "1"
+
+[node name="TextureRect" type="TextureRect" parent="Map/Saloon/VBoxContainer/HBoxContainer/Prix" unique_id=1157414655]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 3.9999962
+offset_top = 1.9999999
+offset_right = 44.0
+offset_bottom = 42.0
+grow_horizontal = 0
+scale = Vector2(1.6861517, 1.5967395)
+texture = ExtResource("17_1xbp8")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Map/Saloon/VBoxContainer" unique_id=2054022271]
+modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "À vos risque et périls"
+
+[node name="SaloonShop" type="Control" parent="Map" unique_id=798128194]
+visible = false
+anchors_preset = 0
+offset_left = 641.99994
+offset_top = 405.99973
+offset_right = 641.99994
+offset_bottom = 405.99973
+scale = Vector2(0.5966584, 0.5966584)
+script = ExtResource("7_l2a8t")
+
+[node name="Panel" type="Panel" parent="Map/SaloonShop" unique_id=644587706]
+modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
+layout_mode = 0
+offset_left = 249.0
+offset_top = 69.0
+offset_right = 851.0
+offset_bottom = 567.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/SaloonShop" unique_id=1527751985]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 141.0
+offset_right = 852.0
+offset_bottom = 476.0
+theme_override_constants/separation = 40
+
+[node name="Saloon" type="Label" parent="Map/SaloonShop/VBoxContainer" unique_id=1254304719]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 75
+text = "Saloon"
+
+[node name="DrinkRoller" type="TextureRect" parent="Map/SaloonShop/VBoxContainer" unique_id=716934428]
+layout_mode = 2
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 3
+
+[node name="DrinkName" type="Label" parent="Map/SaloonShop/VBoxContainer" unique_id=1341093189]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+
+[node name="DrinkDescription" type="Label" parent="Map/SaloonShop/VBoxContainer" unique_id=443216180]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+
+[node name="GetDrinkReceive" type="Button" parent="Map/SaloonShop" unique_id=1261152745]
+layout_mode = 0
+offset_left = 392.1842
+offset_top = 477.66022
+offset_right = 724.4553
+offset_bottom = 521.6602
+theme_override_font_sizes/font_size = 26
+text = "Récupéré"
+
+[node name="Bank" parent="Map" unique_id=2118626797 instance=ExtResource("9_ckosc")]
+visible = false
+layout_mode = 0
+offset_left = 680.99994
+offset_top = 435.9997
+offset_right = 680.99994
+offset_bottom = 435.9997
+scale = Vector2(0.48132288, 0.48132288)
+
+[node name="GiveCard" type="Control" parent="Map" unique_id=502793126]
+visible = false
+layout_mode = 1
+anchor_right = 0.661
+anchor_bottom = 0.72200006
+offset_left = 728.9999
+offset_top = 451.9998
+offset_right = 702.5598
+offset_bottom = 423.11957
+scale = Vector2(0.64000136, 0.64000136)
+script = ExtResource("21_srya7")
+
+[node name="Panel" type="Panel" parent="Map/GiveCard" unique_id=461444429]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(19.383072, 12.068146)
+theme_override_styles/panel = SubResource("StyleBoxFlat_yd7e0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/GiveCard" unique_id=222058577]
+layout_mode = 1
+offset_left = 2.0
+offset_top = 21.0
+offset_right = 768.0
+offset_bottom = 462.0
+theme_override_constants/separation = 40
+
+[node name="question" type="Label" parent="Map/GiveCard/VBoxContainer" unique_id=1772955947]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+text = "A quel joueur voulez-vous donner 
+une carte ?"
+horizontal_alignment = 1
+
+[node name="Joueurs" type="Control" parent="Map/GiveCard/VBoxContainer" unique_id=1049432180]
+layout_mode = 2
+
+[node name="Joueurs" type="HBoxContainer" parent="Map/GiveCard/VBoxContainer/Joueurs" unique_id=1055576432]
+layout_mode = 1
+offset_left = 33.0
+offset_top = -20.0
+offset_right = 1798.0027
+offset_bottom = 492.0
+scale = Vector2(0.39999944, 0.39999944)
+theme_override_constants/separation = 85
+
+[node name="Joueur1" type="TextureRect" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs" unique_id=1291490256]
+material = SubResource("ShaderMaterial_b72to")
+layout_mode = 2
+texture = ExtResource("10_t8783")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Nomjoueur1" type="Label" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs/Joueur1" unique_id=790908500]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+layout_mode = 0
+offset_left = -45.00006
+offset_top = 535.0
+offset_right = 548.99994
+offset_bottom = 598.0
+scale = Vector2(1.0000007, 1)
+theme_override_font_sizes/font_size = 55
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Joueur2" type="TextureRect" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs" unique_id=908924591]
+material = SubResource("ShaderMaterial_mgajk")
+layout_mode = 2
+texture = ExtResource("10_t8783")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Nomjoueur2" type="Label" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs/Joueur2" unique_id=686714384]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+layout_mode = 0
+offset_left = -34.499237
+offset_top = 535.0
+offset_right = 559.50073
+offset_bottom = 598.0
+scale = Vector2(1.0000015, 1)
+theme_override_font_sizes/font_size = 55
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Joueur3" type="TextureRect" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs" unique_id=181278566]
+material = SubResource("ShaderMaterial_7teeq")
+layout_mode = 2
+texture = ExtResource("10_t8783")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Nomjoueur3" type="Label" parent="Map/GiveCard/VBoxContainer/Joueurs/Joueurs/Joueur3" unique_id=384940154]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+layout_mode = 0
+offset_left = -33.998444
+offset_top = 535.0
+offset_right = 560.0016
+offset_bottom = 598.0
+scale = Vector2(1.0000031, 1)
+theme_override_font_sizes/font_size = 55
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GiveCard" type="Button" parent="Map/GiveCard/VBoxContainer" unique_id=636693576]
+modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 30
+text = "Donner une carte"
+
+[node name="Settings" type="Control" parent="Map" unique_id=487688044]
+anchors_preset = 0
+offset_left = 12.999999
+offset_top = 436.0
+offset_right = 12.999999
+offset_bottom = 436.0
+scale = Vector2(0.28937894, 0.2914999)
+script = ExtResource("27_pmure")
+
+[node name="Panel" type="Panel" parent="Map/Settings" unique_id=1936598367]
+layout_mode = 0
+offset_right = 409.512
+offset_bottom = 409.512
+theme_override_styles/panel = SubResource("StyleBoxFlat_kwvs3")
+
+[node name="TextureRect" type="TextureRect" parent="Map/Settings/Panel" unique_id=2131631933]
+modulate = Color(0.95686275, 0.8901961, 0.7647059, 1)
+layout_mode = 0
+offset_left = 86.74396
+offset_top = 88.115425
+offset_right = 149.1067
+offset_bottom = 151.65482
+scale = Vector2(3.662837, 3.662837)
+texture = ExtResource("28_etfdl")
+
+[node name="Button" type="Button" parent="Map/Settings/Panel" unique_id=1362954412]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 412.53812
+offset_bottom = 412.5404
+
+[node name="Panel2" type="Panel" parent="Map/Settings" unique_id=1971159088]
+visible = false
+layout_mode = 0
+offset_left = 326.80283
+offset_right = 974.35657
+offset_bottom = 409.512
+theme_override_styles/panel = SubResource("StyleBoxFlat_2jao0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/Settings/Panel2" unique_id=1837293605]
+layout_mode = 0
+offset_left = 25.676027
+offset_top = 10.290989
+offset_right = 608.67615
+offset_bottom = 354.74222
+theme_override_constants/separation = 21
+
+[node name="Reset" type="Button" parent="Map/Settings/Panel2/VBoxContainer" unique_id=4634548]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pmure")
+
+[node name="Control2" type="HBoxContainer" parent="Map/Settings/Panel2/VBoxContainer/Reset" unique_id=254100862]
+layout_mode = 0
+offset_top = 21.0
+offset_right = 583.0
+offset_bottom = 111.0
+theme_override_constants/separation = 35
+
+[node name="TextureRect" type="TextureRect" parent="Map/Settings/Panel2/VBoxContainer/Reset/Control2" unique_id=1390913507]
+modulate = Color(0.95686275, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("29_vdtr1")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Map/Settings/Panel2/VBoxContainer/Reset/Control2" unique_id=324807996]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+text = "Rejouer"
+
+[node name="Video" type="Button" parent="Map/Settings/Panel2/VBoxContainer" unique_id=1006213386]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pmure")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Map/Settings/Panel2/VBoxContainer/Video" unique_id=2141601403]
+layout_mode = 0
+offset_left = -1.5574874
+offset_top = 8.767242
+offset_right = 581.4425
+offset_bottom = 98.76724
+theme_override_constants/separation = 35
+
+[node name="TextureRect" type="TextureRect" parent="Map/Settings/Panel2/VBoxContainer/Video/HBoxContainer2" unique_id=238358807]
+modulate = Color(0.95686275, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("31_nexnj")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Map/Settings/Panel2/VBoxContainer/Video/HBoxContainer2" unique_id=49502136]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+text = "Vidéo"
+
+[node name="Control" type="Control" parent="Map/Settings/Panel2/VBoxContainer" unique_id=1699113296]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/Settings/Panel2/VBoxContainer/Control" unique_id=1406302295]
+layout_mode = 0
+offset_left = 1.8982172
+offset_top = -0.025338858
+offset_right = 391.89822
+offset_bottom = 89.97466
+theme_override_constants/separation = 35
+
+[node name="TextureRect" type="TextureRect" parent="Map/Settings/Panel2/VBoxContainer/Control/HBoxContainer" unique_id=659925651]
+modulate = Color(0.95686275, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("30_yd7e0")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Volume" type="Label" parent="Map/Settings/Panel2/VBoxContainer/Control/HBoxContainer" unique_id=1808237598]
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="Map/Settings/Panel2/VBoxContainer/Control" unique_id=654705743]
+layout_mode = 0
+offset_left = 19.176687
+offset_top = 72.43328
+offset_right = 191.32735
+offset_bottom = 99.71531
+scale = Vector2(3.3498602, 3.3498602)
+step = 50.0
+
+[node name="StartAction" parent="Map" unique_id=651877005 instance=ExtResource("32_etfdl")]
+visible = false
+layout_mode = 0
+offset_left = 756.99994
+offset_top = 444.99973
+offset_right = 756.99994
+offset_bottom = 444.99973
+scale = Vector2(0.68, 0.68)
+
+[node name="FinDuel" type="Button" parent="Map" unique_id=1624768277]
+visible = false
+layout_mode = 0
+offset_left = 753.0
+offset_top = 569.99976
+offset_right = 1077.0
+offset_bottom = 702.99976
+text = "Fin Duel"
+
+[node name="MancheTransition" type="VideoStreamPlayer" parent="Map" unique_id=1730284145]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+stream = ExtResource("25_nexnj")
+
+[node name="Error" type="Control" parent="Map" unique_id=654894452]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 661.9999
+offset_top = 118.99974
+offset_right = 133.81958
+offset_bottom = -677.9867
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.44000304, 0.44000304)
+script = ExtResource("26_dyk5w")
+
+[node name="Panel" type="Panel" parent="Map/Error" unique_id=296940741]
+layout_mode = 0
+offset_right = 1386.0
+offset_bottom = 274.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qu1kw")
+
+[node name="ErrorText" type="Label" parent="Map/Error" unique_id=491574813]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 29.0
+offset_right = 1327.0
+offset_bottom = 245.0
+theme_override_colors/font_color = Color(0.9566836, 0.8767748, 0.73369735, 1)
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="Map/Error" unique_id=488250601]
+wait_time = 2.0
+
+[node name="Result" parent="Map" unique_id=1012725942 instance=ExtResource("38_dwjdh")]
+visible = false
+layout_mode = 0
+offset_left = 547.9999
+offset_top = 118.999756
+offset_right = 547.9999
+offset_bottom = 118.999756
+scale = Vector2(0.7599994, 0.7599994)
+
+[node name="Manches" parent="." unique_id=1608420756 instance=ExtResource("25_2jxo5")]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 971.0
+offset_right = 507.0
+offset_bottom = 971.0
+scale = Vector2(1.48, 1.48)
+
+[node name="Manches2" parent="." unique_id=1943367806 instance=ExtResource("25_2jxo5")]
+layout_mode = 0
+offset_left = 1419.0
+offset_top = 105.0
+offset_right = 1419.0
+offset_bottom = 105.0
+rotation = 3.1415927
+scale = Vector2(1.48, 1.48)
+
+[node name="Profils" type="Control" parent="." unique_id=42104301]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1921.0
+offset_top = 1080.0
+offset_right = 1920.9998
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+mouse_filter = 2
+
+[node name="Profil" type="Control" parent="Profils" unique_id=1965343262]
+anchors_preset = 0
+offset_left = 373.46613
+offset_top = 290.29102
+offset_right = 812.04346
+offset_bottom = 579.291
+rotation = 3.1415927
+scale = Vector2(0.99062616, 0.99062616)
+script = ExtResource("11_t8783")
+
+[node name="TextureRect" type="TextureRect" parent="Profils/Profil" unique_id=1901958565]
+layout_mode = 0
+offset_top = -46.107063
+offset_right = 382.0
+offset_bottom = 294.89294
+texture = ExtResource("15_n46oe")
+
+[node name="Resources" type="Control" parent="Profils/Profil" unique_id=2140531467]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -246.77939
+offset_top = -28.411774
+offset_right = -23.16867
+offset_bottom = 113.58823
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.7200012, 0.7200012)
+
+[node name="Life" type="HBoxContainer" parent="Profils/Profil/Resources" unique_id=59189518]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -105.43231
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(0.022644043, 34.029373)
+
+[node name="Coeur" type="TextureRect" parent="Profils/Profil/Resources/Life" unique_id=997964193]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur2" type="TextureRect" parent="Profils/Profil/Resources/Life" unique_id=163502719]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur3" type="TextureRect" parent="Profils/Profil/Resources/Life" unique_id=1080425758]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur4" type="TextureRect" parent="Profils/Profil/Resources/Life" unique_id=2024788419]
+modulate = Color(0.34509805, 0.34509805, 0.34509805, 1)
+material = SubResource("CanvasItemMaterial_aarkv")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur5" type="TextureRect" parent="Profils/Profil/Resources/Life" unique_id=1170926488]
+modulate = Color(0.14733289, 0.14733289, 0.14733289, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Drink" type="HBoxContainer" parent="Profils/Profil/Resources" unique_id=1808568161]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 46.07641
+offset_bottom = -47.810524
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(3.5526276, -3.3023376)
+size_flags_horizontal = 0
+
+[node name="Alcohol" type="TextureRect" parent="Profils/Profil/Resources/Drink" unique_id=74946397]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol2" type="TextureRect" parent="Profils/Profil/Resources/Drink" unique_id=838497440]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol3" type="TextureRect" parent="Profils/Profil/Resources/Drink" unique_id=1763508664]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol4" type="TextureRect" parent="Profils/Profil/Resources/Drink" unique_id=833747669]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol5" type="TextureRect" parent="Profils/Profil/Resources/Drink" unique_id=2005705126]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food" type="HBoxContainer" parent="Profils/Profil/Resources" unique_id=141658232]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0131588
+offset_top = 93.062454
+offset_right = 0.0032958984
+offset_bottom = -2.203949
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(4.0225983, -45.925705)
+size_flags_horizontal = 0
+
+[node name="Food" type="TextureRect" parent="Profils/Profil/Resources/Food" unique_id=1118318486]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food2" type="TextureRect" parent="Profils/Profil/Resources/Food" unique_id=1609059438]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food3" type="TextureRect" parent="Profils/Profil/Resources/Food" unique_id=1648635091]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food4" type="TextureRect" parent="Profils/Profil/Resources/Food" unique_id=1456526885]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food5" type="TextureRect" parent="Profils/Profil/Resources/Food" unique_id=573148088]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Items" type="Control" parent="Profils/Profil" unique_id=412679630]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.88176
+offset_top = 17.160952
+offset_right = 83.11824
+offset_bottom = 57.16095
+grow_horizontal = 2
+
+[node name="Items" type="HBoxContainer" parent="Profils/Profil/Items" unique_id=1764220674]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7654053, 0.8551072)
+pivot_offset = Vector2(125.64456, 94.26876)
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="Profils/Profil/Items/Items" unique_id=1813889494]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gun" type="TextureRect" parent="Profils/Profil/Items/Items/Control" unique_id=1966715158]
+self_modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = -9.766952
+offset_top = 12.67806
+offset_right = 103.23305
+offset_bottom = 67.67806
+rotation = -0.13264503
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.89
+texture = ExtResource("15_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Munition" type="Label" parent="Profils/Profil/Items/Items/Control" unique_id=1991218013]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.377228
+offset_top = -26.729395
+offset_right = -11.377228
+offset_bottom = -3.729393
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.998024, 1)
+text = "0"
+
+[node name="KeypadIcon" type="TextureRect" parent="Profils/Profil/Items/Items" unique_id=2052890334]
+modulate = Color(0.60784316, 0.31764707, 0.12156863, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("16_dynj2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeypadOpen" type="Button" parent="Profils/Profil/Items/Items/KeypadIcon" unique_id=387620019]
+modulate = Color(0.02745098, 0.02745098, 0.02745098, 0)
+layout_mode = 0
+offset_left = 18.324741
+offset_top = -4.498038
+offset_right = 26.324741
+offset_bottom = 3.5019622
+scale = Vector2(8.067134, 7.890571)
+
+[node name="Money" type="Label" parent="Profils/Profil/Items/Items" unique_id=1703040666]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_011ta")
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "10"
+max_lines_visible = 1
+
+[node name="Gold" type="TextureRect" parent="Profils/Profil/Items/Items/Money" unique_id=1982357367]
+modulate = Color(0.8646751, 0.86467516, 0.8646751, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 0
+offset_left = 51.38794
+offset_top = -7.7945204
+offset_right = 113.38794
+offset_bottom = 54.20548
+size_flags_horizontal = 6
+texture = ExtResource("17_1xbp8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PlayerIcon" type="Control" parent="Profils/Profil" unique_id=1532733838]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0662365
+offset_top = -210.26193
+offset_right = 139.93376
+offset_bottom = -40.261963
+grow_vertical = 0
+
+[node name="Personnage" type="TextureRect" parent="Profils/Profil/PlayerIcon" unique_id=1053168023]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.216125
+offset_top = -73.89592
+offset_right = 91.783875
+offset_bottom = 61.10408
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_t8783")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NomJoueur" type="Label" parent="Profils/Profil" unique_id=221801202]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.575928
+offset_top = -45.719543
+offset_right = -35.575928
+offset_bottom = 3.2804565
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(92.99988, -66.99997)
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+
+[node name="Keypad" parent="Profils/Profil" unique_id=774372980 instance=ExtResource("18_2jxo5")]
+visible = false
+position = Vector2(189, -118.10706)
+scale = Vector2(0.39007133, 0.39007133)
+
+[node name="EndTurn1" type="Button" parent="Profils/Profil" unique_id=1152333479]
+layout_mode = 0
+offset_left = 182.09442
+offset_top = 76.42584
+offset_right = 354.09442
+offset_bottom = 107.42584
+text = "Terminer ma journée"
+
+[node name="StartProfil1" type="Label" parent="Profils/Profil" unique_id=1332349012]
+visible = false
+layout_mode = 0
+offset_left = 1.4799893
+offset_top = -42.103653
+offset_right = 376.7058
+offset_bottom = 110.89635
+theme_override_font_sizes/font_size = 112
+text = "Prêt"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Profil2" type="Control" parent="Profils" unique_id=912308252]
+anchors_preset = 0
+offset_left = 1921.0
+offset_top = 288.99988
+offset_right = 2359.5771
+offset_bottom = 577.9999
+rotation = 3.1415927
+scale = Vector2(0.99062616, 0.99062616)
+script = ExtResource("11_t8783")
+
+[node name="TextureRect" type="TextureRect" parent="Profils/Profil2" unique_id=1495980488]
+layout_mode = 0
+offset_top = -46.107063
+offset_right = 382.0
+offset_bottom = 294.89294
+texture = ExtResource("15_n46oe")
+
+[node name="Resources" type="Control" parent="Profils/Profil2" unique_id=1095789874]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -246.77939
+offset_top = -28.411774
+offset_right = -23.16867
+offset_bottom = 113.58823
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.7200012, 0.7200012)
+
+[node name="Life" type="HBoxContainer" parent="Profils/Profil2/Resources" unique_id=1747350786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -105.43231
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(0.022644043, 34.029373)
+
+[node name="Coeur" type="TextureRect" parent="Profils/Profil2/Resources/Life" unique_id=163565131]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur2" type="TextureRect" parent="Profils/Profil2/Resources/Life" unique_id=1460384666]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur3" type="TextureRect" parent="Profils/Profil2/Resources/Life" unique_id=1105469790]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur4" type="TextureRect" parent="Profils/Profil2/Resources/Life" unique_id=812053460]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_aarkv")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur5" type="TextureRect" parent="Profils/Profil2/Resources/Life" unique_id=2098484420]
+modulate = Color(0.14733289, 0.14733289, 0.14733289, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Drink" type="HBoxContainer" parent="Profils/Profil2/Resources" unique_id=1508421196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 46.07641
+offset_bottom = -47.810524
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(3.5526276, -3.3023376)
+size_flags_horizontal = 0
+
+[node name="Alcohol" type="TextureRect" parent="Profils/Profil2/Resources/Drink" unique_id=1651261085]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol2" type="TextureRect" parent="Profils/Profil2/Resources/Drink" unique_id=202879206]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol3" type="TextureRect" parent="Profils/Profil2/Resources/Drink" unique_id=1068109929]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol4" type="TextureRect" parent="Profils/Profil2/Resources/Drink" unique_id=705000703]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol5" type="TextureRect" parent="Profils/Profil2/Resources/Drink" unique_id=1077116151]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food" type="HBoxContainer" parent="Profils/Profil2/Resources" unique_id=1892166110]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0131588
+offset_top = 93.062454
+offset_right = 0.0032958984
+offset_bottom = -2.203949
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(4.0225983, -45.925705)
+size_flags_horizontal = 0
+
+[node name="Food" type="TextureRect" parent="Profils/Profil2/Resources/Food" unique_id=1055458092]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food2" type="TextureRect" parent="Profils/Profil2/Resources/Food" unique_id=349701886]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food3" type="TextureRect" parent="Profils/Profil2/Resources/Food" unique_id=697949419]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food4" type="TextureRect" parent="Profils/Profil2/Resources/Food" unique_id=1941352343]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food5" type="TextureRect" parent="Profils/Profil2/Resources/Food" unique_id=531396933]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Items" type="Control" parent="Profils/Profil2" unique_id=2093325092]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.88176
+offset_top = 17.160952
+offset_right = 83.11824
+offset_bottom = 57.16095
+grow_horizontal = 2
+
+[node name="Items" type="HBoxContainer" parent="Profils/Profil2/Items" unique_id=2146932109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7654053, 0.8551072)
+pivot_offset = Vector2(125.64456, 94.26876)
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="Profils/Profil2/Items/Items" unique_id=464992022]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gun" type="TextureRect" parent="Profils/Profil2/Items/Items/Control" unique_id=434222126]
+self_modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = -9.766952
+offset_top = 12.67806
+offset_right = 103.23305
+offset_bottom = 67.67806
+rotation = -0.13264503
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.89
+texture = ExtResource("15_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Munition" type="Label" parent="Profils/Profil2/Items/Items/Control" unique_id=1497290750]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.377228
+offset_top = -26.729395
+offset_right = -11.377228
+offset_bottom = -3.729393
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.998024, 1)
+text = "0"
+
+[node name="KeypadIcon" type="TextureRect" parent="Profils/Profil2/Items/Items" unique_id=1840939515]
+modulate = Color(0.60784316, 0.31764707, 0.12156863, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("16_dynj2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeypadOpen" type="Button" parent="Profils/Profil2/Items/Items/KeypadIcon" unique_id=2136546563]
+modulate = Color(0.02745098, 0.02745098, 0.02745098, 0)
+layout_mode = 0
+offset_left = 14.368583
+offset_top = -4.497893
+offset_right = 22.368584
+offset_bottom = 3.5021071
+scale = Vector2(8.067134, 7.890571)
+
+[node name="Money" type="Label" parent="Profils/Profil2/Items/Items" unique_id=344063615]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_011ta")
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "10"
+max_lines_visible = 1
+
+[node name="Gold" type="TextureRect" parent="Profils/Profil2/Items/Items/Money" unique_id=388905157]
+modulate = Color(0.8627451, 0.8627451, 0.8627451, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = 51.38794
+offset_top = -7.7945204
+offset_right = 113.38794
+offset_bottom = 54.20548
+size_flags_horizontal = 6
+texture = ExtResource("17_1xbp8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PlayerIcon" type="Control" parent="Profils/Profil2" unique_id=451521205]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0662365
+offset_top = -210.26193
+offset_right = 139.93376
+offset_bottom = -40.261963
+grow_vertical = 0
+
+[node name="Personnage" type="TextureRect" parent="Profils/Profil2/PlayerIcon" unique_id=1164671683]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.216125
+offset_top = -73.89592
+offset_right = 91.783875
+offset_bottom = 61.10408
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_t8783")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NomJoueur" type="Label" parent="Profils/Profil2" unique_id=1691180563]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.575928
+offset_top = -45.719543
+offset_right = -35.575928
+offset_bottom = 3.2804565
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(92.99988, -66.99997)
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+
+[node name="Keypad" parent="Profils/Profil2" unique_id=554215312 instance=ExtResource("18_2jxo5")]
+visible = false
+position = Vector2(189, -118.10706)
+scale = Vector2(0.39007133, 0.39007133)
+
+[node name="EndTurn2" type="Button" parent="Profils/Profil2" unique_id=274533568]
+layout_mode = 0
+offset_left = 188.15106
+offset_top = 76.4258
+offset_right = 360.15106
+offset_bottom = 107.4258
+text = "Terminer ma journée"
+
+[node name="StartProfil2" type="Label" parent="Profils/Profil2" unique_id=1528351081]
+visible = false
+layout_mode = 0
+offset_left = -2.0187988
+offset_top = -43.40683
+offset_right = 373.20703
+offset_bottom = 109.59317
+theme_override_font_sizes/font_size = 112
+text = "Prêt"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Profil3" type="Control" parent="Profils" unique_id=1643295922]
+anchors_preset = 0
+offset_left = 1545.0001
+offset_top = 789.99994
+offset_right = 1983.5775
+offset_bottom = 1078.9999
+scale = Vector2(0.99062616, 0.99062616)
+script = ExtResource("11_t8783")
+
+[node name="TextureRect" type="TextureRect" parent="Profils/Profil3" unique_id=299599021]
+layout_mode = 0
+offset_top = -46.107063
+offset_right = 382.0
+offset_bottom = 294.89294
+texture = ExtResource("15_n46oe")
+
+[node name="Resources" type="Control" parent="Profils/Profil3" unique_id=763675177]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -246.77939
+offset_top = -28.411774
+offset_right = -23.16867
+offset_bottom = 113.58823
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.7200012, 0.7200012)
+
+[node name="Life" type="HBoxContainer" parent="Profils/Profil3/Resources" unique_id=2095478022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -105.43231
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(0.022644043, 34.029373)
+
+[node name="Coeur" type="TextureRect" parent="Profils/Profil3/Resources/Life" unique_id=1441842735]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur2" type="TextureRect" parent="Profils/Profil3/Resources/Life" unique_id=5306251]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur3" type="TextureRect" parent="Profils/Profil3/Resources/Life" unique_id=1966655631]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur4" type="TextureRect" parent="Profils/Profil3/Resources/Life" unique_id=1784799564]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_aarkv")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur5" type="TextureRect" parent="Profils/Profil3/Resources/Life" unique_id=1263357146]
+modulate = Color(0.14733289, 0.14733289, 0.14733289, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Drink" type="HBoxContainer" parent="Profils/Profil3/Resources" unique_id=326039991]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 46.07641
+offset_bottom = -47.810524
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(3.5526276, -3.3023376)
+size_flags_horizontal = 0
+
+[node name="Alcohol" type="TextureRect" parent="Profils/Profil3/Resources/Drink" unique_id=1288328643]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol2" type="TextureRect" parent="Profils/Profil3/Resources/Drink" unique_id=921455251]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol3" type="TextureRect" parent="Profils/Profil3/Resources/Drink" unique_id=1921081206]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol4" type="TextureRect" parent="Profils/Profil3/Resources/Drink" unique_id=1069213983]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol5" type="TextureRect" parent="Profils/Profil3/Resources/Drink" unique_id=121561649]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food" type="HBoxContainer" parent="Profils/Profil3/Resources" unique_id=1627358499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0131588
+offset_top = 93.062454
+offset_right = 0.0032958984
+offset_bottom = -2.203949
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(4.0225983, -45.925705)
+size_flags_horizontal = 0
+
+[node name="Food" type="TextureRect" parent="Profils/Profil3/Resources/Food" unique_id=636274255]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food2" type="TextureRect" parent="Profils/Profil3/Resources/Food" unique_id=1010749614]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food3" type="TextureRect" parent="Profils/Profil3/Resources/Food" unique_id=1596299477]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food4" type="TextureRect" parent="Profils/Profil3/Resources/Food" unique_id=2094814620]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food5" type="TextureRect" parent="Profils/Profil3/Resources/Food" unique_id=34785155]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Items" type="Control" parent="Profils/Profil3" unique_id=12360119]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.88176
+offset_top = 17.160952
+offset_right = 83.11824
+offset_bottom = 57.16095
+grow_horizontal = 2
+
+[node name="Items" type="HBoxContainer" parent="Profils/Profil3/Items" unique_id=689357846]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7654053, 0.8551072)
+pivot_offset = Vector2(125.64456, 94.26876)
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="Profils/Profil3/Items/Items" unique_id=1202860352]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gun" type="TextureRect" parent="Profils/Profil3/Items/Items/Control" unique_id=178317291]
+self_modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = -9.766952
+offset_top = 12.67806
+offset_right = 103.23305
+offset_bottom = 67.67806
+rotation = -0.13264503
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.89
+texture = ExtResource("15_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Munition" type="Label" parent="Profils/Profil3/Items/Items/Control" unique_id=213872346]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.377228
+offset_top = -26.729395
+offset_right = -11.377228
+offset_bottom = -3.729393
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.998024, 1)
+text = "0"
+
+[node name="KeypadIcon" type="TextureRect" parent="Profils/Profil3/Items/Items" unique_id=979362391]
+modulate = Color(0.60784316, 0.31764707, 0.12156863, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("16_dynj2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeypadOpen" type="Button" parent="Profils/Profil3/Items/Items/KeypadIcon" unique_id=1352125697]
+modulate = Color(0.02745098, 0.02745098, 0.02745098, 0)
+layout_mode = 0
+offset_left = 18.324982
+offset_top = -4.4982185
+offset_right = 26.324982
+offset_bottom = 3.5017815
+scale = Vector2(8.067134, 7.890571)
+
+[node name="Money" type="Label" parent="Profils/Profil3/Items/Items" unique_id=97365489]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_011ta")
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "10"
+max_lines_visible = 1
+
+[node name="Gold" type="TextureRect" parent="Profils/Profil3/Items/Items/Money" unique_id=1282140388]
+modulate = Color(0.8627451, 0.8627451, 0.8627451, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = 51.38794
+offset_top = -7.7945204
+offset_right = 113.38794
+offset_bottom = 54.20548
+size_flags_horizontal = 6
+texture = ExtResource("17_1xbp8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PlayerIcon" type="Control" parent="Profils/Profil3" unique_id=1648915880]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0662365
+offset_top = -210.26193
+offset_right = 139.93376
+offset_bottom = -40.261963
+grow_vertical = 0
+
+[node name="Personnage" type="TextureRect" parent="Profils/Profil3/PlayerIcon" unique_id=1520417410]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.216125
+offset_top = -73.89592
+offset_right = 91.783875
+offset_bottom = 61.10408
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_t8783")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NomJoueur" type="Label" parent="Profils/Profil3" unique_id=1039430927]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.575928
+offset_top = -45.719543
+offset_right = -35.575928
+offset_bottom = 3.2804565
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(92.99988, -66.99997)
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+
+[node name="Keypad" parent="Profils/Profil3" unique_id=496744008 instance=ExtResource("18_2jxo5")]
+visible = false
+position = Vector2(189, -118.10706)
+scale = Vector2(0.39007133, 0.39007133)
+
+[node name="EndTurn3" type="Button" parent="Profils/Profil3" unique_id=909946187]
+layout_mode = 0
+offset_left = 185.82047
+offset_top = 80.33455
+offset_right = 357.82047
+offset_bottom = 111.33455
+text = "Terminer ma journée"
+
+[node name="StartProfil3" type="Label" parent="Profils/Profil3" unique_id=255677289]
+visible = false
+layout_mode = 0
+offset_left = 5.047304
+offset_top = -46.435364
+offset_right = 380.27313
+offset_bottom = 106.56464
+theme_override_font_sizes/font_size = 112
+text = "Prêt"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Profil4" type="Control" parent="Profils" unique_id=808373957]
+anchors_preset = 0
+offset_left = -6.4661264
+offset_top = 793.70905
+offset_right = 432.1112
+offset_bottom = 1082.709
+scale = Vector2(0.99062616, 0.99062616)
+script = ExtResource("11_t8783")
+
+[node name="TextureRect" type="TextureRect" parent="Profils/Profil4" unique_id=1327086082]
+layout_mode = 0
+offset_top = -46.107063
+offset_right = 382.0
+offset_bottom = 294.89294
+texture = ExtResource("15_n46oe")
+
+[node name="Resources" type="Control" parent="Profils/Profil4" unique_id=1081930778]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -246.77939
+offset_top = -28.411774
+offset_right = -23.16867
+offset_bottom = 113.58823
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.7200012, 0.7200012)
+
+[node name="Life" type="HBoxContainer" parent="Profils/Profil4/Resources" unique_id=943312540]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -105.43231
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(0.022644043, 34.029373)
+
+[node name="Coeur" type="TextureRect" parent="Profils/Profil4/Resources/Life" unique_id=1016633844]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur2" type="TextureRect" parent="Profils/Profil4/Resources/Life" unique_id=841971689]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur3" type="TextureRect" parent="Profils/Profil4/Resources/Life" unique_id=414491636]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_0ah0u")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur4" type="TextureRect" parent="Profils/Profil4/Resources/Life" unique_id=215964686]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_aarkv")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur5" type="TextureRect" parent="Profils/Profil4/Resources/Life" unique_id=346300118]
+modulate = Color(0.14733289, 0.14733289, 0.14733289, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Drink" type="HBoxContainer" parent="Profils/Profil4/Resources" unique_id=873311442]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 46.07641
+offset_bottom = -47.810524
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(3.5526276, -3.3023376)
+size_flags_horizontal = 0
+
+[node name="Alcohol" type="TextureRect" parent="Profils/Profil4/Resources/Drink" unique_id=482127125]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol2" type="TextureRect" parent="Profils/Profil4/Resources/Drink" unique_id=424899640]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol3" type="TextureRect" parent="Profils/Profil4/Resources/Drink" unique_id=426437543]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol4" type="TextureRect" parent="Profils/Profil4/Resources/Drink" unique_id=1931053870]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Alcohol5" type="TextureRect" parent="Profils/Profil4/Resources/Drink" unique_id=1018997552]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("13_v2y4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food" type="HBoxContainer" parent="Profils/Profil4/Resources" unique_id=334816666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0131588
+offset_top = 93.062454
+offset_right = 0.0032958984
+offset_bottom = -2.203949
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.003269, 0.9768656)
+pivot_offset = Vector2(4.0225983, -45.925705)
+size_flags_horizontal = 0
+
+[node name="Food" type="TextureRect" parent="Profils/Profil4/Resources/Food" unique_id=653902760]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food2" type="TextureRect" parent="Profils/Profil4/Resources/Food" unique_id=1732772087]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food3" type="TextureRect" parent="Profils/Profil4/Resources/Food" unique_id=1721954017]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food4" type="TextureRect" parent="Profils/Profil4/Resources/Food" unique_id=824209916]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Food5" type="TextureRect" parent="Profils/Profil4/Resources/Food" unique_id=112705808]
+modulate = Color(0.14901961, 0.14901961, 0.14901961, 1)
+material = SubResource("CanvasItemMaterial_6k428")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("14_aojn8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Items" type="Control" parent="Profils/Profil4" unique_id=1418696471]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.88176
+offset_top = 17.160952
+offset_right = 83.11824
+offset_bottom = 57.16095
+grow_horizontal = 2
+
+[node name="Items" type="HBoxContainer" parent="Profils/Profil4/Items" unique_id=1736991985]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7654053, 0.8551072)
+pivot_offset = Vector2(125.64456, 94.26876)
+size_flags_horizontal = 0
+
+[node name="Control" type="Control" parent="Profils/Profil4/Items/Items" unique_id=678801466]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gun" type="TextureRect" parent="Profils/Profil4/Items/Items/Control" unique_id=183540350]
+self_modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = -9.766952
+offset_top = 12.67806
+offset_right = 103.23305
+offset_bottom = 67.67806
+rotation = -0.13264503
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.89
+texture = ExtResource("15_x2ui6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Munition" type="Label" parent="Profils/Profil4/Items/Items/Control" unique_id=1425792549]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.377228
+offset_top = -26.729395
+offset_right = -11.377228
+offset_bottom = -3.729393
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.998024, 1)
+text = "0"
+
+[node name="KeypadIcon" type="TextureRect" parent="Profils/Profil4/Items/Items" unique_id=966620221]
+modulate = Color(0.60784316, 0.31764707, 0.12156863, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("16_dynj2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeypadOpen" type="Button" parent="Profils/Profil4/Items/Items/KeypadIcon" unique_id=1400776485]
+modulate = Color(0.02745098, 0.02745098, 0.02745098, 0)
+layout_mode = 0
+offset_left = 19.64376
+offset_top = -4.4980745
+offset_right = 27.64376
+offset_bottom = 3.5019255
+scale = Vector2(8.067134, 7.890571)
+
+[node name="Money" type="Label" parent="Profils/Profil4/Items/Items" unique_id=392453831]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_011ta")
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "10"
+max_lines_visible = 1
+
+[node name="Gold" type="TextureRect" parent="Profils/Profil4/Items/Items/Money" unique_id=1865512038]
+modulate = Color(0.8627451, 0.8627451, 0.8627451, 1)
+material = SubResource("CanvasItemMaterial_n46oe")
+layout_mode = 0
+offset_left = 51.38794
+offset_top = -7.7945204
+offset_right = 113.38794
+offset_bottom = 54.20548
+size_flags_horizontal = 6
+texture = ExtResource("17_1xbp8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PlayerIcon" type="Control" parent="Profils/Profil4" unique_id=1342042704]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0662365
+offset_top = -210.26193
+offset_right = 139.93376
+offset_bottom = -40.261963
+grow_vertical = 0
+
+[node name="Personnage" type="TextureRect" parent="Profils/Profil4/PlayerIcon" unique_id=611145179]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.216125
+offset_top = -73.89592
+offset_right = 91.783875
+offset_bottom = 61.10408
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_t8783")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NomJoueur" type="Label" parent="Profils/Profil4" unique_id=1376018608]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.575928
+offset_top = -45.719543
+offset_right = -35.575928
+offset_bottom = 3.2804565
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(92.99988, -66.99997)
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+
+[node name="Keypad" parent="Profils/Profil4" unique_id=2074569258 instance=ExtResource("18_2jxo5")]
+visible = false
+position = Vector2(189, -118.10706)
+scale = Vector2(0.39007133, 0.39007133)
+
+[node name="EndTurn4" type="Button" parent="Profils/Profil4" unique_id=1678085941]
+layout_mode = 0
+offset_left = 188.84888
+offset_top = 78.31561
+offset_right = 360.84888
+offset_bottom = 109.31561
+text = "Terminer ma journée"
+
+[node name="StartProfil4" type="Label" parent="Profils/Profil4" unique_id=1817477944]
+visible = false
+layout_mode = 0
+offset_left = 8.546273
+offset_top = -47.15104
+offset_right = 383.7721
+offset_bottom = 105.84896
+theme_override_font_sizes/font_size = 112
+text = "Prêt"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="FinJeu" parent="." unique_id=91722483 instance=ExtResource("34_yd7e0")]
+visible = false
+layout_mode = 0
+offset_top = -2.9999695
+offset_bottom = -2.9999695
+
+[node name="Rules" type="VideoStreamPlayer" parent="." unique_id=1211032366]
+visible = false
+layout_mode = 0
+offset_left = 0.00012207031
+offset_top = 0.00014863047
+offset_right = 1920.0001
+offset_bottom = 1080.0001
+
+[node name="BeginScene" parent="." unique_id=1431948896 instance=ExtResource("36_rrv1i")]
+visible = false
+layout_mode = 1
+offset_right = -1280.2561
+offset_bottom = -720.14404
+
+[connection signal="pressed" from="Map/Places/Saloon" to="Map/Places" method="_on_saloon_pressed"]
+[connection signal="pressed" from="Map/Places/Mine" to="Map/Places" method="_on_mine_pressed"]
+[connection signal="pressed" from="Map/Places/Restaurant" to="Map/Places" method="_on_restaurant_pressed"]
+[connection signal="pressed" from="Map/Places/Armory" to="Map/Places" method="_on_armory_pressed"]
+[connection signal="pressed" from="Map/Places/Bank" to="Map/Places" method="_on_bank_pressed"]
+[connection signal="pressed" from="Map/Places/Duel" to="." method="_on_duel_pressed"]
+[connection signal="pressed" from="Map/Places/Duel" to="Map/Places" method="_on_duel_pressed"]
+[connection signal="animation_finished" from="Map/Dés/SubViewportContainer/SubViewport/Node3D/RollDiceAnimation" to="Map/Dés/RollDiceButton" method="_on_roll_dice_animation_animation_finished"]
+[connection signal="pressed" from="Map/Dés/RollDiceButton" to="Map/Dés/RollDiceButton" method="roll_dice"]
+[connection signal="pressed" from="Map/Restaurant/VBoxContainer/RestaurantUseCard" to="." method="_on_restaurant_use_card_pressed"]
+[connection signal="pressed" from="Map/Restaurant/VBoxContainer/RestaurantGiveCard" to="." method="_on_restaurant_give_card_pressed"]
+[connection signal="pressed" from="Map/Restaurant/VBoxContainer/HBoxContainer/FoodBuyCard" to="Map/Places" method="_on_food_buy_card_pressed"]
+[connection signal="pressed" from="Map/Restaurant/VBoxContainer/HBoxContainer/FoodBuyCard" to="Map/RestaurantShop" method="_on_food_buy_card_pressed"]
+[connection signal="pressed" from="Map/RestaurantShop/GetFoodReceive" to="Map/RestaurantShop" method="_on_get_food_receive_pressed"]
+[connection signal="pressed" from="Map/Armory/VBoxContainer/HBoxContainer/moins" to="Map/Armory" method="_on_moins_pressed"]
+[connection signal="pressed" from="Map/Armory/VBoxContainer/HBoxContainer/plus" to="Map/Armory" method="_on_plus_pressed"]
+[connection signal="pressed" from="Map/Armory/VBoxContainer/ArmoryBuyCard" to="Map/Armory" method="_on_armory_buy_card_pressed"]
+[connection signal="pressed" from="Map/Armory/VBoxContainer/ArmoryUseCard" to="." method="_on_armory_use_card_pressed"]
+[connection signal="pressed" from="Map/Saloon/VBoxContainer/SaloonUseCard" to="." method="_on_saloon_use_card_pressed"]
+[connection signal="pressed" from="Map/Saloon/VBoxContainer/SaloonGiveCard" to="." method="_on_saloon_give_card_pressed"]
+[connection signal="pressed" from="Map/Saloon/VBoxContainer/HBoxContainer/DrinkBuyCard" to="Map/Places" method="_on_drink_buy_card_pressed"]
+[connection signal="pressed" from="Map/Saloon/VBoxContainer/HBoxContainer/DrinkBuyCard" to="Map/SaloonShop" method="_on_drink_buy_card_pressed"]
+[connection signal="pressed" from="Map/SaloonShop/GetDrinkReceive" to="Map/SaloonShop" method="_on_get_drink_receive_pressed"]
+[connection signal="pressed" from="Map/GiveCard/VBoxContainer/GiveCard" to="Map/GiveCard" method="_on_give_card_pressed"]
+[connection signal="pressed" from="Map/Settings/Panel/Button" to="Map/Settings" method="_on_button_pressed"]
+[connection signal="pressed" from="Map/Settings/Panel2/VBoxContainer/Reset" to="Map/Settings" method="_on_reset_pressed"]
+[connection signal="pressed" from="Map/FinDuel" to="." method="_on_fin_duel_pressed"]
+[connection signal="finished" from="Map/MancheTransition" to="." method="_on_manche_transition_finished"]
+[connection signal="timeout" from="Map/Error/Timer" to="Map/Error" method="_on_timer_timeout"]
+[connection signal="pressed" from="Profils/Profil/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil" method="_on_keypad_open_pressed"]
+[connection signal="pressed" from="Profils/Profil2/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil2" method="_on_keypad_open_pressed"]
+[connection signal="pressed" from="Profils/Profil3/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil3" method="_on_keypad_open_pressed"]
+[connection signal="pressed" from="Profils/Profil4/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil4" method="_on_keypad_open_pressed"]
+[connection signal="finished" from="Rules" to="BeginScene" method="_on_rules_finished"]
