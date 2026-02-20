@@ -56,6 +56,7 @@ func _ready() -> void:
 	DatabaseConfig.script_duel = $Map/Duel
 	DatabaseConfig.script_don = $Map/GiveCard
 	DatabaseConfig.script_result = $Map/Result
+	DatabaseConfig.script_duel_result = $Map/DuelResult
 	
 	give_card.hide()
 	
