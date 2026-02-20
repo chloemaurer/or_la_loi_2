@@ -2,6 +2,7 @@ extends Node
 
 signal demande_affichage_erreur
 signal rewards(times)
+signal fight()
 signal db_ready
 var db_ref : FirebaseDatabaseReference = null
 var is_ready : bool = false
@@ -32,6 +33,7 @@ var script_armory = null
 var script_duel = null
 var script_don = null
 var script_result = null
+var script_duel_result = null
 var cache_cartes = null
 var donnees_scores : Array = []
 #------- Actions par Tour ----------------------------------
@@ -314,7 +316,10 @@ func _on_rewards_received(results: Array):
 	print("[REWARDS] Signal reçu, distribution de l'argent...")
 	winner_miniJeux(results)
 	
-
+func _on_fight_received(results: Array):
+	print("[REWARDS] Signal reçu, distribution de l'argent...")
+	
+	
 	
 func _verifier_scores_minijeux(data):
 	if typeof(data) != TYPE_DICTIONARY: return
@@ -513,7 +518,7 @@ func terminer_le_duel():
 	var degats = script_general.profils_noeuds[int(gagnant_final)].get_gun()
 
 	print("[VICTOIRE FINALE] ID", gagnant_final, " inflige ", degats, " dégâts à ID", perdant_final)
-	
+	script_duel_result.afficher_duel_resultat(gagnant_final,perdant_final,degats)
 	# 6. Application des dégâts
 	lose_life(degats, perdant_final)
 	

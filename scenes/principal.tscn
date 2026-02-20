@@ -27,7 +27,7 @@
 [ext_resource type="Shader" uid="uid://6bmmgs1kn515" path="res://ennemyselect.gdshader" id="22_dynj2"]
 [ext_resource type="PackedScene" uid="uid://b3xr1tqch4x8m" path="res://scenes/manches.tscn" id="25_2jxo5"]
 [ext_resource type="VideoStream" uid="uid://d8e8bwbm3nh6" path="res://animation/Manche.ogv" id="25_nexnj"]
-[ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scenes/error.gd" id="26_dyk5w"]
+[ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scripts/error.gd" id="26_dyk5w"]
 [ext_resource type="Script" uid="uid://bkh7kd8symyl6" path="res://scripts/settings.gd" id="27_pmure"]
 [ext_resource type="Texture2D" uid="uid://vg54pksbl74s" path="res://assets/icone/parametre.webp" id="28_etfdl"]
 [ext_resource type="Texture2D" uid="uid://cipx6kvt7xgce" path="res://assets/icone/reset.webp" id="29_vdtr1"]
@@ -37,7 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://cvjvuytfbacf8" path="res://scenes/mine.tscn" id="33_vdtr1"]
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
-[ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://result.tscn" id="38_dwjdh"]
+[ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://scenes/result.tscn" id="38_dwjdh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3ehx"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

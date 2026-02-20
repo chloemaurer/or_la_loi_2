@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://ch52hv5yvlhec"]
+
+[ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="1_ufq6h"]
+[ext_resource type="Script" uid="uid://dqch5aowgphsj" path="res://duel_result.gd" id="1_yftia"]
+[ext_resource type="Texture2D" uid="uid://dwg03ruoyaydt" path="res://assets/profil/niv1Icon.webp" id="3_3urdu"]
+[ext_resource type="Texture2D" uid="uid://7nrwkrwc1tok" path="res://assets/profil/coeur.webp" id="4_4hp33"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2m8hv"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wjneb"]
+blend_mode = 2
+
+[node name="DuelResult" type="Control" unique_id=68083784]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yftia")
+
+[node name="Panel" type="Panel" parent="." unique_id=2032680834]
+layout_mode = 0
+offset_right = 756.0
+offset_bottom = 598.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2m8hv")
+
+[node name="Label" type="Label" parent="." unique_id=436493067]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 0
+offset_left = 205.0
+offset_top = 13.0
+offset_right = 541.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 75
+text = "Duel"
+horizontal_alignment = 1
+
+[node name="Duel" type="HBoxContainer" parent="." unique_id=566499062]
+layout_mode = 0
+offset_top = 170.0
+offset_right = 761.0
+offset_bottom = 329.0
+theme_override_constants/separation = 95
+alignment = 1
+
+[node name="Gagnant" type="TextureRect" parent="Duel" unique_id=179560342]
+layout_mode = 2
+texture = ExtResource("1_ufq6h")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="VS" type="Label" parent="Duel" unique_id=1680869405]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+text = "VS"
+horizontal_alignment = 1
+
+[node name="Perdant" type="TextureRect" parent="Duel" unique_id=323242761]
+layout_mode = 2
+texture = ExtResource("1_ufq6h")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Effect" type="HBoxContainer" parent="." unique_id=602006419]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 345.0
+offset_right = 715.0
+offset_bottom = 504.0
+theme_override_constants/separation = 220
+alignment = 1
+
+[node name="Joueur1" type="TextureRect" parent="Effect" unique_id=902178754]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("3_3urdu")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Life" type="HBoxContainer" parent="Effect" unique_id=1314700902]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Coeur" type="TextureRect" parent="Effect/Life" unique_id=945120790]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_wjneb")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_4hp33")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur2" type="TextureRect" parent="Effect/Life" unique_id=1058216264]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_wjneb")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_4hp33")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coeur3" type="TextureRect" parent="Effect/Life" unique_id=1429601722]
+modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
+material = SubResource("CanvasItemMaterial_wjneb")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_4hp33")
+expand_mode = 1
+stretch_mode = 5
