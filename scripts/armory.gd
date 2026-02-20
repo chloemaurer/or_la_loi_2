@@ -28,8 +28,7 @@ func _on_plus_pressed() -> void:
 		num += 1
 		nb_prix += 1
 		_actualiser_labels()
-	else:
-		prix.modulate = Color.RED
+
 
 func _actualiser_labels() -> void:
 	count.text = str(num)

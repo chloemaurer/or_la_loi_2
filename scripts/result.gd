@@ -1,11 +1,14 @@
 extends Control
 
 @onready var icon_winner = [
-$"Control/VBoxContainer/1er/Icon", $"Control/VBoxContainer/2eme/Icon", $"Control/VBoxContainer/3eme/Icon", $"Control/VBoxContainer/4eme/Icon"]
+$"Control/VBoxContainer/1er/Icon", $"Control/VBoxContainer/2eme/Icon", $"Control/VBoxContainer/3eme/Icon", $"Control/VBoxContainer/4eme/Icon"
+]
 
 @onready var time_winner = [
 	$"Control/VBoxContainer/1er/Time", $"Control/VBoxContainer/2eme/Time", $"Control/VBoxContainer/3eme/Time", $"Control/VBoxContainer/4eme/Time"
 ]
+func _ready() -> void:
+	self.hide()
 
 func afficher_resultats(scores_bruts: Array):
 	# 1. Sécurité : On s'assure que le tableau n'est pas vide

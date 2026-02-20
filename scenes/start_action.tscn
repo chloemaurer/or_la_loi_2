@@ -2,10 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://b5rvx4867ip50" path="res://assets/icone/piocher.webp" id="1_0c3f2"]
 [ext_resource type="Script" uid="uid://bplxuggdh62p2" path="res://scripts/start_action.gd" id="1_vtkbs"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_kehs7"]
 [ext_resource type="Texture2D" uid="uid://d3q8mek75cmag" path="res://assets/icone/dés.webp" id="3_dw5uq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtkbs"]
 bg_color = Color(0.18857142, 0.12281906, 0.09618177, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_s4n0k"]
+font = ExtResource("2_kehs7")
+font_size = 36
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dw5uq"]
 
@@ -22,12 +28,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_vtkbs")
 
 [node name="Label" type="Label" parent="." unique_id=834612485]
 layout_mode = 0
-offset_left = 35.0
-offset_top = 41.0
-offset_right = 534.0
-offset_bottom = 91.0
-theme_override_font_sizes/font_size = 36
+offset_left = 47.0
+offset_top = 40.0
+offset_right = 546.0
+offset_bottom = 90.0
 text = "Choisissez votre destin "
+label_settings = SubResource("LabelSettings_s4n0k")
 horizontal_alignment = 1
 
 [node name="Choix" type="HBoxContainer" parent="." unique_id=1552290671]
@@ -44,6 +50,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="IconePioche" type="TextureRect" parent="Choix/piocher" unique_id=1071572412]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("1_0c3f2")
@@ -51,6 +58,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Piocher" type="Button" parent="Choix/piocher/IconePioche" unique_id=334265421]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 0
 offset_top = -24.0
 offset_right = 229.0
@@ -58,6 +66,7 @@ offset_bottom = 231.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dw5uq")
 
 [node name="Label" type="Label" parent="Choix/piocher" unique_id=1491741942]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Piocher"
@@ -68,6 +77,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Icone dé" type="TextureRect" parent="Choix/dés" unique_id=1259680828]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("3_dw5uq")
@@ -75,6 +85,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Lancer les dé" type="Button" parent="Choix/dés/Icone dé" unique_id=172576391]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 0
 offset_top = -20.0
 offset_right = 226.0
@@ -82,6 +93,7 @@ offset_bottom = 234.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dw5uq")
 
 [node name="Label" type="Label" parent="Choix/dés" unique_id=682793697]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Lancer les dés"

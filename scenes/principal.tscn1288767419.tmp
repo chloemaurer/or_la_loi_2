@@ -27,20 +27,25 @@
 [ext_resource type="Shader" uid="uid://6bmmgs1kn515" path="res://ennemyselect.gdshader" id="22_dynj2"]
 [ext_resource type="PackedScene" uid="uid://b3xr1tqch4x8m" path="res://scenes/manches.tscn" id="25_2jxo5"]
 [ext_resource type="VideoStream" uid="uid://d8e8bwbm3nh6" path="res://animation/Manche.ogv" id="25_nexnj"]
-[ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://scenes/result.tscn" id="26_dwjdh"]
-[ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scripts/error.gd" id="26_eto4s"]
-[ext_resource type="PackedScene" uid="uid://ch52hv5yvlhec" path="res://duel_result.tscn" id="27_dr6sg"]
+<<<<<<< HEAD
+[ext_resource type="Script" path="res://scenes/error.gd" id="26_dyk5w"]
+=======
+[ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scripts/error.gd" id="26_dyk5w"]
+>>>>>>> origin
 [ext_resource type="Script" uid="uid://bkh7kd8symyl6" path="res://scripts/settings.gd" id="27_pmure"]
 [ext_resource type="Texture2D" uid="uid://vg54pksbl74s" path="res://assets/icone/parametre.webp" id="28_etfdl"]
 [ext_resource type="Texture2D" uid="uid://cipx6kvt7xgce" path="res://assets/icone/reset.webp" id="29_vdtr1"]
-[ext_resource type="PackedScene" uid="uid://cci83b0uexl5k" path="res://give_card_effect.tscn" id="29_vr4so"]
 [ext_resource type="Texture2D" uid="uid://bqspcwu3db8kt" path="res://assets/icone/son.webp" id="30_yd7e0"]
 [ext_resource type="Texture2D" uid="uid://b2sbq33egsir7" path="res://assets/icone/video.webp" id="31_nexnj"]
 [ext_resource type="PackedScene" uid="uid://c6oiyw3qtp8i" path="res://scenes/start_action.tscn" id="32_etfdl"]
 [ext_resource type="PackedScene" uid="uid://cvjvuytfbacf8" path="res://scenes/mine.tscn" id="33_vdtr1"]
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
-[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
 [ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
+<<<<<<< HEAD
+[ext_resource type="PackedScene" uid="uid://biyhsoempxrhf" path="res://result.tscn" id="38_dwjdh"]
+=======
+[ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://scenes/result.tscn" id="38_dwjdh"]
+>>>>>>> origin
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3ehx"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -134,11 +139,6 @@ blend_mode = 2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_011ta"]
 blend_mode = 2
-
-[sub_resource type="LabelSettings" id="LabelSettings_eto4s"]
-font = ExtResource("36_dr6sg")
-font_size = 35
-font_color = Color(0, 0, 0, 1)
 
 [node name="Principal" type="Control" unique_id=684752956]
 layout_mode = 3
@@ -1026,7 +1026,7 @@ offset_bottom = -677.9867
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.44000304, 0.44000304)
-script = ExtResource("26_eto4s")
+script = ExtResource("26_dyk5w")
 
 [node name="Panel" type="Panel" parent="Map/Error" unique_id=296940741]
 layout_mode = 0
@@ -1048,28 +1048,14 @@ vertical_alignment = 1
 [node name="Timer" type="Timer" parent="Map/Error" unique_id=488250601]
 wait_time = 2.0
 
-[node name="Result" parent="Map" unique_id=1012725942 instance=ExtResource("26_dwjdh")]
-layout_mode = 0
-offset_left = 531.99994
-offset_top = 134.99976
-offset_right = 531.99994
-offset_bottom = 134.99976
-scale = Vector2(0.78129625, 0.78129625)
-
-[node name="DuelResult" parent="Map" unique_id=68083784 instance=ExtResource("27_dr6sg")]
-layout_mode = 1
-offset_left = 593.99994
-offset_top = 286.99976
-offset_right = -567.9972
-offset_bottom = -192.84265
-
-[node name="GiveCardEffect" parent="Map" unique_id=450712904 instance=ExtResource("29_vr4so")]
+[node name="Result" parent="Map" unique_id=1012725942 instance=ExtResource("38_dwjdh")]
 visible = false
-layout_mode = 1
-offset_left = 720.5
-offset_top = 379.99963
-offset_right = -680.5
-offset_bottom = -328.00037
+layout_mode = 0
+offset_left = 547.9999
+offset_top = 118.999756
+offset_right = 547.9999
+offset_bottom = 118.999756
+scale = Vector2(0.7599994, 0.7599994)
 
 [node name="Manches" parent="." unique_id=1608420756 instance=ExtResource("25_2jxo5")]
 layout_mode = 0
@@ -1448,7 +1434,6 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(92.99988, -66.99997)
 theme_override_font_sizes/font_size = 35
-label_settings = SubResource("LabelSettings_eto4s")
 horizontal_alignment = 1
 
 [node name="Keypad" parent="Profils/Profil" unique_id=774372980 instance=ExtResource("18_2jxo5")]
@@ -1823,7 +1808,6 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(92.99988, -66.99997)
 theme_override_font_sizes/font_size = 35
-label_settings = SubResource("LabelSettings_eto4s")
 horizontal_alignment = 1
 
 [node name="Keypad" parent="Profils/Profil2" unique_id=554215312 instance=ExtResource("18_2jxo5")]
@@ -2197,7 +2181,6 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(92.99988, -66.99997)
 theme_override_font_sizes/font_size = 35
-label_settings = SubResource("LabelSettings_eto4s")
 horizontal_alignment = 1
 
 [node name="Keypad" parent="Profils/Profil3" unique_id=496744008 instance=ExtResource("18_2jxo5")]
@@ -2571,7 +2554,6 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(92.99988, -66.99997)
 theme_override_font_sizes/font_size = 35
-label_settings = SubResource("LabelSettings_eto4s")
 horizontal_alignment = 1
 
 [node name="Keypad" parent="Profils/Profil4" unique_id=2074569258 instance=ExtResource("18_2jxo5")]

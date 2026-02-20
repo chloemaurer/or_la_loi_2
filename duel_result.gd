@@ -4,6 +4,9 @@ extends Control
 @onready var gagnant_rect: TextureRect = $Duel/Gagnant
 @onready var perdant_rect: TextureRect = $Duel/Perdant
 
+func _ready() -> void:
+	self.hide()
+	
 func afficher_duel_resultat(id_gagnant: int, id_perdant: int, degats: int):
 	# 1. Récupérer les icônes des personnages
 	var nodes_profils = DatabaseConfig.script_general.profils_noeuds
@@ -25,5 +28,7 @@ func afficher_duel_resultat(id_gagnant: int, id_perdant: int, degats: int):
 	# 3. Afficher le Pop-up
 	self.show()
 
-func _on_close_button_pressed():
+
+
+func _on_close_pressed() -> void:
 	self.hide()

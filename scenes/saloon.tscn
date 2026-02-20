@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://70jy4arab3ww"]
 
-[node name="Saloon" type="Control"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="1_mu0e1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("1_mu0e1")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[node name="Saloon" type="Control" unique_id=1608886107]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1197239757]
 modulate = Color(1, 0.27999997, 0.4960001, 1)
 show_behind_parent = true
 layout_mode = 0
@@ -13,7 +20,7 @@ offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=972376096]
 layout_mode = 0
 offset_left = 249.0
 offset_top = 112.0
@@ -21,34 +28,35 @@ offset_right = 852.0
 offset_bottom = 452.0
 theme_override_constants/separation = 29
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=60215704]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Saloon"
+label_settings = SubResource("LabelSettings_35ldr")
 
-[node name="UseCard" type="Button" parent="VBoxContainer"]
+[node name="UseCard" type="Button" parent="VBoxContainer" unique_id=1328027097]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Utiliser une carte"
 
-[node name="GiveCard" type="Button" parent="VBoxContainer"]
+[node name="GiveCard" type="Button" parent="VBoxContainer" unique_id=591775783]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Donner une carte"
 
-[node name="BuyCard" type="Button" parent="VBoxContainer"]
+[node name="BuyCard" type="Button" parent="VBoxContainer" unique_id=1499491061]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Acheter une carte"
 
-[node name="Label2" type="Label" parent="VBoxContainer/BuyCard"]
+[node name="Label2" type="Label" parent="VBoxContainer/BuyCard" unique_id=466680308]
 modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
 layout_mode = 0
 offset_left = 33.0

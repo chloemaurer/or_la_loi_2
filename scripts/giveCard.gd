@@ -88,19 +88,36 @@ func _on_adversaire_clique(event: InputEvent, index: int) -> void:
 
 func _on_give_card_pressed() -> void:
 	if cible_choisie_id == "":
-		print("Erreur : Aucune cible sélectionnée !")
+		DatabaseConfig.notifier_erreur("Sélectionne un allié d'abord !")
 		return
 	
-	# 1. On enregistre enfin l'ID dans le Singleton
+	# Vérification : Est-ce que la cible est en vie ?
+	var idx_cible = int(cible_choisie_id)
+	if DatabaseConfig.script_general.profils_noeuds[idx_cible].get_life() <= 0:
+		DatabaseConfig.notifier_erreur("Ce joueur est KO, tu ne peux rien lui donner.")
+		return
+
+	# 1. Enregistrement de l'ID pour le Singleton
 	DatabaseConfig.cible_don_id = cible_choisie_id
 	print("[GiveCard] Cible enregistrée : ", DatabaseConfig.cible_don_id)
 	
-	# 2. On ferme le menu de sélection
+	# 2. Fermeture et ouverture Keypad
 	self.hide()
 	
 	var principal = DatabaseConfig.script_general
 	principal.open_current_keypad() 
 
-	# IMPORTANT : C'est ici qu'on prévient le keypad d'afficher la croix
+	# 3. Préparer le keypad
 	var id_joueur = int(DatabaseConfig.current_profil_id)
-	principal.keypad[id_joueur].preparer_clavier_pour_don()
+	if principal.keypad.size() > id_joueur:
+		principal.keypad[id_joueur].preparer_clavier_pour_don()
+	
+	# 4. RESET du visuel pour la prochaine fois
+	_reset_visuel_selection()
+
+func _reset_visuel_selection():
+	cible_choisie_id = ""
+	for slot in emplacements:
+		var tr : TextureRect = slot.rect
+		if tr.material is ShaderMaterial:
+			tr.material.set("shader_parameter/thickness", 0.0)

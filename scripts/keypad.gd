@@ -8,7 +8,7 @@ preload("uid://by34fmmkfdae3"),preload("uid://civ1gsrq8j33m"),preload("uid://du7
 @onready var code: Node2D = $Code
 @onready var back: Button = $Actions/Back
 @onready var close_button: TextureButton = $CloseButton
-@onready var fin_mini_jeu: Button = $"../../../Map/FinMiniJeu"
+
 
 var current_index := 0
 var input_code := "" 
@@ -31,6 +31,9 @@ func mettre_a_jour_catalogue(cle: String, valeur):
 		for id_key in valeur.keys():
 			var data = valeur[id_key]
 			if typeof(data) == TYPE_DICTIONARY:
+				var est_dispo = data.get("disponible", true)
+				if str(est_dispo) == "false": est_dispo = false
+				if str(est_dispo) == "true": est_dispo = true
 				tous_les_codes[id_key] = {
 					"code": clean_val.call(data.get("code", "0")),
 					"effet": data.get("effet", "Inconnu"),
@@ -155,12 +158,15 @@ func apply_card(category: String, effet_valeur, id_carte: String):
 	var id_joueur = DatabaseConfig.current_profil_id
 	var effet = int(effet_valeur)
 	var id_final = DatabaseConfig.cible_don_id if DatabaseConfig.cible_don_id != "" else id_joueur
-
+	
+	if DatabaseConfig.cible_don_id != "" and DatabaseConfig.cible_don_id != id_joueur:
+		if DatabaseConfig.script_don_result:
+			# On appelle la fonction de ton pop-up avec les bonnes références
+			DatabaseConfig.script_don_result.afficher_don(id_joueur, id_final, effet, category)
 	
 	match category:
 		"MiniJeux": 
 			DatabaseConfig.play_minijeux(id_carte)
-			#fin_mini_jeu.show()
 		"saloon": DatabaseConfig.get_drink(effet, id_final)
 		"restaurant": DatabaseConfig.get_food(effet, id_final)
 		"vie": DatabaseConfig.get_life(effet, id_final)

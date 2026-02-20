@@ -96,5 +96,8 @@ func _on_versus_pressed() -> void:
 	var mon_id = DatabaseConfig.current_profil_id
 
 	DatabaseConfig.duel_versus(mon_id, cible_choisie_id)
+	DatabaseConfig.actions_faites += 1
+	if DatabaseConfig.script_general:
+		DatabaseConfig.script_general.verifier_limite_actions()
 	self.hide()
 	cible_choisie_id = ""

@@ -2,20 +2,36 @@
 
 [ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="1_ufq6h"]
 [ext_resource type="Script" uid="uid://dqch5aowgphsj" path="res://duel_result.gd" id="1_yftia"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_3urdu"]
 [ext_resource type="Texture2D" uid="uid://dwg03ruoyaydt" path="res://assets/profil/niv1Icon.webp" id="3_3urdu"]
-[ext_resource type="Texture2D" uid="uid://7nrwkrwc1tok" path="res://assets/profil/coeur.webp" id="4_4hp33"]
+[ext_resource type="Texture2D" uid="uid://dkka7mu3mc6ln" path="res://assets/icone/coeur_brise.webp" id="4_yftia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2m8hv"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wjneb"]
-blend_mode = 2
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("2_3urdu")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3urdu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4hp33"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="DuelResult" type="Control" unique_id=68083784]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1157.0
+offset_bottom = -476.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yftia")
@@ -35,6 +51,7 @@ offset_right = 541.0
 offset_bottom = 116.0
 theme_override_font_sizes/font_size = 75
 text = "Duel"
+label_settings = SubResource("LabelSettings_35ldr")
 horizontal_alignment = 1
 
 [node name="Duel" type="HBoxContainer" parent="." unique_id=566499062]
@@ -68,9 +85,9 @@ stretch_mode = 5
 layout_mode = 0
 offset_left = 77.0
 offset_top = 345.0
-offset_right = 715.0
+offset_right = 729.0
 offset_bottom = 504.0
-theme_override_constants/separation = 220
+theme_override_constants/separation = 207
 alignment = 1
 
 [node name="Joueur1" type="TextureRect" parent="Effect" unique_id=902178754]
@@ -86,28 +103,38 @@ size_flags_horizontal = 3
 alignment = 1
 
 [node name="Coeur" type="TextureRect" parent="Effect/Life" unique_id=945120790]
-modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
-material = SubResource("CanvasItemMaterial_wjneb")
+material = SubResource("ShaderMaterial_3urdu")
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_4hp33")
+texture = ExtResource("4_yftia")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 3
 
 [node name="Coeur2" type="TextureRect" parent="Effect/Life" unique_id=1058216264]
-modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
-material = SubResource("CanvasItemMaterial_wjneb")
+material = SubResource("ShaderMaterial_3urdu")
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_4hp33")
+texture = ExtResource("4_yftia")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 3
 
 [node name="Coeur3" type="TextureRect" parent="Effect/Life" unique_id=1429601722]
-modulate = Color(0.34548014, 0.34548014, 0.34548014, 1)
-material = SubResource("CanvasItemMaterial_wjneb")
+material = SubResource("ShaderMaterial_4hp33")
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_4hp33")
+texture = ExtResource("4_yftia")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 3
+
+[node name="Close" type="Button" parent="." unique_id=272376140]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 507.0
+offset_right = 519.0
+offset_bottom = 574.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
+text = "Fermer"
+
+[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

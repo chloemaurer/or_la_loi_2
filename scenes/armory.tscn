@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://del8a3r8ivufw"]
+[gd_scene format=3 uid="uid://del8a3r8ivufw"]
 
 [ext_resource type="Texture2D" uid="uid://vcohqkjwjaaf" path="res://assets/profil/or.webp" id="1_8g1bi"]
 [ext_resource type="Script" uid="uid://bwib1drxiulqp" path="res://scripts/armory.gd" id="1_48su1"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_jwn4v"]
 
-[node name="Armory" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("2_jwn4v")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[node name="Armory" type="Control" unique_id=1869016115]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_48su1")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=109440751]
 modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
 layout_mode = 0
 offset_left = 214.0
@@ -16,7 +22,7 @@ offset_top = 31.0
 offset_right = 930.0
 offset_bottom = 633.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1266222413]
 layout_mode = 0
 offset_left = 308.0
 offset_top = 63.0
@@ -24,52 +30,53 @@ offset_right = 830.0
 offset_bottom = 578.0
 theme_override_constants/separation = 40
 
-[node name="Titre" type="Label" parent="VBoxContainer"]
+[node name="Titre" type="Label" parent="VBoxContainer" unique_id=2055726100]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Armurerie"
+label_settings = SubResource("LabelSettings_35ldr")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=24934130]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=2009572301]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 50
 text = "Munitions"
 
-[node name="moins" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="moins" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1298558391]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "  -  "
 
-[node name="Count" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Count" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=900202191]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 50
 text = "1"
 
-[node name="plus" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="plus" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=852548102]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "  +  "
 
-[node name="Prix" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Prix" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1662724011]
 modulate = Color(1, 0.64705884, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 50
 text = "2"
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Prix"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Prix" unique_id=819650437]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -83,7 +90,7 @@ scale = Vector2(1.6861517, 1.5967395)
 texture = ExtResource("1_8g1bi")
 expand_mode = 1
 
-[node name="ArmoryBuyCard" type="Button" parent="VBoxContainer"]
+[node name="ArmoryBuyCard" type="Button" parent="VBoxContainer" unique_id=1929794255]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -91,7 +98,7 @@ theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_font_sizes/font_size = 38
 text = "Acheter une munition"
 
-[node name="GiveCard" type="Button" parent="VBoxContainer"]
+[node name="GiveCard" type="Button" parent="VBoxContainer" unique_id=1765371731]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -99,7 +106,7 @@ theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_font_sizes/font_size = 38
 text = "Donner une carte"
 
-[node name="GetCard" type="Button" parent="VBoxContainer"]
+[node name="GetCard" type="Button" parent="VBoxContainer" unique_id=1756191263]
 modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4

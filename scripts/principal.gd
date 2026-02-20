@@ -42,13 +42,15 @@ var cible_duel_id : String = ""
 @onready var mine: Control = $Map/Mine
 @onready var manche_transition: VideoStreamPlayer = $Map/MancheTransition
 @onready var result: Control = $Map/Result
+@onready var duel_result: Control = $Map/DuelResult
+@onready var give_card_effect: Control = $Map/GiveCardEffect
 
 
 
 func _ready() -> void:
-	# 1. On donne les accès au singleton immédiatement
+	
 	DatabaseConfig.script_general = self
-	# 2. Branchement des autres boutiques
+
 	DatabaseConfig.script_saloon = $Map/SaloonShop
 	DatabaseConfig.script_restaurant = $Map/RestaurantShop
 	DatabaseConfig.script_bank = $Map/Bank
@@ -57,6 +59,7 @@ func _ready() -> void:
 	DatabaseConfig.script_don = $Map/GiveCard
 	DatabaseConfig.script_result = $Map/Result
 	DatabaseConfig.script_duel_result = $Map/DuelResult
+	DatabaseConfig.script_don_result = $Map/GiveCardEffect
 	
 	give_card.hide()
 	
@@ -208,6 +211,9 @@ func _consommer_ressources_manche():
 		if joueur.get_life() > 0:
 			DatabaseConfig.get_food(-1, id_str)
 			DatabaseConfig.get_drink(-1, id_str)
+			if joueur.get_drink() <= 0 or joueur.get_food() <= 0:
+				if joueur.get_drink() <= 0: DatabaseConfig.get_drink(2, id_str)
+				if joueur.get_food() <= 0: DatabaseConfig.get_food(2, id_str)
 			
 
 			if joueur.get_food() <= 0 or joueur.get_drink() <= 0:

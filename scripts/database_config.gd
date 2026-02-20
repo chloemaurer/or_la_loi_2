@@ -34,6 +34,7 @@ var script_duel = null
 var script_don = null
 var script_result = null
 var script_duel_result = null
+var script_don_result = null
 var cache_cartes = null
 var donnees_scores : Array = []
 #------- Actions par Tour ----------------------------------
@@ -318,6 +319,7 @@ func _on_rewards_received(results: Array):
 	
 func _on_fight_received(results: Array):
 	print("[REWARDS] Signal reçu, distribution de l'argent...")
+	terminer_le_duel()
 	
 	
 	
@@ -479,58 +481,63 @@ func terminer_le_duel():
 	var t_b = float(scores_accumules.get(id_b, 0))
 
 	if t_a <= 0 or t_b <= 0:
-		print("[ERREUR] Duel incomplet")
 		return
 
-	# 1. On récupère les munitions actuelles des deux duellistes
+	# 1. On récupère les munitions RÉELLES de chaque joueur depuis leurs nœuds respectifs
 	var m_a = script_general.profils_noeuds[int(id_a)].get_munition()
 	var m_b = script_general.profils_noeuds[int(id_b)].get_munition()
 	
-	# 2. Déterminer le gagnant "théorique" (le plus rapide)
+	# 2. Logique de décision
 	var rapide = id_a if t_a < t_b else id_b
 	var lent = id_b if t_a < t_b else id_a
-	
+	var m_rapide = m_a if t_a < t_b else m_b
+	var m_lent = m_b if t_a < t_b else m_a
+
 	var gagnant_final = ""
 	var perdant_final = ""
 	
-	# 3. LOGIQUE DES MUNITIONS
-	# Si le plus rapide a des munitions, il gagne normalement
-	if (rapide == id_a and m_a > 0) or (rapide == id_b and m_b > 0):
+	if m_rapide > 0:
 		gagnant_final = rapide
 		perdant_final = lent
-		DatabaseConfig.notifier_erreur("Le plus rapide gagne")
-		print("[DUEL] Le plus rapide (ID", rapide, ") a tiré !")
-	# Si le plus rapide n'a PAS de munitions mais que le plus lent en a
-	elif (rapide == id_a and m_a <= 0 and m_b > 0) or (rapide == id_b and m_b <= 0 and m_a > 0):
+	elif m_lent > 0:
 		gagnant_final = lent
 		perdant_final = rapide
-		DatabaseConfig.notifier_erreur("Pas de balle pour le gagnant, riposte de l'adversaire")
-		print("[DUEL] ID", rapide, " était plus rapide mais n'avait pas de balles ! ID", lent, " riposte !")
 	else:
-		print("[DUEL] Personne n'a de munitions... Match nul !")
+		print("[DUEL] Personne n'a de balles.")
+		_reset_duel_apres_combat()
 		return
 
-	# 4. Consommation d'une munition pour le gagnant
-	get_munition(-1, gagnant_final)
-	get_munition(-1, perdant_final)
+	# 3. CONSOMMATION DES MUNITIONS (On retire 1 à chacun directement dans Firebase)
+	# On ne passe plus par get_munition() pour éviter le bug de munition_local
+	_soustraire_munition_firebase(id_a, m_a)
+	_soustraire_munition_firebase(id_b, m_b)
 
-	# 5. Calcul des dégâts selon l'arme du gagnant
+	# 4. Dégâts et Pop-up
 	var degats = script_general.profils_noeuds[int(gagnant_final)].get_gun()
-
-	print("[VICTOIRE FINALE] ID", gagnant_final, " inflige ", degats, " dégâts à ID", perdant_final)
-	script_duel_result.afficher_duel_resultat(gagnant_final,perdant_final,degats)
-	# 6. Application des dégâts
+	
+	# Affichage du pop-up chez tout le monde
+	if script_duel_result:
+		script_duel_result.afficher_duel_resultat(int(gagnant_final), int(perdant_final), degats)
+	
+	# Perte de vie pour le perdant
 	lose_life(degats, perdant_final)
 	
+	_reset_duel_apres_combat()
+
+# Fonction helper pour éviter les bugs de variables locales
+func _soustraire_munition_firebase(id_joueur: String, stock_actuel: int):
+	var nouveau_stock = max(0, stock_actuel - 1)
+	Firebase.Database.get_database_reference("profils/ID" + id_joueur).update("", {"Munition": nouveau_stock})
+	# On met à jour la variable locale SEULEMENT si c'est nous
+	if id_joueur == current_profil_id:
+		munition_local = nouveau_stock
+
+func _reset_duel_apres_combat():
 	scores_accumules = {"0": 0.0, "1": 0.0, "2": 0.0, "3": 0.0}
 	cible_duel_id = ""
 
 
-func _nettoyer_duel(id_joueur: String):
-	scores_accumules[id_joueur] = 0.0
-	Firebase.Database.get_database_reference("mini_jeu/ID" + id_joueur).update("", {"duel": false, "temps": 0})
-
 
 func notifier_erreur(msg: String):
 	error_message = msg
-	demande_affichage_erreur.emit() # On tire la sonnette d'alarme
+	demande_affichage_erreur.emit() #
