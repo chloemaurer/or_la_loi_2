@@ -160,9 +160,6 @@ func _on_end_turn_pressed(index_actuel: int):
 		manche_transition.show()
 		manche_transition.play()
 		_consommer_ressources_manche()
-		if DatabaseConfig.manches > 9 :
-			start_action.hide()
-			mine.show()
 			
 		print("--- TOUS LES JOUEURS ONT JOUÉ ---")
 		print("DÉBUT DE LA MANCHE : ", DatabaseConfig.manches)
@@ -179,6 +176,10 @@ func _on_end_turn_pressed(index_actuel: int):
 	places.close_all()
 	places.close_place()
 	
+	if DatabaseConfig.manches >= 11 :
+		start_action.hide()
+		mine.show()
+		
 	# On change les menus des boutiques pour le nouveau joueur
 	if restaurant_shop: restaurant_shop.random_food()
 	if saloon_shop: saloon_shop.random_drink()

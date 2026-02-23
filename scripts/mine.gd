@@ -12,35 +12,42 @@ func lancer_evenement_mine():
 	_passer_au_joueur_suivant()
 
 func _passer_au_joueur_suivant():
-	# 1. Vérifier si on a dépassé le nombre de joueurs
+	# --- ÉTAPE 1 : VÉRIFICATION DE LA VICTOIRE (MODIFIÉE) ---
 	if joueur_actuel >= 4:
-		print("[MINE] Tous les survivants ont passé l'épreuve.")
-		DatabaseConfig.zone = "" # On libère la zone
-		var survivants = 0
+		print("[MINE] Tous les joueurs ont fini leur tour.")
+		DatabaseConfig.zone = "" 
+
+		var survivants_reels = 0
 		for p in DatabaseConfig.script_general.profils_noeuds:
-			if p.get_life() > 2 && p.get_drink() > 1 && p.get_food() > 1:
-				survivants += 1
+			# On compte simplement ceux qui ont encore de la vie (> 0)
+			if p.get_life() > 0:
+				survivants_reels += 1
 		
-		# Si au moins un joueur est vivant à la fin de la mine
-		if survivants == 4:
+		print("DEBUG MINE : Survivants = ", survivants_reels, " | Attendus = ", DatabaseConfig.players_alive)
+
+		# CONDITION DE VICTOIRE : 
+		# Si tous ceux qui étaient vivants au début de la mine ont survécu
+		if survivants_reels > 0 and survivants_reels == DatabaseConfig.players_alive:
+			print("FÉLICITATIONS : Victoire collective !")
 			fin_jeu.afficher_resultat(true)
-			
+		else:
+			print("DOMMAGE : Quelqu'un est resté au fond...")
+			fin_jeu.afficher_resultat(false)
 		return
 
-	# 2. Récupérer le profil
+	# --- ÉTAPE 2 : RÉCUPÉRATION DU PROFIL (GARDER LA SUITE) ---
 	var profil_du_joueur = DatabaseConfig.script_general.profils_noeuds[joueur_actuel]
 
-	# 3. LOGIQUE DES MORTS : Si le joueur est mort, on l'ignore et on passe au suivant
+	# 3. LOGIQUE DES MORTS : Si le joueur est déjà mort avant, on passe
 	if profil_du_joueur.get_life() <= 0:
-		print("[MINE] Joueur ID", joueur_actuel, " est mort, on saute.")
 		joueur_actuel += 1
 		_passer_au_joueur_suivant()
 		return
 
-	# 4. GESTION VISUELLE : On active ce profil et on grise les autres
+	# 4. GESTION VISUELLE
 	_actualiser_visuel_profils(joueur_actuel)
 
-	# 5. CONFIGURATION DU KEYPAD
+	# 5. CONFIGURATION ET OUVERTURE KEYPAD
 	DatabaseConfig.current_profil_id = str(joueur_actuel)
 	DatabaseConfig.zone = "mine"
 	
@@ -48,11 +55,7 @@ func _passer_au_joueur_suivant():
 	if is_instance_valid(keypad_local):
 		if not keypad_local.mine_terminee.is_connected(_on_joueur_a_fini):
 			keypad_local.mine_terminee.connect(_on_joueur_a_fini)
-		
-		print("[MINE] Ouverture du Keypad pour ID", joueur_actuel)
 		keypad_local.preparer_pour_mine()
-	else:
-		print("ERREUR : Keypad introuvable pour le joueur ", joueur_actuel)
 
 func _actualiser_visuel_profils(id_actif: int):
 	# On parcourt tous les profils pour les griser, sauf celui qui doit jouer
