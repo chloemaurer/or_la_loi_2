@@ -75,6 +75,7 @@ offset_bottom = 462.0
 theme_override_constants/separation = 40
 
 [node name="question" type="Label" parent="VBoxContainer" unique_id=1726878183]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 35
@@ -144,12 +145,13 @@ vertical_alignment = 1
 
 [node name="GiveCard" type="Button" parent="." unique_id=1825683814]
 layout_mode = 0
-offset_left = 244.0
+offset_left = 246.0
 offset_top = 409.0
-offset_right = 531.0
+offset_right = 533.0
 offset_bottom = 463.0
 size_flags_horizontal = 4
 size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Donner une carte"

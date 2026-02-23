@@ -4,6 +4,7 @@ extends Control
 @onready var count: Label = $VBoxContainer/Control/HBoxContainer/Count
 @onready var plus: Button = $VBoxContainer/Control/HBoxContainer/plus
 @onready var prix: Label = $VBoxContainer/Control/HBoxContainer/Prix
+@onready var buy_card: Control = $"../BuyCard"
 
 
 var num := 1
@@ -58,8 +59,13 @@ func _on_bank_buy_card_pressed() -> void:
  
 func _on_get_card_pressed() -> void:
 	var id_joueur = DatabaseConfig.current_profil_id
+	buy_card.show()
 	pioche = DatabaseConfig.spend_money(prix_pioche,id_joueur)
 	DatabaseConfig.actions_faites += 1
 	# On demande au script principal de vérifier si on doit fermer les places
 	if DatabaseConfig.script_general:
 		DatabaseConfig.script_general.verifier_limite_actions()
+
+
+func _on_close_pressed() -> void:
+	buy_card.hide()

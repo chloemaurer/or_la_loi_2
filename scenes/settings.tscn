@@ -99,7 +99,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = "Volume"
 
-[node name="HSlider" type="HSlider" parent="Panel2/VBoxContainer/Control" unique_id=654705743]
+[node name="Volume" type="HSlider" parent="Panel2/VBoxContainer/Control" unique_id=654705743]
 layout_mode = 0
 offset_left = 16.138416
 offset_top = 94.246605
@@ -120,3 +120,5 @@ stretch_mode = 6
 layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = "Vidéo"
+
+[connection signal="value_changed" from="Panel2/VBoxContainer/Control/Volume" to="." method="_on_volume_value_changed"]

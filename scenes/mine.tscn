@@ -62,6 +62,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Rentrer dans la mine"
 
 [node name="Passturn" type="Button" parent="." unique_id=69858661]
+visible = false
 layout_mode = 0
 offset_left = 79.0
 offset_top = 318.0

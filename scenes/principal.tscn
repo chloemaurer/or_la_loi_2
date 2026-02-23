@@ -29,11 +29,12 @@
 [ext_resource type="VideoStream" uid="uid://d8e8bwbm3nh6" path="res://animation/Manche.ogv" id="25_nexnj"]
 [ext_resource type="PackedScene" uid="uid://bxqn50l366o2q" path="res://scenes/result.tscn" id="26_dwjdh"]
 [ext_resource type="Script" uid="uid://ceid58oyvrvkr" path="res://scripts/error.gd" id="26_eto4s"]
-[ext_resource type="PackedScene" uid="uid://ch52hv5yvlhec" path="res://duel_result.tscn" id="27_dr6sg"]
+[ext_resource type="PackedScene" uid="uid://ch52hv5yvlhec" path="res://scenes/duel_result.tscn" id="27_dr6sg"]
 [ext_resource type="Script" uid="uid://bkh7kd8symyl6" path="res://scripts/settings.gd" id="27_pmure"]
 [ext_resource type="Texture2D" uid="uid://vg54pksbl74s" path="res://assets/icone/parametre.webp" id="28_etfdl"]
 [ext_resource type="Texture2D" uid="uid://cipx6kvt7xgce" path="res://assets/icone/reset.webp" id="29_vdtr1"]
-[ext_resource type="PackedScene" uid="uid://cci83b0uexl5k" path="res://give_card_effect.tscn" id="29_vr4so"]
+[ext_resource type="PackedScene" uid="uid://cci83b0uexl5k" path="res://scenes/give_card_effect.tscn" id="29_vr4so"]
+[ext_resource type="Texture2D" uid="uid://b5rvx4867ip50" path="res://assets/icone/piocher.webp" id="30_f8urn"]
 [ext_resource type="Texture2D" uid="uid://bqspcwu3db8kt" path="res://assets/icone/son.webp" id="30_yd7e0"]
 [ext_resource type="Texture2D" uid="uid://b2sbq33egsir7" path="res://assets/icone/video.webp" id="31_nexnj"]
 [ext_resource type="PackedScene" uid="uid://c6oiyw3qtp8i" path="res://scenes/start_action.tscn" id="32_etfdl"]
@@ -41,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
 [ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
+[ext_resource type="AudioStream" uid="uid://bqbk8bj442cxn" path="res://son/Musique_jeu_mixage final.ogg" id="42_nc7xk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3ehx"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -112,6 +114,13 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pmure"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8urn"]
+bg_color = Color(0.95686275, 0.8901961, 0.7647059, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu1kw"]
 bg_color = Color(0.48829013, 0.28945515, 0.118414946, 1)
 corner_radius_top_left = 20
@@ -119,6 +128,16 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h7na"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxb3x"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0ah0u"]
 blend_mode = 2
@@ -886,7 +905,6 @@ offset_right = 412.53812
 offset_bottom = 412.5404
 
 [node name="Panel2" type="Panel" parent="Map/Settings" unique_id=1971159088]
-visible = false
 layout_mode = 0
 offset_left = 326.80283
 offset_right = 974.35657
@@ -979,14 +997,17 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = "Volume"
 
-[node name="HSlider" type="HSlider" parent="Map/Settings/Panel2/VBoxContainer/Control" unique_id=654705743]
+[node name="Volume" type="HSlider" parent="Map/Settings/Panel2/VBoxContainer/Control" unique_id=654705743]
 layout_mode = 0
 offset_left = 19.176687
 offset_top = 72.43328
 offset_right = 191.32735
 offset_bottom = 99.71531
 scale = Vector2(3.3498602, 3.3498602)
-step = 50.0
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_f8urn")
+min_value = -30.0
+max_value = 15.0
+value = 5.0
 
 [node name="StartAction" parent="Map" unique_id=651877005 instance=ExtResource("32_etfdl")]
 visible = false
@@ -1071,6 +1092,57 @@ offset_top = 379.99963
 offset_right = -680.5
 offset_bottom = -328.00037
 
+[node name="BuyCard" type="Control" parent="Map" unique_id=1319103514]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 795.99994
+offset_top = 455.9997
+offset_right = -679.92993
+offset_bottom = -254.9502
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7200024, 0.7200024)
+
+[node name="Panel" type="Panel" parent="Map/BuyCard" unique_id=2096309955]
+layout_mode = 0
+offset_right = 447.0
+offset_bottom = 372.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0h7na")
+
+[node name="Control" type="HBoxContainer" parent="Map/BuyCard" unique_id=160675512]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 37.0
+offset_right = 386.0
+offset_bottom = 242.0
+
+[node name="Carte" type="Label" parent="Map/BuyCard/Control" unique_id=2047298537]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 150
+text = "+3"
+
+[node name="TextureRect" type="TextureRect" parent="Map/BuyCard/Control" unique_id=1256395785]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("30_f8urn")
+expand_mode = 3
+
+[node name="Close" type="Button" parent="Map/BuyCard" unique_id=7589924]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 279.0
+offset_right = 347.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_gxb3x")
+text = "Fermer"
+
 [node name="Manches" parent="." unique_id=1608420756 instance=ExtResource("25_2jxo5")]
 layout_mode = 0
 offset_left = 507.0
@@ -1093,9 +1165,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1921.0
+offset_left = 1922.0
 offset_top = 1080.0
-offset_right = 1920.9998
+offset_right = 1921.9998
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -2613,12 +2685,18 @@ offset_left = 0.00012207031
 offset_top = 0.00014863047
 offset_right = 1920.0001
 offset_bottom = 1080.0001
+paused = true
 
 [node name="BeginScene" parent="." unique_id=1431948896 instance=ExtResource("36_rrv1i")]
 visible = false
 layout_mode = 1
 offset_right = -1280.2561
 offset_bottom = -720.14404
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="." unique_id=2044894860]
+stream = ExtResource("42_nc7xk")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="Map/Places/Saloon" to="Map/Places" method="_on_saloon_pressed"]
 [connection signal="pressed" from="Map/Places/Mine" to="Map/Places" method="_on_mine_pressed"]
@@ -2646,9 +2724,11 @@ offset_bottom = -720.14404
 [connection signal="pressed" from="Map/GiveCard/VBoxContainer/GiveCard" to="Map/GiveCard" method="_on_give_card_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel/Button" to="Map/Settings" method="_on_button_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel2/VBoxContainer/Reset" to="Map/Settings" method="_on_reset_pressed"]
+[connection signal="value_changed" from="Map/Settings/Panel2/VBoxContainer/Control/Volume" to="Map/Settings" method="_on_volume_value_changed"]
 [connection signal="pressed" from="Map/FinDuel" to="." method="_on_fin_duel_pressed"]
 [connection signal="finished" from="Map/MancheTransition" to="." method="_on_manche_transition_finished"]
 [connection signal="timeout" from="Map/Error/Timer" to="Map/Error" method="_on_timer_timeout"]
+[connection signal="pressed" from="Map/BuyCard/Close" to="Map/Bank" method="_on_close_pressed"]
 [connection signal="pressed" from="Profils/Profil/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil" method="_on_keypad_open_pressed"]
 [connection signal="pressed" from="Profils/Profil2/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil2" method="_on_keypad_open_pressed"]
 [connection signal="pressed" from="Profils/Profil3/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil3" method="_on_keypad_open_pressed"]

@@ -5,8 +5,8 @@
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_kehs7"]
 [ext_resource type="Texture2D" uid="uid://d3q8mek75cmag" path="res://assets/icone/dés.webp" id="3_dw5uq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtkbs"]
-bg_color = Color(0.18857142, 0.12281906, 0.09618177, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_s4n0k"]
 font = ExtResource("2_kehs7")
@@ -24,7 +24,7 @@ script = ExtResource("1_vtkbs")
 layout_mode = 0
 offset_right = 585.0
 offset_bottom = 412.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vtkbs")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jwn4v")
 
 [node name="Label" type="Label" parent="." unique_id=834612485]
 layout_mode = 0

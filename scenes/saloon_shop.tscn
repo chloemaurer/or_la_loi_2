@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://camp0foh2lq17"]
 
 [ext_resource type="Script" uid="uid://ct54k77ngvy4p" path="res://scripts/saloon_shop.gd" id="1_ie1bb"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_ss5m3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("2_ss5m3")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [node name="SaloonShop" type="Control" unique_id=53226681]
 layout_mode = 3
@@ -31,6 +37,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Saloon"
+label_settings = SubResource("LabelSettings_35ldr")
 
 [node name="DrinkRoller" type="TextureRect" parent="VBoxContainer" unique_id=328734874]
 layout_mode = 2

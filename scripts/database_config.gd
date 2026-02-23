@@ -61,7 +61,6 @@ func _on_db_data_update(resource: FirebaseResource):
 	var data = resource.data
 	
 	if chemin == null: return
-	print("Dispatcher",resource)
 #---- 1. PROFILS--------------------------------
 	if chemin.begins_with("profils") or chemin == "profils":
 		if script_general:

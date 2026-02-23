@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://buesj3ox4nsti"]
+
+[ext_resource type="Texture2D" uid="uid://b5rvx4867ip50" path="res://assets/icone/piocher.webp" id="1_6bq81"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h7na"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxb3x"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="BuyCard" type="Control" unique_id=1319103514]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1478.0
+offset_bottom = -708.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=2096309955]
+layout_mode = 0
+offset_right = 447.0
+offset_bottom = 372.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0h7na")
+
+[node name="Control" type="HBoxContainer" parent="." unique_id=160675512]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 37.0
+offset_right = 386.0
+offset_bottom = 242.0
+
+[node name="Carte" type="Label" parent="Control" unique_id=2047298537]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 150
+text = "+3"
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1256395785]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("1_6bq81")
+expand_mode = 3
+
+[node name="Close" type="Button" parent="." unique_id=7589924]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 279.0
+offset_right = 347.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_gxb3x")
+text = "Fermer"

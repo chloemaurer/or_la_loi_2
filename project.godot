@@ -39,10 +39,14 @@ enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg", "res://addon
 [file_customization]
 
 folder_colors={
-"res://assets/icone/": "yellow",
+"res://animation/": "orange",
+"res://assets/": "red",
+"res://assets/icone/": "red",
 "res://assets/manches/": "red",
-"res://assets/pavenum/": "orange",
-"res://assets/profil/": "pink",
+"res://assets/pavenum/": "red",
+"res://assets/profil/": "red",
+"res://fonts/": "pink",
 "res://scenes/": "purple",
-"res://scripts/": "blue"
+"res://scripts/": "blue",
+"res://son/": "teal"
 }

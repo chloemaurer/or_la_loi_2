@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://m1vsi3h6p5qc"]
 
 [ext_resource type="Script" uid="uid://boka4heiwao03" path="res://scripts/restaurant_shop.gd" id="1_i78rg"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_pmknq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("2_pmknq")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [node name="RestaurantShop" type="Control" unique_id=1768338329]
 layout_mode = 3
@@ -31,6 +37,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Taverne"
+label_settings = SubResource("LabelSettings_35ldr")
 
 [node name="FoodRoller" type="TextureRect" parent="VBoxContainer" unique_id=1268902735]
 layout_mode = 2

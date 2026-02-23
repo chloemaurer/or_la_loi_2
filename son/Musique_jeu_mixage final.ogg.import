@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bqbk8bj442cxn"
+path="res://.godot/imported/Musique_jeu_mixage final.ogg-5ca9c1a4274c07f2cbf41ca79473fd03.oggvorbisstr"
+
+[deps]
+
+source_file="res://son/Musique_jeu_mixage final.ogg"
+dest_files=["res://.godot/imported/Musique_jeu_mixage final.ogg-5ca9c1a4274c07f2cbf41ca79473fd03.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
