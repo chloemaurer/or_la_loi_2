@@ -4,10 +4,27 @@
 [ext_resource type="Script" uid="uid://bwib1drxiulqp" path="res://scripts/armory.gd" id="1_48su1"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_jwn4v"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
 font = ExtResource("2_jwn4v")
 font_size = 75
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6sc50"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Armory" type="Control" unique_id=1869016115]
 layout_mode = 3
@@ -15,12 +32,12 @@ anchors_preset = 0
 script = ExtResource("1_48su1")
 
 [node name="Panel" type="Panel" parent="." unique_id=109440751]
-modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
 layout_mode = 0
 offset_left = 214.0
 offset_top = 31.0
 offset_right = 930.0
 offset_bottom = 633.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jwn4v")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1266222413]
 layout_mode = 0
@@ -45,28 +62,32 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=2009572301]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 50
 text = "Munitions"
 
 [node name="moins" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1298558391]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_6sc50")
 text = "  -  "
 
 [node name="Count" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=900202191]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 50
 text = "1"
 
 [node name="plus" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=852548102]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_6sc50")
 text = "  +  "
 
 [node name="Prix" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1662724011]
@@ -90,27 +111,42 @@ scale = Vector2(1.6861517, 1.5967395)
 texture = ExtResource("1_8g1bi")
 expand_mode = 1
 
-[node name="ArmoryBuyCard" type="Button" parent="VBoxContainer" unique_id=1929794255]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="ArmoryBuyCard" type="Button" parent="." unique_id=1929794255]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 290.0
+offset_right = 858.0
+offset_bottom = 356.0
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une munition"
 
-[node name="GiveCard" type="Button" parent="VBoxContainer" unique_id=1765371731]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="GiveCard" type="Button" parent="." unique_id=1765371731]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 383.0
+offset_right = 861.0
+offset_bottom = 449.0
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
 
-[node name="GetCard" type="Button" parent="VBoxContainer" unique_id=1756191263]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="GetCard" type="Button" parent="." unique_id=1756191263]
+layout_mode = 0
+offset_left = 308.0
+offset_top = 473.0
+offset_right = 860.0
+offset_bottom = 552.0
 size_flags_horizontal = 4
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte armurerie"
 
-[connection signal="pressed" from="VBoxContainer/ArmoryBuyCard" to="." method="_on_armory_buy_card_pressed"]
+[connection signal="pressed" from="ArmoryBuyCard" to="." method="_on_armory_buy_card_pressed"]

@@ -61,19 +61,21 @@ func _on_db_data_update(resource: FirebaseResource):
 	var data = resource.data
 	
 	if chemin == null: return
-
+	print("Dispatcher",resource)
 #---- 1. PROFILS--------------------------------
 	if chemin.begins_with("profils") or chemin == "profils":
 		if script_general:
 			# On envoie TOUT le dictionnaire au script général
 			script_general.distribuer_donnees(chemin, data)
-			
+			print("Modification profils")
 		_trier_donnees_locales(chemin, data)
 		
 		if script_bank and script_bank.has_method("mettre_a_jour_interface"):
+			print("Modification argent")
 			script_bank.mettre_a_jour_interface()
 			
 		if script_armory and script_armory.has_method("mettre_a_jour_interface"):
+			print("Modification arme")
 			script_armory.mettre_a_jour_interface()
 #---- 2. SALOON-------------------------------
 	if chemin.begins_with("saloon"):
@@ -199,14 +201,15 @@ func spend_money(montant: int, profil_id: String) -> bool:
 func get_munition(montant_a_ajouter: int, profil_id: String):
 	var nouveau_montant = max(0, munition_local + montant_a_ajouter)
 	munition_local = nouveau_montant
-	Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Munition": munition_local})
+	var link = "profils/ID" + profil_id
+	db_ref.update(link, {"Munition": munition_local})
 
 func get_money(montant: int, profil_id: String):
 	var index = int(profil_id)
 	
 	if script_general and script_general.profils_noeuds.size() > index:
 		var cible_node = script_general.profils_noeuds[index]
-		
+		var link = "profils/ID" + profil_id
 		# 1. On calcule le nouveau total en prenant ce qui est déjà affiché
 		var nouveau_total = cible_node.get_money() + montant
 		
@@ -219,12 +222,13 @@ func get_money(montant: int, profil_id: String):
 			money_local = nouveau_total
 		
 		# 4. On envoie à Firebase (pour que les autres joueurs reçoivent l'info)
-		Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Argent": nouveau_total})
+		db_ref.update(link, {"Argent": nouveau_total})
 		print("[SUCCÈS] ID", profil_id, " gagne ", montant, ". Nouveau total affiché: ", nouveau_total)
 		
 func get_life(montant: int, profil_id: String):
 	var nouveau_total = clampi(life_local + montant, 0, 5)
-	Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Vie": nouveau_total})
+	var link = "profils/ID" + profil_id
+	db_ref.update(link, {"Vie": nouveau_total})
 
 func lose_life(montant: int, profil_id: String):
 	var index = int(profil_id)
@@ -232,7 +236,8 @@ func lose_life(montant: int, profil_id: String):
 		var cible = script_general.profils_noeuds[index]
 		var vie_actuelle = cible.get_life() 
 		var nouveau_total = clampi(vie_actuelle - montant, 0, 5)
-		Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Vie": nouveau_total})
+		var link = "profils/ID" + profil_id
+		db_ref.update(link, {"Vie": nouveau_total})
 
 		if nouveau_total <= 0:
 			script_general.Kill_player(index)
@@ -241,8 +246,8 @@ func get_drink(val: int, profil_id: String):
 	var cible_node = script_general.profils_noeuds[int(profil_id)]
 	var valeur_actuelle_cible = cible_node.get_drink()
 	var nouveau_total = clampi(valeur_actuelle_cible + val, 0, 5)
-	var db_link = Firebase.Database.get_database_reference("profils/ID" + profil_id)
-	db_link.update("", {"Boisson": nouveau_total})
+	var link = "profils/ID" + profil_id
+	db_ref.update(link, {"Boisson": nouveau_total})
 	
 	print("[DB] Don Boisson : ID", profil_id, " passe à ", nouveau_total)
 
@@ -251,10 +256,12 @@ func get_food(val: int, profil_id: String):
 	var cible_node = script_general.profils_noeuds[int(profil_id)]
 	var valeur_actuelle_cible = cible_node.get_food()
 	var nouveau_total = clampi(valeur_actuelle_cible + val, 0, 5)
-	Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Nourriture": nouveau_total})
+	var link = "profils/ID" + profil_id
+	db_ref.update(link, {"Nourriture": nouveau_total})
 	print("[DB] Don Nourriture : ID", profil_id, " passe à ", nouveau_total)
 
 func update_gun(val: int, profil_id: String):
+	var link = "profils/ID" + profil_id
 	if val == 2 && actual_Gun == 1 :
 		actual_Gun = val
 	elif val == 3 && actual_Gun == 2 :
@@ -265,13 +272,13 @@ func update_gun(val: int, profil_id: String):
 		print("Veuillez d'abord augmenter au niveau 2")
 	else :
 		print("arme impossible a upgrader")
-	Firebase.Database.get_database_reference("profils/ID" + profil_id).update("", {"Arme": actual_Gun})
+	db_ref.update(link, {"Arme": actual_Gun})
 	print (actual_Gun)
 
 func disable_card(id_carte: String):
 	# Le chemin sera "cartes/ID58"
 	var chemin = "cartes/" + id_carte
-	Firebase.Database.get_database_reference(chemin).update("", {"disponible": false})
+	db_ref.update(chemin, {"disponible": false})
 
 #func winner_money(montant: int, profil_id: String):
 	#var index = int(profil_id)
@@ -300,7 +307,7 @@ func play_minijeux(id_minijeux: String):
 	
 	# 1. Activer le mini-jeu
 	var chemin = "MiniJeux/" + id_minijeux
-	Firebase.Database.get_database_reference(chemin).update("", {"play": true})
+	db_ref.update(chemin, {"play": true})
 	# 2. Reset UNIQUEMENT les scores sans supprimer le "status" ou les "autres trucs"
 	# On crée un dictionnaire de chemins précis
 	var updates = {
@@ -418,41 +425,12 @@ func duel_versus(id_attaquant: String, id_cible: String):
 	elif current_profil_id == id_cible:
 		cible_duel_id = id_attaquant
 		
-	Firebase.Database.get_database_reference("mini_jeu").update("", updates)
-	Firebase.Database.get_database_reference(chemin_attaquant).update("", {"duel": true})
-	Firebase.Database.get_database_reference(chemin_cible).update("", {"duel": true})
+	db_ref.update("mini_jeu", updates)
+	db_ref.update(chemin_attaquant, {"duel": true})
+	db_ref.update(chemin_cible, {"duel": true})
 	
 	print("[DB] Duel activé pour ID", id_attaquant, " et ID", id_cible)
 	
-#---- Reset ----------------------------
-var etait_en_reset : bool = false # AJOUTÉ : Pour automatiser le redémarrage
-# --- RESET ET RELOAD ---
-func reset_game_start():
-	print("[DB] Lancement du Reset complet...")
-	etait_en_reset = true
-	for i in range(4):
-		var path = "profils/ID" + str(i)
-		var data = {"Vie": 5, "Boisson": 5, "Nourriture": 5, "Munition": 0, "Argent": 10, "Arme": 1}
-		Firebase.Database.get_database_reference(path).update("", data)
-	
-	_reset_all_cards()
-	Firebase.Database.get_database_reference("mini_jeu").update("", {"ID0/temps":0,"ID1/temps":0,"ID2/temps":0,"ID3/temps":0})
-	
-	manches = 0
-	actions_faites = 0
-	current_profil_id = "0"
-	
-	script_general = null
-	script_saloon = null
-	script_restaurant = null
-	
-	await get_tree().create_timer(1.5).timeout
-	get_tree().reload_current_scene()
-
-func _reset_all_cards():
-	var big_update = {}
-	for i in range(100): big_update["ID" + str(i) + "/disponible"] = true
-	Firebase.Database.get_database_reference("cartes").update("", big_update)
 	
 
 # --- LOGIQUE DUEL ---
@@ -527,7 +505,8 @@ func terminer_le_duel():
 # Fonction helper pour éviter les bugs de variables locales
 func _soustraire_munition_firebase(id_joueur: String, stock_actuel: int):
 	var nouveau_stock = max(0, stock_actuel - 1)
-	Firebase.Database.get_database_reference("profils/ID" + id_joueur).update("", {"Munition": nouveau_stock})
+	var link = "profils/ID" + id_joueur
+	db_ref.update(link, {"Munition": nouveau_stock})
 	# On met à jour la variable locale SEULEMENT si c'est nous
 	if id_joueur == current_profil_id:
 		munition_local = nouveau_stock
@@ -537,7 +516,49 @@ func _reset_duel_apres_combat():
 	cible_duel_id = ""
 
 
-
+#----- Pop Up Erreur -----------------------------------
 func notifier_erreur(msg: String):
 	error_message = msg
 	demande_affichage_erreur.emit() #
+
+#---- Reset ----------------------------
+var on_reset : bool = false # AJOUTÉ : Pour automatiser le redémarrage
+# --- RESET ET RELOAD ---
+func reset_game_start():
+	print("[DB] Lancement du Reset complet...")
+	
+	# SÉCURITÉ : Si Firebase n'est pas prêt, on ne crash pas
+	if db_ref == null:
+		print("[ERREUR] Impossible de reset : Firebase non connecté.")
+		return
+
+	# 1. On réinitialise les variables locales
+	manches = 1
+	actions_faites = 0
+	current_profil_id = "0"
+	players_alive = 4
+
+	# 2. Envoi des données à Firebase
+	for i in range(4):
+		var path = "profils/ID" + str(i)
+		var data = {"Vie": 5, "Boisson": 5, "Nourriture": 5, "Munition": 0, "Argent": 10, "Arme": 1}
+		# Note : j'ai corrigé "path" en "" pour mettre à jour la racine de l'ID
+		db_ref.update(path, data)
+	
+	_reset_all_cards()
+	db_ref.update("mini_jeu", {"ID0/temps":0,"ID1/temps":0,"ID2/temps":0,"ID3/temps":0})
+	
+	# 3. ON ATTEND QUE FIREBASE TERMINE (Crucial)
+	print("[DB] Attente de la confirmation serveur...")
+	await get_tree().create_timer(1.0).timeout
+	
+	# 4. RELOAD PROPRE
+	print("[DB] Reload de la scène.")
+	#get_tree().reload_current_scene()
+	
+	
+
+func _reset_all_cards():
+	var big_update = {}
+	for i in range(100): big_update["ID" + str(i) + "/disponible"] = true
+	db_ref.update("cartes", big_update)

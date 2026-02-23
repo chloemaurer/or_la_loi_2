@@ -33,6 +33,7 @@ var _arme: int = 0
 
 
 func update_visuel(cle: String, valeur):
+	
 	match cle:
 		"Icone":
 			var index = int(valeur)

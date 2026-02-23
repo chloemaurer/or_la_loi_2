@@ -2,23 +2,32 @@
 
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="1_mu0e1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu0e1"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
 font = ExtResource("1_mu0e1")
 font_size = 75
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Saloon" type="Control" unique_id=1608886107]
 layout_mode = 3
 anchors_preset = 0
 
 [node name="Panel" type="Panel" parent="." unique_id=1197239757]
-modulate = Color(1, 0.27999997, 0.4960001, 1)
-show_behind_parent = true
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mu0e1")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=972376096]
 layout_mode = 0
@@ -35,34 +44,49 @@ theme_override_font_sizes/font_size = 75
 text = "Saloon"
 label_settings = SubResource("LabelSettings_35ldr")
 
-[node name="UseCard" type="Button" parent="VBoxContainer" unique_id=1328027097]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="UseCard" type="Button" parent="." unique_id=1328027097]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 217.0
+offset_right = 745.0
+offset_bottom = 279.0
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte"
 
-[node name="GiveCard" type="Button" parent="VBoxContainer" unique_id=591775783]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="GiveCard" type="Button" parent="." unique_id=591775783]
+layout_mode = 0
+offset_left = 362.0
+offset_top = 298.0
+offset_right = 746.0
+offset_bottom = 363.0
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
 
-[node name="BuyCard" type="Button" parent="VBoxContainer" unique_id=1499491061]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="BuyCard" type="Button" parent="." unique_id=1499491061]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 380.0
+offset_right = 750.0
+offset_bottom = 443.0
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une carte"
 
-[node name="Label2" type="Label" parent="VBoxContainer/BuyCard" unique_id=466680308]
-modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
+[node name="Label2" type="Label" parent="BuyCard" unique_id=466680308]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 0
-offset_left = 33.0
-offset_top = 51.0
-offset_right = 234.0
-offset_bottom = 86.0
+offset_left = 69.0
+offset_top = 72.0
+offset_right = 319.0
+offset_bottom = 107.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "À vos risque et périls"

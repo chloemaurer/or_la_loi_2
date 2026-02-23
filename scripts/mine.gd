@@ -8,7 +8,6 @@ var joueur_actuel := 0
 
 func lancer_evenement_mine():
 	joueur_actuel = 0
-	print("[LIEU : MINE] L'explosion est imminente ! Début du sacrifice.")
 	_passer_au_joueur_suivant()
 
 func _passer_au_joueur_suivant():
@@ -19,14 +18,19 @@ func _passer_au_joueur_suivant():
 
 		var survivants_reels = 0
 		for p in DatabaseConfig.script_general.profils_noeuds:
-			# On compte simplement ceux qui ont encore de la vie (> 0)
-			if p.get_life() > 0:
+			var a_vie = p.get_life() >= 2 
+			var a_boisson = p.get_drink() >= 1  
+			var a_nourriture = p.get_food() >= 1 
+			
+			if a_vie and a_boisson and a_nourriture:
 				survivants_reels += 1
+				DatabaseConfig.notifier_erreur("Vous avez assez de ressource pour rentrer")
+			else:
+				DatabaseConfig.notifier_erreur("Vous n'avez pas assez de ressource pour rentrer")
+				print("Joueur ", p.name, " n'a pas assez de ressources pour survivre à l'après-mine !")
 		
-		print("DEBUG MINE : Survivants = ", survivants_reels, " | Attendus = ", DatabaseConfig.players_alive)
+		print("MINE : Survivants = ", survivants_reels, " | Attendus = ", DatabaseConfig.players_alive)
 
-		# CONDITION DE VICTOIRE : 
-		# Si tous ceux qui étaient vivants au début de la mine ont survécu
 		if survivants_reels > 0 and survivants_reels == DatabaseConfig.players_alive:
 			print("FÉLICITATIONS : Victoire collective !")
 			fin_jeu.afficher_resultat(true)

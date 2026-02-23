@@ -15,7 +15,7 @@ bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
 font = ExtResource("2_3xsjk")
-font_size = 75
+font_size = 80
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
@@ -38,10 +38,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_mk788")
 
 [node name="Titre" type="Label" parent="." unique_id=660370046]
 layout_mode = 0
-offset_left = 407.0
+offset_left = 386.0
 offset_top = 28.0
-offset_right = 779.0
-offset_bottom = 131.0
+offset_right = 782.0
+offset_bottom = 122.0
 theme_override_font_sizes/font_size = 75
 text = "Résultats"
 label_settings = SubResource("LabelSettings_35ldr")

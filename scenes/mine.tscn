@@ -1,6 +1,22 @@
 [gd_scene format=3 uid="uid://cvjvuytfbacf8"]
 
 [ext_resource type="Script" uid="uid://bhsoc74tsc1o3" path="res://scripts/mine.gd" id="1_kqr42"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_yym1a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_35ldr"]
+font = ExtResource("2_yym1a")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Mine" type="Control" unique_id=970763158]
 layout_mode = 3
@@ -11,6 +27,7 @@ script = ExtResource("1_kqr42")
 layout_mode = 0
 offset_right = 500.0
 offset_bottom = 420.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jwn4v")
 
 [node name="Titre" type="Label" parent="." unique_id=168305606]
 layout_mode = 0
@@ -21,13 +38,15 @@ offset_bottom = 135.0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Mine"
+label_settings = SubResource("LabelSettings_35ldr")
 
 [node name="Label2" type="Label" parent="." unique_id=2074509469]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 154.0
-offset_right = 502.0
-offset_bottom = 197.0
+offset_left = 21.0
+offset_top = 137.0
+offset_right = 481.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 25
 text = "Veuillez rentrer vos deux cartes mines"
 horizontal_alignment = 1
@@ -38,15 +57,18 @@ offset_left = 77.0
 offset_top = 246.0
 offset_right = 424.0
 offset_bottom = 306.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Rentrer dans la mine"
 
 [node name="Passturn" type="Button" parent="." unique_id=69858661]
-visible = false
 layout_mode = 0
-offset_left = 85.0
+offset_left = 79.0
 offset_top = 318.0
-offset_right = 432.0
+offset_right = 426.0
 offset_bottom = 378.0
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Passer mon tour"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

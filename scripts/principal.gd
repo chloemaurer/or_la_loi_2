@@ -48,9 +48,8 @@ var cible_duel_id : String = ""
 
 
 func _ready() -> void:
-	
 	DatabaseConfig.script_general = self
-
+	
 	DatabaseConfig.script_saloon = $Map/SaloonShop
 	DatabaseConfig.script_restaurant = $Map/RestaurantShop
 	DatabaseConfig.script_bank = $Map/Bank
@@ -84,7 +83,6 @@ func _initialisation_depart():
 	places.hide()
 	start_action.hide()
 	for i in range(profils_noeuds.size()):
-		# CORRECTION : On met 0.5 au lieu de 0.2 pour qu'ils soient visibles !
 		profils_noeuds[i].modulate = Color(0.5, 0.5, 0.5, 1) 
 		if is_instance_valid(labels_start[i]):
 			labels_start[i].show()
@@ -143,6 +141,26 @@ func selectionner_profil(index_choisi: int):
 			profils_noeuds[i].modulate = Color(0.3, 0.3, 0.3, 1)
 			boutons_fin_tour[i].disabled = true
 			boutons_fin_tour[i].hide()
+			
+			
+func _synchroniser_stats_vers_global(index: int):
+	var cible = profils_noeuds[index]
+	
+	# Si la cible n'existe pas ou n'a pas le script Profil attaché
+	if not is_instance_valid(cible) or not cible.has_method("get_life"):
+		print("Attente du script Profil sur le noeud : ", index)
+		await get_tree().process_frame # On attend une frame
+		_synchroniser_stats_vers_global(index) # On recommence
+		return # On arrête l'exécution ici pour ne pas lire la suite
+
+
+	DatabaseConfig.life_local = cible.get_life()
+	DatabaseConfig.food_local = cible.get_food()
+	DatabaseConfig.drink_local = cible.get_drink()
+	DatabaseConfig.money_local = cible.get_money()
+	DatabaseConfig.munition_local = cible.get_munition()
+	DatabaseConfig.actual_Gun = cible.get_gun()
+	
 		
 func _on_end_turn_pressed(index_actuel: int):
 	check_resources_globale()
@@ -239,24 +257,6 @@ func revive_player():
 	if has_node("EndTurn1"):
 		get_node("EndTurn1").disabled = false
 	print("Le joueur ", name, " est revenu à la vie !")
-	
-func _synchroniser_stats_vers_global(index: int):
-	var cible = profils_noeuds[index]
-	
-	# Si la cible n'existe pas ou n'a pas le script Profil attaché
-	if not is_instance_valid(cible) or not cible.has_method("get_life"):
-		print("Attente du script Profil sur le noeud : ", index)
-		await get_tree().process_frame # On attend une frame
-		_synchroniser_stats_vers_global(index) # On recommence
-		return # On arrête l'exécution ici pour ne pas lire la suite
-
-
-	DatabaseConfig.life_local = cible.get_life()
-	DatabaseConfig.food_local = cible.get_food()
-	DatabaseConfig.drink_local = cible.get_drink()
-	DatabaseConfig.money_local = cible.get_money()
-	DatabaseConfig.munition_local = cible.get_munition()
-	DatabaseConfig.actual_Gun = cible.get_gun()
 	
 	
 #---- Tour -------------------------------------------------------------------------
@@ -371,18 +371,6 @@ func _on_restaurant_give_card_pressed() -> void:
 	
 	
 #--------------------------------------------------------------------------------
-
-
-#func _on_fin_mini_jeu_pressed() -> void:
-	## On appelle la fonction de distribution manuelle
-	#DatabaseConfig.valider_et_distribuer()
-	#DatabaseConfig.peut_distribuer_recompenses = true
-
-
-
-#func _on_fin_duel_pressed() -> void:
-	#DatabaseConfig.terminer_le_duel()
-	#fin_duel.hide()
 
 
 func _on_manche_transition_finished() -> void:
