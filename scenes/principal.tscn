@@ -1067,7 +1067,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="Map/Error" unique_id=488250601]
-wait_time = 2.0
+wait_time = 4.0
 
 [node name="Result" parent="Map" unique_id=1012725942 instance=ExtResource("26_dwjdh")]
 layout_mode = 0

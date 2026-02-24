@@ -1,8 +1,8 @@
 extends Control
 
 var drinks = [
-	preload("uid://defnlcal2s16u"), preload("uid://duq0qpxicvgwe"),
-	preload("uid://dbk7n00v8a0jk"), preload("uid://bmbrqc2cdl5cj"), 
+	 preload("uid://bmbrqc2cdl5cj"), preload("uid://duq0qpxicvgwe"),
+	preload("uid://dbk7n00v8a0jk"), preload("uid://defnlcal2s16u"),
 	preload("uid://yntx2g58parc"), preload("uid://djpm3liihmd0r")
 ]
 
@@ -65,8 +65,6 @@ func update_drink():
 
 func _on_drink_buy_card_pressed() -> void:
 	update_drink()
-
-		
 
 func _on_get_drink_receive_pressed() -> void:
 	DatabaseConfig.actions_faites += 1
