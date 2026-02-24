@@ -203,10 +203,6 @@ func _on_end_turn_pressed(index_actuel: int):
 			# 3. On affiche la mine
 			mine.show()
 
-			# 4. On lance la logique interne de la mine
-			if mine.has_method("lancer_evenement_mine"):
-				mine.lancer_evenement_mine()
-
 			return # ON ARRÊTE TOUT ICI : On ne sélectionne pas de profil normal
 			
 	# --- LOGIQUE NORMALE (HORS MINE) ---
@@ -223,41 +219,60 @@ func _on_end_turn_pressed(index_actuel: int):
 	if saloon_shop: saloon_shop.random_drink()
 
 func check_resources_globale():
-	for i in range(profils_noeuds.size()):
-		var joueur = profils_noeuds[i]
-		if joueur.get_life() > 0:
-			var id_str = str(i)
-
-			if i == int(DatabaseConfig.current_profil_id):
-				if joueur.get_drink() <= 0 or joueur.get_food() <= 0:
-					# CORRECTION : On donne les ressources AVANT de retirer la vie
-					# Comme ça le dernier ID ne meurt pas en boucle
-					if joueur.get_drink() <= 0: DatabaseConfig.get_drink(2, id_str)
-					if joueur.get_food() <= 0: DatabaseConfig.get_food(2, id_str)
-					
-					DatabaseConfig.lose_life(1, id_str)
+	var i = int(DatabaseConfig.current_profil_id)
+	var joueur = profils_noeuds[i]
+	
+	if joueur.get_life() > 0:
+		var id_str = str(i)
+		var vie_a_perdre = 0
+		
+		# Règle : Si 0 nourriture ou 0 boisson, on perd de la vie
+		if joueur.get_food() <= 0:
+			vie_a_perdre += 1
+		if joueur.get_drink() <= 0:
+			vie_a_perdre += 1
 			
-			if joueur.get_life() <= 0:
-				Kill_player(i)
+		if vie_a_perdre > 0:
+			print("Joueur ", id_str, " n'a plus de ressources. Perte de ", vie_a_perdre, " vie(s).")
+			DatabaseConfig.lose_life(vie_a_perdre, id_str)
+			# Règle : On redonne 2 de chaque après une perte de vie
+			DatabaseConfig.get_food(2, id_str)
+			DatabaseConfig.get_drink(2, id_str)
+		
+		# Si le joueur est mort après la perte de vie
+		if joueur.get_life() <= 0:
+			Kill_player(i)
 
-# Cette fonction gère l'apparence
+
+# --- 2. CONSOMMATION À LA FIN DE LA MANCHE (TOUT LE MONDE) ---
 func _consommer_ressources_manche():
+	print("--- Fin de manche : Consommation des ressources ---")
 	for i in range(profils_noeuds.size()):
 		var joueur = profils_noeuds[i]
 		var id_str = str(i)
 		
-		# On ne traite que les survivants
 		if joueur.get_life() > 0:
+			# On retire 1 de chaque
 			DatabaseConfig.get_food(-1, id_str)
 			DatabaseConfig.get_drink(-1, id_str)
-			if joueur.get_drink() <= 0 or joueur.get_food() <= 0:
-				if joueur.get_drink() <= 0: DatabaseConfig.get_drink(2, id_str)
-				if joueur.get_food() <= 0: DatabaseConfig.get_food(2, id_str)
 			
-
-			if joueur.get_food() <= 0 or joueur.get_drink() <= 0:
-				print("ID", id_str, " n'a plus de ressources pour finir la manche ! -1 PV")
-				DatabaseConfig.lose_life(1, id_str)
+			# On vérifie s'ils sont tombés à 0 ou moins après le retrait
+			var vie_a_perdre_manche = 0
+			if joueur.get_food() <= 0:
+				vie_a_perdre_manche += 1
+			if joueur.get_drink() <= 0:
+				vie_a_perdre_manche += 1
+				
+			if vie_a_perdre_manche > 0:
+				print("Manche fatale pour ID", id_str, ". Perte de ", vie_a_perdre_manche, " PV.")
+				DatabaseConfig.lose_life(vie_a_perdre_manche, id_str)
+				# Règle : On redonne 2 de chaque
+				DatabaseConfig.get_food(2, id_str)
+				DatabaseConfig.get_drink(2, id_str)
+				
+			# Vérification finale de mort
+			if joueur.get_life() <= 0:
+				Kill_player(i)
 				
 func Kill_player(index: int):
 	print("Le joueur ", index, " est éliminé.")
