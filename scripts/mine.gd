@@ -89,7 +89,5 @@ func _on_button_pressed() -> void:
 	passturn.show()
 	
 	
-
-
 func _on_passturn_pressed() -> void:
 	fin_jeu.afficher_resultat(false)

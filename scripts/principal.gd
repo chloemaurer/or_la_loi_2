@@ -168,11 +168,13 @@ func _on_end_turn_pressed(index_actuel: int):
 	var prochain_profil = (index_actuel + 1) % profils_noeuds.size()
 	var tentative = 0
 
+	# Passer les joueurs morts
 	while profils_noeuds[prochain_profil].get_life() <= 0 and tentative < profils_noeuds.size():
 		print("Joueur ID", prochain_profil, " est mort, on saute...")
 		prochain_profil = (prochain_profil + 1) % profils_noeuds.size()
 		tentative += 1
 
+	# Changement de manche détecté
 	if prochain_profil <= index_actuel:
 		DatabaseConfig.manches += 1
 		manche_transition.show()
@@ -182,10 +184,32 @@ func _on_end_turn_pressed(index_actuel: int):
 		print("--- TOUS LES JOUEURS ONT JOUÉ ---")
 		print("DÉBUT DE LA MANCHE : ", DatabaseConfig.manches)
 		
-		# Mise à jour visuelle des wagons de manche
+		# Mise à jour visuelle des wagons
 		if has_node("Manches"): $Manches.fill_wagon()
 		if has_node("Manches2"): $Manches2.fill_wagon()
 		
+		# --- DÉCLENCHEMENT DE LA MINE (MANCHE 11) ---
+		if DatabaseConfig.manches >= 11:
+			print("!!! ÉVÉNEMENT MINE ACTIVÉ !!!")
+			
+			# 1. On nettoie l'interface
+			start_action.hide()
+			places.hide()
+			places.close_all()
+			
+			# 2. On reset les actions pour le mode sacrifice
+			DatabaseConfig.actions_faites = 0 
+			
+			# 3. On affiche la mine
+			mine.show()
+
+			# 4. On lance la logique interne de la mine
+			if mine.has_method("lancer_evenement_mine"):
+				mine.lancer_evenement_mine()
+
+			return # ON ARRÊTE TOUT ICI : On ne sélectionne pas de profil normal
+			
+	# --- LOGIQUE NORMALE (HORS MINE) ---
 	# 4. On active le nouveau joueur
 	selectionner_profil(prochain_profil)
 	
@@ -193,10 +217,6 @@ func _on_end_turn_pressed(index_actuel: int):
 	places.show()
 	places.close_all()
 	places.close_place()
-	
-	if DatabaseConfig.manches >= 11 :
-		start_action.hide()
-		mine.show()
 		
 	# On change les menus des boutiques pour le nouveau joueur
 	if restaurant_shop: restaurant_shop.random_food()
