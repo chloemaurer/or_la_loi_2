@@ -72,6 +72,16 @@ theme_override_font_sizes/font_size = 25
 text = "Piocher"
 horizontal_alignment = 1
 
+[node name="Label" type="Label" parent="Choix/piocher/Label" unique_id=428342803]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 24.0
+offset_right = 166.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 25
+text = "2 cartes"
+horizontal_alignment = 1
+
 [node name="dés" type="VBoxContainer" parent="Choix" unique_id=409947028]
 layout_mode = 2
 size_flags_horizontal = 3

@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://cet0eidritxbt"]
+
+[ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="1_vp72u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rj8w1"]
+bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_762if"]
+bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="VideoSettings" type="Control" unique_id=1944974994]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StopPlay" type="Button" parent="." unique_id=597879575]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 8.0
+offset_right = 218.0
+offset_bottom = 217.0
+
+[node name="Panel" type="Panel" parent="StopPlay" unique_id=73779443]
+layout_mode = 0
+offset_right = 205.0
+offset_bottom = 205.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rj8w1")
+
+[node name="TextureRect" type="TextureRect" parent="StopPlay/Panel" unique_id=1865016939]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 42.0
+offset_right = 80.02822
+offset_bottom = 76.12655
+scale = Vector2(3.662837, 3.662837)
+texture = ExtResource("1_vp72u")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Skip" type="Button" parent="." unique_id=657622562]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 224.0
+offset_top = -3.0
+offset_right = 659.0
+offset_bottom = 215.0
+
+[node name="Panel" type="Panel" parent="Skip" unique_id=1536585739]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 17.0
+offset_right = 420.512
+offset_bottom = 207.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_762if")
+
+[node name="Pass" type="Label" parent="Skip/Panel" unique_id=843078081]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 27.0
+offset_right = 356.0
+offset_bottom = 157.0
+theme_override_font_sizes/font_size = 95
+text = "Passer"

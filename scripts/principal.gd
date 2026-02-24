@@ -44,6 +44,8 @@ var cible_duel_id : String = ""
 @onready var result: Control = $Map/Result
 @onready var duel_result: Control = $Map/DuelResult
 @onready var give_card_effect: Control = $Map/GiveCardEffect
+@onready var map_visual: TextureRect = $Map/Panel2/MapVisual
+@onready var sand_tempest: VideoStreamPlayer = $Animations/SandTempest
 
 
 
@@ -188,6 +190,12 @@ func _on_end_turn_pressed(index_actuel: int):
 		if has_node("Manches"): $Manches.fill_wagon()
 		if has_node("Manches2"): $Manches2.fill_wagon()
 		
+		##-----Changement Map et apparition de la mine
+		#if DatabaseConfig.manches == 6:
+			#
+			#sand_tempest.show()
+			#sand_tempest.play()
+			#map_visual.texture = preload("uid://b8lqmhaiis554")
 		# --- DÉCLENCHEMENT DE LA MINE (MANCHE 11) ---
 		if DatabaseConfig.manches >= 11:
 			print("!!! ÉVÉNEMENT MINE ACTIVÉ !!!")
@@ -410,3 +418,8 @@ func _on_restaurant_give_card_pressed() -> void:
 
 func _on_manche_transition_finished() -> void:
 	manche_transition.hide()
+	#-----Changement Map et apparition de la mine
+	if DatabaseConfig.manches == 6:
+		sand_tempest.show()
+		sand_tempest.play()
+		map_visual.texture = preload("uid://b8lqmhaiis554")
