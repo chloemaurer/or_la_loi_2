@@ -4,6 +4,7 @@ extends Control
 @onready var count: Label = $VBoxContainer/HBoxContainer/Count
 @onready var plus: Button = $VBoxContainer/HBoxContainer/plus
 @onready var prix: Label = $VBoxContainer/HBoxContainer/Prix
+@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
 
 var num := 1
 var nb_prix := 2
@@ -41,6 +42,7 @@ func _on_armory_buy_card_pressed() -> void:
 	var succes = DatabaseConfig.spend_money(nb_prix, id_actuel)
 	
 	if succes:
+		money_song.play()
 		print("Armurerie : Achat validé pour le profil ", id_actuel)
 		DatabaseConfig.get_munition(num, id_actuel)
 		DatabaseConfig.actions_faites += 1

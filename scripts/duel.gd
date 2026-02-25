@@ -5,6 +5,7 @@ extends Control
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur2, "label": $VBoxContainer/Joueurs/Joueurs/Joueur2/Nomjoueur2},
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur3, "label": $VBoxContainer/Joueurs/Joueurs/Joueur3/Nomjoueur3}
 ]
+@onready var duel_start: AudioStreamPlayer = $"../../Son/DuelStart"
 
 var cible_choisie_id : String = ""
 
@@ -94,7 +95,7 @@ func _on_versus_pressed() -> void:
 		return
 	
 	var mon_id = DatabaseConfig.current_profil_id
-
+	duel_start.play()
 	DatabaseConfig.duel_versus(mon_id, cible_choisie_id)
 	DatabaseConfig.actions_faites += 1
 	if DatabaseConfig.script_general:

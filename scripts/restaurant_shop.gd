@@ -10,6 +10,7 @@ var foods = [
 @onready var food_name: Label = $VBoxContainer/FoodName
 @onready var food_description: Label = $VBoxContainer/FoodDescription
 @onready var restaurant: Control = $"../Restaurant"
+@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
 
 var catalogue = {}  
 var current_id = 0  
@@ -54,6 +55,7 @@ func update_food():
 		var succes = DatabaseConfig.spend_money(prix_food, id_joueur)
 
 		if succes:
+			money_song.play()
 			print("Achat validé. Application de l'effet : ", food_effect)
 			# 2. Si l'argent est retiré, on donne la nourriture
 			DatabaseConfig.get_food(food_effect, id_joueur)

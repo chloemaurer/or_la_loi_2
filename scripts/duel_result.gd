@@ -4,6 +4,7 @@ extends Control
 @onready var gagnant_rect: TextureRect = $Duel/Gagnant
 @onready var perdant_rect: TextureRect = $Duel/Perdant
 @onready var gun: TextureRect = $Effect/Gun
+@onready var fin_duel: AudioStreamPlayer = $"../../Son/FinDuel"
 
 @onready var gun_shoot = [
 	preload("uid://bs5swbvmuugrl"), 
@@ -15,6 +16,7 @@ func _ready() -> void:
 	self.hide()
 	
 func afficher_duel_resultat(id_gagnant: int, id_perdant: int, degats: int):
+	fin_duel.play()
 	# 1. Récupérer les icônes des personnages
 	var nodes_profils = DatabaseConfig.script_general.profils_noeuds
 	

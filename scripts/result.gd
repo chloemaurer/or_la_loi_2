@@ -1,4 +1,5 @@
 extends Control
+@onready var fin_mini_jeux: AudioStreamPlayer = $"../../Son/FinMiniJeux"
 
 @onready var icon_winner = [
 $"Control/VBoxContainer/1er/Icon", $"Control/VBoxContainer/2eme/Icon", $"Control/VBoxContainer/3eme/Icon", $"Control/VBoxContainer/4eme/Icon"
@@ -11,10 +12,11 @@ func _ready() -> void:
 	self.hide()
 
 func afficher_resultats(scores_bruts: Array):
+	fin_mini_jeux.play()
 	# 1. Sécurité : On s'assure que le tableau n'est pas vide
 	if scores_bruts.is_empty(): 
 		return
-
+	
 	# 2. Trier les scores (du plus petit temps au plus grand)
 	# On utilise ["temps"] car ce sont des dictionnaires venant de DatabaseConfig
 	scores_bruts.sort_custom(func(a, b): return float(a["temps"]) < float(b["temps"]))

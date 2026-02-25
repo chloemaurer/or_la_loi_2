@@ -35,6 +35,7 @@ func _process(_delta):
 
 # Fonction générique pour lancer une section
 func play_section(start: float, end: float):
+	print("video lancé")
 	rules.stream_position = start
 	stop_at_time = end
 	is_playing_section = true

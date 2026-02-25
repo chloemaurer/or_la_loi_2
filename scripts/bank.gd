@@ -5,6 +5,7 @@ extends Control
 @onready var plus: Button = $VBoxContainer/Control/HBoxContainer/plus
 @onready var prix: Label = $VBoxContainer/Control/HBoxContainer/Prix
 @onready var buy_card: Control = $"../BuyCard"
+@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
 
 
 var num := 1
@@ -44,6 +45,7 @@ func _on_bank_buy_card_pressed() -> void:
 	var succes = DatabaseConfig.spend_money(nb_prix, id_joueur)
 
 	if succes:
+		money_song.play()
 		print("Banque : Achat validé pour le profil ", id_joueur)
 		life_multiply = DatabaseConfig.get_life(num,id_joueur)
 		DatabaseConfig.actions_faites += 1
@@ -61,6 +63,7 @@ func _on_get_card_pressed() -> void:
 	var id_joueur = DatabaseConfig.current_profil_id
 	buy_card.show()
 	pioche = DatabaseConfig.spend_money(prix_pioche,id_joueur)
+	money_song.play()
 	DatabaseConfig.actions_faites += 1
 	# On demande au script principal de vérifier si on doit fermer les places
 	if DatabaseConfig.script_general:

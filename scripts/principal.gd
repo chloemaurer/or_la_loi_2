@@ -169,15 +169,20 @@ func _on_end_turn_pressed(index_actuel: int):
 	
 	var prochain_profil = (index_actuel + 1) % profils_noeuds.size()
 	var tentative = 0
-
+	var _seul_survivant = false
 	# Passer les joueurs morts
 	while profils_noeuds[prochain_profil].get_life() <= 0 and tentative < profils_noeuds.size():
 		print("Joueur ID", prochain_profil, " est mort, on saute...")
 		prochain_profil = (prochain_profil + 1) % profils_noeuds.size()
 		tentative += 1
-
+		
+		
+	if prochain_profil == index_actuel:
+		_seul_survivant = true
+		print("Un seul survivant détecté (ID", index_actuel, "). Passage de manche forcé.")
+		
 	# Changement de manche détecté
-	if prochain_profil <= index_actuel:
+	if prochain_profil <= index_actuel or _seul_survivant:
 		DatabaseConfig.manches += 1
 		manche_transition.show()
 		manche_transition.play()

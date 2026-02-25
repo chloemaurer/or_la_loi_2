@@ -10,6 +10,7 @@ var drinks = [
 @onready var drink_roller = $VBoxContainer/DrinkRoller
 @onready var drink_name = $VBoxContainer/DrinkName
 @onready var drink_description = $VBoxContainer/DrinkDescription
+@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
 
 
 var catalogue = {}  
@@ -53,8 +54,9 @@ func update_drink():
 		
 		# 1. On demande au Singleton de dépenser l'argent
 		var succes = DatabaseConfig.spend_money(prix_boisson, id_joueur)
-
+		
 		if succes:
+			money_song.play()
 			print("Achat validé. Application de l'effet : ", drink_effect)
 			# 2. Si l'argent est retiré, on donne la boisson
 			DatabaseConfig.get_drink(drink_effect, id_joueur)

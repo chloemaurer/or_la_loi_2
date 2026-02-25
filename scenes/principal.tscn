@@ -33,11 +33,12 @@
 [ext_resource type="Script" uid="uid://bkh7kd8symyl6" path="res://scripts/settings.gd" id="27_pmure"]
 [ext_resource type="Texture2D" uid="uid://vg54pksbl74s" path="res://assets/icone/parametre.webp" id="28_etfdl"]
 [ext_resource type="Texture2D" uid="uid://cipx6kvt7xgce" path="res://assets/icone/reset.webp" id="29_vdtr1"]
-[ext_resource type="PackedScene" uid="uid://cci83b0uexl5k" path="res://scenes/give_card_effect.tscn" id="29_vr4so"]
 [ext_resource type="Texture2D" uid="uid://b5rvx4867ip50" path="res://assets/icone/piocher.webp" id="30_f8urn"]
 [ext_resource type="Texture2D" uid="uid://bqspcwu3db8kt" path="res://assets/icone/son.webp" id="30_yd7e0"]
 [ext_resource type="Texture2D" uid="uid://b2sbq33egsir7" path="res://assets/icone/video.webp" id="31_nexnj"]
+[ext_resource type="Script" uid="uid://bseixtygakgm2" path="res://scripts/give_card_effect.gd" id="31_w31y2"]
 [ext_resource type="PackedScene" uid="uid://c6oiyw3qtp8i" path="res://scenes/start_action.tscn" id="32_etfdl"]
+[ext_resource type="Texture2D" uid="uid://bdrhkb0vaf44i" path="res://assets/icone/flecheDuel.webp" id="33_mh0tp"]
 [ext_resource type="PackedScene" uid="uid://cvjvuytfbacf8" path="res://scenes/mine.tscn" id="33_vdtr1"]
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
@@ -48,6 +49,13 @@
 [ext_resource type="VideoStream" uid="uid://cxsmmo6l0qh4h" path="res://animation/finBonne.ogv" id="43_cbgdg"]
 [ext_resource type="VideoStream" path="res://animation/tempetesable.ogv" id="44_fvccq"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
+[ext_resource type="VideoStream" uid="uid://bes631ewutua6" path="res://animation/reglements_v4.ogv" id="46_cbgdg"]
+[ext_resource type="AudioStream" uid="uid://w1yxyfcdf6vc" path="res://son/get_resources.mp3" id="49_1qqir"]
+[ext_resource type="AudioStream" uid="uid://cbxqm6i2jnkdf" path="res://son/argent2.ogg" id="50_w31y2"]
+[ext_resource type="AudioStream" uid="uid://d1eu3lpejnqk1" path="res://son/lose_resources.mp3" id="51_mh0tp"]
+[ext_resource type="AudioStream" uid="uid://bukxkhxg37ohi" path="res://son/finDuel.mp3" id="52_meguh"]
+[ext_resource type="AudioStream" uid="uid://bmvuvw0l5eqhq" path="res://son/Duel.ogg" id="52_mh0tp"]
+[ext_resource type="AudioStream" uid="uid://dqkuyxthnfib5" path="res://son/finMiniJeux.mp3" id="53_g42em"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -160,6 +168,9 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meguh"]
+bg_color = Color(0.18431373, 0.09411765, 0.050980393, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h7na"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -979,6 +990,7 @@ offset_right = 412.53812
 offset_bottom = 412.5404
 
 [node name="Panel2" type="Panel" parent="Map/Settings" unique_id=1971159088]
+visible = false
 layout_mode = 0
 offset_left = 326.80283
 offset_right = 974.35657
@@ -1294,9 +1306,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 661.9999
-offset_top = 118.99974
+offset_top = 92.99974
 offset_right = 133.81958
-offset_bottom = -677.9867
+offset_bottom = -553.5927
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.44000304, 0.44000304)
@@ -1339,13 +1351,84 @@ offset_top = 286.99976
 offset_right = -567.9972
 offset_bottom = -192.84265
 
-[node name="GiveCardEffect" parent="Map" unique_id=450712904 instance=ExtResource("29_vr4so")]
+[node name="GiveCardEffect" type="Control" parent="Map" unique_id=450712904]
 visible = false
 layout_mode = 1
-offset_left = 720.5
-offset_top = 379.99963
-offset_right = -680.5
-offset_bottom = -328.00037
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 933.99994
+offset_top = 612.9997
+offset_right = -217.16705
+offset_bottom = -33.592773
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_w31y2")
+
+[node name="Panel" type="Panel" parent="Map/GiveCardEffect" unique_id=1683501090]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_meguh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/GiveCardEffect" unique_id=935656350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = 48.0
+offset_right = -47.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="GivePlayer" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer" unique_id=1922662855]
+layout_mode = 2
+texture = ExtResource("10_t8783")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/GiveCardEffect/HBoxContainer" unique_id=1097262004]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer" unique_id=465378647]
+layout_mode = 2
+alignment = 1
+
+[node name="Effect" type="Label" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=127184694]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "-1"
+
+[node name="Type" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=513379889]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("14_aojn8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Arrow" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer" unique_id=68585774]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("33_mh0tp")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="GetPlayer" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer" unique_id=219874437]
+layout_mode = 2
+texture = ExtResource("10_t8783")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Timer" type="Timer" parent="Map/GiveCardEffect" unique_id=2128117720]
+wait_time = 4.0
 
 [node name="BuyCard" type="Control" parent="Map" unique_id=1319103514]
 visible = false
@@ -1353,10 +1436,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 795.99994
-offset_top = 455.9997
-offset_right = -679.92993
-offset_bottom = -254.9502
+offset_left = 797.0
+offset_top = 453.99973
+offset_right = -354.167
+offset_bottom = -192.59274
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7200024, 0.7200024)
@@ -2976,6 +3059,7 @@ offset_left = 0.00012207031
 offset_top = 0.00014863047
 offset_right = 1920.0001
 offset_bottom = 1080.0001
+stream = ExtResource("46_cbgdg")
 paused = true
 
 [node name="VideoSettings" type="Control" parent="Animations" unique_id=1944974994]
@@ -3042,120 +3126,33 @@ offset_top = -17.0
 offset_right = 424.0
 offset_bottom = 201.0
 
-[node name="Animations2" type="Control" parent="." unique_id=1611778929]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="LoseEnd" type="VideoStreamPlayer" parent="Animations2" unique_id=1323065163]
-visible = false
-layout_mode = 0
-offset_left = 0.001953125
-offset_top = 0.0023780875
-offset_right = 1920.002
-offset_bottom = 1080.0023
-stream = ExtResource("42_fvccq")
-
-[node name="WinEnd" type="VideoStreamPlayer" parent="Animations2" unique_id=1307672112]
-visible = false
-layout_mode = 0
-offset_left = 0.0009765625
-offset_top = 0.0011890437
-offset_right = 1920.001
-offset_bottom = 1080.0012
-stream = ExtResource("43_cbgdg")
-
-[node name="Story" type="VideoStreamPlayer" parent="Animations2" unique_id=130064293]
-visible = false
-layout_mode = 0
-offset_left = 0.00024414063
-offset_top = 0.00029726094
-offset_right = 1920.0002
-offset_bottom = 1080.0002
-stream = ExtResource("42_ihcfc")
-
-[node name="Rules" type="VideoStreamPlayer" parent="Animations2" unique_id=1753671126]
-visible = false
-layout_mode = 0
-offset_left = 0.00012207031
-offset_top = 0.00014863047
-offset_right = 1920.0001
-offset_bottom = 1080.0001
-paused = true
-
-[node name="VideoSettings" type="Control" parent="Animations2" unique_id=1586304151]
-visible = false
-top_level = true
-layout_mode = 1
-anchor_right = 0.59800005
-anchor_bottom = 0.59800005
-offset_left = 1551.0001
-offset_top = 903.00006
-offset_right = 1070.3398
-offset_bottom = 489.65973
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.39999998, 0.39999998)
-
-[node name="Panel2" type="Panel" parent="Animations2/VideoSettings" unique_id=2078548843]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 8.0
-offset_right = 216.0
-offset_bottom = 213.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_rj8w1")
-
-[node name="StopPlay" type="TextureRect" parent="Animations2/VideoSettings/Panel2" unique_id=981788507]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 42.0
-offset_right = 80.02822
-offset_bottom = 76.12655
-scale = Vector2(3.662837, 3.662837)
-texture = ExtResource("44_voqbm")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="StopPlay2" type="Button" parent="Animations2/VideoSettings/Panel2" unique_id=1271333053]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_right = 207.0
-offset_bottom = 209.0
-
-[node name="Panel" type="Panel" parent="Animations2/VideoSettings" unique_id=1242441907]
-layout_mode = 0
-offset_left = 234.99976
-offset_top = 13.999756
-offset_right = 644.5117
-offset_bottom = 203.99976
-theme_override_styles/panel = SubResource("StyleBoxFlat_762if")
-
-[node name="Pass" type="Label" parent="Animations2/VideoSettings/Panel" unique_id=1370874317]
-layout_mode = 0
-offset_left = 54.0
-offset_top = 27.0
-offset_right = 356.0
-offset_bottom = 157.0
-theme_override_font_sizes/font_size = 95
-text = "Passer"
-
-[node name="Skip" type="Button" parent="Animations2/VideoSettings/Panel" unique_id=223660602]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = -11.0
-offset_top = -17.0
-offset_right = 424.0
-offset_bottom = 201.0
-
 [node name="BeginScene" parent="." unique_id=1431948896 instance=ExtResource("36_rrv1i")]
 visible = false
 layout_mode = 1
 offset_right = -1280.2561
 offset_bottom = -720.14404
+
+[node name="Son" type="Node" parent="." unique_id=1260097317]
+
+[node name="GetResources" type="AudioStreamPlayer" parent="Son" unique_id=1921405149]
+stream = ExtResource("49_1qqir")
+parameters/looping = true
+
+[node name="Money" type="AudioStreamPlayer" parent="Son" unique_id=1798171056]
+stream = ExtResource("50_w31y2")
+
+[node name="DuelStart" type="AudioStreamPlayer" parent="Son" unique_id=958040386]
+stream = ExtResource("52_mh0tp")
+
+[node name="LoseResources" type="AudioStreamPlayer" parent="Son" unique_id=1915720728]
+stream = ExtResource("51_mh0tp")
+parameters/looping = true
+
+[node name="FinDuel" type="AudioStreamPlayer" parent="Son" unique_id=599739199]
+stream = ExtResource("52_meguh")
+
+[node name="FinMiniJeux" type="AudioStreamPlayer" parent="Son" unique_id=994773408]
+stream = ExtResource("53_g42em")
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="." unique_id=2044894860]
 stream = ExtResource("42_nc7xk")
@@ -3201,6 +3198,7 @@ parameters/looping = true
 [connection signal="finished" from="Map/MancheTransition" to="." method="_on_manche_transition_finished"]
 [connection signal="finished" from="Map/SandTempest" to="BeginScene" method="_on_sand_tempest_finished"]
 [connection signal="timeout" from="Map/Error/Timer" to="Map/Error" method="_on_timer_timeout"]
+[connection signal="timeout" from="Map/GiveCardEffect/Timer" to="Map/GiveCardEffect" method="_on_timer_timeout"]
 [connection signal="pressed" from="Map/BuyCard/Close" to="Map/Bank" method="_on_close_pressed"]
 [connection signal="pressed" from="Profils/Profil/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil" method="_on_keypad_open_pressed"]
 [connection signal="pressed" from="Profils/Profil2/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil2" method="_on_keypad_open_pressed"]
@@ -3212,9 +3210,3 @@ parameters/looping = true
 [connection signal="gui_input" from="Animations/Rules" to="BeginScene" method="_on_rules_gui_input"]
 [connection signal="pressed" from="Animations/VideoSettings/Panel2/StopPlay2" to="BeginScene" method="_on_stop_play_pressed"]
 [connection signal="pressed" from="Animations/VideoSettings/Panel/Skip" to="BeginScene" method="_on_skip_pressed"]
-[connection signal="finished" from="Animations2/Story" to="BeginScene" method="_on_story_finished"]
-[connection signal="gui_input" from="Animations2/Story" to="BeginScene" method="_on_story_gui_input"]
-[connection signal="finished" from="Animations2/Rules" to="BeginScene" method="_on_rules_finished"]
-[connection signal="gui_input" from="Animations2/Rules" to="BeginScene" method="_on_rules_gui_input"]
-[connection signal="pressed" from="Animations2/VideoSettings/Panel2/StopPlay2" to="BeginScene" method="_on_stop_play_pressed"]
-[connection signal="pressed" from="Animations2/VideoSettings/Panel/Skip" to="BeginScene" method="_on_skip_pressed"]
