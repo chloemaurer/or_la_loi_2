@@ -54,8 +54,8 @@ corner_radius_bottom_left = 10
 layout_mode = 3
 anchor_right = 0.661
 anchor_bottom = 0.72200006
-offset_right = -761.47205
-offset_bottom = -467.85605
+offset_right = -492.12
+offset_bottom = -294.76007
 script = ExtResource("1_qo5h2")
 
 [node name="Panel" type="Panel" parent="." unique_id=1268300025]

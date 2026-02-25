@@ -130,17 +130,29 @@ func _consommer_action_et_quitter():
 	_finaliser_utilisation_keypad()
 
 func _finaliser_utilisation_keypad():
+	# On stocke l'état avant de reset
+	var etait_en_mine = mode_mine 
+	
+	# Reset standard
 	mode_mine = false
 	compteur_mines = 0
-	DatabaseConfig.zone = "" 
 	DatabaseConfig.cible_don_id = "" 
 	close_button.hide()
 	reset_keypad()
 	self.hide()
-	print("[Keypad] Clavier fermé et zones reset.")
+
+	if etait_en_mine:
+		DatabaseConfig.zone = "mine" 
+	else:
+		DatabaseConfig.zone = "" 
+		
+	print("[Keypad] Clavier fermé. Zone actuelle : ", DatabaseConfig.zone)
 
 func is_zone_valid(category: String) -> bool:
 	var player_zone = DatabaseConfig.zone
+	if mode_mine:
+		return category == "Mine"
+		
 	if category in ["vie", "argent", "MiniJeux"]: 
 		_consommer_action_et_quitter()
 		return true

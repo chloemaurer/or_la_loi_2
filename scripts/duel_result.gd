@@ -6,9 +6,9 @@ extends Control
 @onready var gun: TextureRect = $Effect/Gun
 
 @onready var gun_shoot = [
-	preload("uid://bs5swbvmuugrl"), # Index 0 (Niveau 1)
-	preload("uid://b1j22bf1ehjt2"), # Index 1 (Niveau 2)
-	preload("uid://c6i2pqsx3aw7p")  # Index 2 (Niveau 3)
+	preload("uid://bs5swbvmuugrl"), 
+	preload("uid://c6i2pqsx3aw7p"),  
+	preload("uid://b1j22bf1ehjt2"), 
 ]
 
 func _ready() -> void:

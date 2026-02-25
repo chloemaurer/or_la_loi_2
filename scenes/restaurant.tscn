@@ -1,59 +1,80 @@
 [gd_scene format=3 uid="uid://d0a8i0ilo6r1g"]
 
-[node name="Restaurant" type="Control"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="1_tdg2f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iw0ck"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y2pbi"]
+font = ExtResource("1_tdg2f")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Restaurant" type="Control" unique_id=142328193]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Panel" type="Panel" parent="."]
-modulate = Color(0.827451, 0.22745098, 0.40784314, 1)
+[node name="Panel" type="Panel" parent="." unique_id=1424165811]
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_iw0ck")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=738897049]
 layout_mode = 0
 offset_left = 249.0
 offset_top = 109.0
-offset_right = 852.0
-offset_bottom = 482.0
+offset_right = 850.0
+offset_bottom = 455.0
 theme_override_constants/separation = 29
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=202003379]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Taverne"
+label_settings = SubResource("LabelSettings_y2pbi")
 
-[node name="UseCard" type="Button" parent="VBoxContainer"]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+[node name="UseCard" type="Button" parent="VBoxContainer" unique_id=1627704352]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Utiliser une carte"
 
-[node name="GiveCard" type="Button" parent="VBoxContainer"]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+[node name="GiveCard" type="Button" parent="VBoxContainer" unique_id=1011119064]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Donner une carte"
 
-[node name="BuyCard" type="Button" parent="VBoxContainer"]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
+[node name="BuyCard" type="Button" parent="VBoxContainer" unique_id=2052559085]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Acheter une carte"
 
-[node name="Label2" type="Label" parent="VBoxContainer/BuyCard"]
+[node name="Label2" type="Label" parent="VBoxContainer/BuyCard" unique_id=1583814673]
 modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
 layout_mode = 0
-offset_left = 33.0
-offset_top = 51.0
-offset_right = 234.0
-offset_bottom = 86.0
+offset_left = 31.0
+offset_top = 64.0
+offset_right = 232.0
+offset_bottom = 99.0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "À vos risque et périls"

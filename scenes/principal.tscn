@@ -47,6 +47,9 @@
 [ext_resource type="VideoStream" uid="uid://d03mq0mi0vuae" path="res://animation/tempetesable_v2.ogv" id="44_6vvq3"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3ehx"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -62,8 +65,32 @@ glow_enabled = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g3ehx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd7e0"]
-bg_color = Color(0.1882353, 0.12156863, 0.09411765, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voqbm"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_voqbm"]
+font = ExtResource("36_dr6sg")
+font_size = 75
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_rno4q"]
+font = ExtResource("36_dr6sg")
+font_size = 35
+font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b72to"]
 shader = ExtResource("22_dynj2")
@@ -180,8 +207,8 @@ corner_radius_bottom_left = 50
 layout_mode = 3
 anchor_right = 1.667
 anchor_bottom = 1.667
-offset_right = -0.3840332
-offset_bottom = -0.21606445
+offset_right = -1279.6401
+offset_bottom = -721.3601
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -281,7 +308,6 @@ scale = Vector2(0.97888863, 0.92170674)
 position = Vector2(20.052631, 19.947388)
 
 [node name="Dés" type="Control" parent="Map" unique_id=986222176]
-visible = false
 anchors_preset = 0
 offset_left = 753.0
 offset_top = 440.99973
@@ -295,6 +321,7 @@ offset_left = 4.4285316
 offset_top = 1.7857151
 offset_right = 250.42853
 offset_bottom = 184.78572
+theme_override_styles/panel = SubResource("StyleBoxFlat_jwn4v")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Map/Dés" unique_id=761849960]
 layout_mode = 0
@@ -312,7 +339,7 @@ physics_object_picking = true
 physics_object_picking_sort = true
 physics_object_picking_first_only = true
 size = Vector2i(852, 553)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Node3D" type="Node3D" parent="Map/Dés/SubViewportContainer/SubViewport" unique_id=1695860777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, 0)
@@ -354,18 +381,20 @@ offset_right = 285.4286
 offset_bottom = 70.78571
 scale = Vector2(0.7203803, 0.7653786)
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Lancer les dés"
 script = ExtResource("4_6ndk6")
 
 [node name="DiceResultLabel" type="Label" parent="Map/Dés" unique_id=1428810630]
 layout_mode = 0
-offset_left = 103.42853
-offset_top = 53.785736
-offset_right = 160.42853
-offset_bottom = 122.785736
+offset_left = 105.4876
+offset_top = 53.658417
+offset_right = 162.48761
+offset_bottom = 122.65842
 scale = Vector2(0.8377734, 0.8554982)
 theme_override_font_sizes/font_size = 50
 text = "10"
+horizontal_alignment = 1
 
 [node name="Restaurant" type="Control" parent="Map" unique_id=718299353]
 visible = false
@@ -377,12 +406,12 @@ offset_bottom = 393.9997
 scale = Vector2(0.6123316, 0.6123316)
 
 [node name="Panel" type="Panel" parent="Map/Restaurant" unique_id=1705846929]
-modulate = Color(0.827451, 0.22745098, 0.40784314, 1)
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/Restaurant" unique_id=1441516783]
 layout_mode = 0
@@ -391,25 +420,29 @@ offset_top = 109.0
 offset_right = 852.0
 offset_bottom = 482.0
 theme_override_constants/separation = 29
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Map/Restaurant/VBoxContainer" unique_id=555113155]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Taverne"
+label_settings = SubResource("LabelSettings_voqbm")
 
 [node name="RestaurantUseCard" type="Button" parent="Map/Restaurant/VBoxContainer" unique_id=1331140267]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte"
 
 [node name="RestaurantGiveCard" type="Button" parent="Map/Restaurant/VBoxContainer" unique_id=1695504744]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Map/Restaurant/VBoxContainer" unique_id=560388059]
@@ -417,10 +450,11 @@ layout_mode = 2
 alignment = 1
 
 [node name="FoodBuyCard" type="Button" parent="Map/Restaurant/VBoxContainer/HBoxContainer" unique_id=626690792]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une carte"
 
 [node name="Prix" type="Label" parent="Map/Restaurant/VBoxContainer/HBoxContainer" unique_id=928036117]
@@ -445,7 +479,7 @@ texture = ExtResource("17_1xbp8")
 expand_mode = 1
 
 [node name="Label2" type="Label" parent="Map/Restaurant/VBoxContainer" unique_id=2023448666]
-modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
@@ -462,12 +496,12 @@ scale = Vector2(0.6626349, 0.6626349)
 script = ExtResource("8_0at3r")
 
 [node name="Panel" type="Panel" parent="Map/RestaurantShop" unique_id=996172716]
-modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 589.095
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/RestaurantShop" unique_id=123672786]
 layout_mode = 0
@@ -482,6 +516,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Taverne"
+label_settings = SubResource("LabelSettings_voqbm")
 
 [node name="FoodRoller" type="TextureRect" parent="Map/RestaurantShop/VBoxContainer" unique_id=1982238036]
 layout_mode = 2
@@ -505,7 +540,9 @@ offset_left = 392.37305
 offset_top = 516.1212
 offset_right = 724.64417
 offset_bottom = 560.1212
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Récupéré"
 
 [node name="Armory" type="Control" parent="Map" unique_id=1680406120]
@@ -519,12 +556,12 @@ scale = Vector2(0.4224615, 0.4224615)
 script = ExtResource("8_v2y4t")
 
 [node name="Panel" type="Panel" parent="Map/Armory" unique_id=1663753145]
-modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
 layout_mode = 0
 offset_left = 214.0
 offset_top = 31.0
 offset_right = 930.0
 offset_bottom = 633.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/Armory" unique_id=297704797]
 layout_mode = 0
@@ -539,6 +576,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Armurerie"
+label_settings = SubResource("LabelSettings_voqbm")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Map/Armory/VBoxContainer" unique_id=1430104715]
 layout_mode = 2
@@ -546,6 +584,7 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=1927451088]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 1
@@ -553,23 +592,26 @@ theme_override_font_sizes/font_size = 50
 text = "Munitions"
 
 [node name="moins" type="Button" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=1757239059]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "  -  "
 
 [node name="Count" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=918983646]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 50
 text = "1"
 
 [node name="plus" type="Button" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=632050188]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "  +  "
 
 [node name="Prix" type="Label" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=318143626]
@@ -594,18 +636,20 @@ texture = ExtResource("17_1xbp8")
 expand_mode = 1
 
 [node name="ArmoryBuyCard" type="Button" parent="Map/Armory/VBoxContainer" unique_id=1302460776]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une munition"
 
 [node name="ArmoryUseCard" type="Button" parent="Map/Armory/VBoxContainer" unique_id=1362764953]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte armurerie"
 
 [node name="Mine" parent="Map" unique_id=970763158 instance=ExtResource("33_vdtr1")]
@@ -637,13 +681,13 @@ offset_bottom = 398.99973
 scale = Vector2(0.62141335, 0.62141335)
 
 [node name="Panel" type="Panel" parent="Map/Saloon" unique_id=537473098]
-modulate = Color(1, 0.27999997, 0.4960001, 1)
 show_behind_parent = true
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/Saloon" unique_id=1955415373]
 layout_mode = 0
@@ -658,30 +702,35 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Saloon"
+label_settings = SubResource("LabelSettings_voqbm")
 
 [node name="SaloonUseCard" type="Button" parent="Map/Saloon/VBoxContainer" unique_id=2073720106]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte"
 
 [node name="SaloonGiveCard" type="Button" parent="Map/Saloon/VBoxContainer" unique_id=1665502334]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Map/Saloon/VBoxContainer" unique_id=1540477837]
 layout_mode = 2
+theme_override_constants/separation = 35
 alignment = 1
 
 [node name="DrinkBuyCard" type="Button" parent="Map/Saloon/VBoxContainer/HBoxContainer" unique_id=1165614999]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une carte"
 
 [node name="Prix" type="Label" parent="Map/Saloon/VBoxContainer/HBoxContainer" unique_id=506808374]
@@ -706,7 +755,7 @@ texture = ExtResource("17_1xbp8")
 expand_mode = 1
 
 [node name="Label2" type="Label" parent="Map/Saloon/VBoxContainer" unique_id=2054022271]
-modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
+modulate = Color(0.88235295, 0.80784315, 0.6901961, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
@@ -723,12 +772,12 @@ scale = Vector2(0.5966584, 0.5966584)
 script = ExtResource("7_l2a8t")
 
 [node name="Panel" type="Panel" parent="Map/SaloonShop" unique_id=644587706]
-modulate = Color(0.8291994, 0.22925165, 0.4097061, 1)
 layout_mode = 0
 offset_left = 249.0
 offset_top = 69.0
 offset_right = 851.0
 offset_bottom = 567.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/SaloonShop" unique_id=1527751985]
 layout_mode = 0
@@ -743,6 +792,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 75
 text = "Saloon"
+label_settings = SubResource("LabelSettings_voqbm")
 
 [node name="DrinkRoller" type="TextureRect" parent="Map/SaloonShop/VBoxContainer" unique_id=716934428]
 layout_mode = 2
@@ -766,7 +816,9 @@ offset_left = 392.1842
 offset_top = 477.66022
 offset_right = 724.4553
 offset_bottom = 521.6602
+theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Récupéré"
 
 [node name="Bank" parent="Map" unique_id=2118626797 instance=ExtResource("9_ckosc")]
@@ -795,7 +847,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(19.383072, 12.068146)
-theme_override_styles/panel = SubResource("StyleBoxFlat_yd7e0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Map/GiveCard" unique_id=222058577]
 layout_mode = 1
@@ -811,6 +863,7 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 35
 text = "A quel joueur voulez-vous donner 
 une carte ?"
+label_settings = SubResource("LabelSettings_rno4q")
 horizontal_alignment = 1
 
 [node name="Joueurs" type="Control" parent="Map/GiveCard/VBoxContainer" unique_id=1049432180]
@@ -922,6 +975,7 @@ offset_right = 412.53812
 offset_bottom = 412.5404
 
 [node name="Panel2" type="Panel" parent="Map/Settings" unique_id=1971159088]
+visible = false
 layout_mode = 0
 offset_left = 326.80283
 offset_right = 974.35657
@@ -1035,15 +1089,6 @@ offset_right = 756.99994
 offset_bottom = 444.99973
 scale = Vector2(0.68, 0.68)
 
-[node name="FinDuel" type="Button" parent="Map" unique_id=1624768277]
-visible = false
-layout_mode = 0
-offset_left = 753.0
-offset_top = 569.99976
-offset_right = 1077.0
-offset_bottom = 702.99976
-text = "Fin Duel"
-
 [node name="MancheTransition" type="VideoStreamPlayer" parent="Map" unique_id=1730284145]
 visible = false
 layout_mode = 0
@@ -1087,6 +1132,7 @@ vertical_alignment = 1
 wait_time = 4.0
 
 [node name="Result" parent="Map" unique_id=1012725942 instance=ExtResource("26_dwjdh")]
+visible = false
 layout_mode = 0
 offset_left = 531.99994
 offset_top = 134.99976
@@ -1095,6 +1141,7 @@ offset_bottom = 134.99976
 scale = Vector2(0.78129625, 0.78129625)
 
 [node name="DuelResult" parent="Map" unique_id=68083784 instance=ExtResource("27_dr6sg")]
+visible = false
 layout_mode = 1
 offset_left = 593.99994
 offset_top = 286.99976
@@ -1182,10 +1229,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1922.0
-offset_top = 1080.0
-offset_right = 1921.9998
-offset_bottom = 1080.0
+offset_left = 1929.0
+offset_top = 1079.0
+offset_right = 1928.9998
+offset_bottom = 1079.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
@@ -2828,7 +2875,6 @@ parameters/looping = true
 [connection signal="pressed" from="Map/Settings/Panel/Button" to="Map/Settings" method="_on_button_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel2/VBoxContainer/Reset" to="Map/Settings" method="_on_reset_pressed"]
 [connection signal="value_changed" from="Map/Settings/Panel2/VBoxContainer/Control/Volume" to="Map/Settings" method="_on_volume_value_changed"]
-[connection signal="pressed" from="Map/FinDuel" to="." method="_on_fin_duel_pressed"]
 [connection signal="finished" from="Map/MancheTransition" to="." method="_on_manche_transition_finished"]
 [connection signal="timeout" from="Map/Error/Timer" to="Map/Error" method="_on_timer_timeout"]
 [connection signal="pressed" from="Map/BuyCard/Close" to="Map/Bank" method="_on_close_pressed"]

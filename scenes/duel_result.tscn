@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="1_ufq6h"]
 [ext_resource type="Script" uid="uid://dqch5aowgphsj" path="res://scripts/duel_result.gd" id="1_yftia"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_3urdu"]
-[ext_resource type="Texture2D" uid="uid://dwg03ruoyaydt" path="res://assets/profil/niv1Icon.webp" id="3_3urdu"]
+[ext_resource type="Texture2D" uid="uid://bs5swbvmuugrl" path="res://assets/profil/DuelArme/niv_1.webp" id="4_8li3r"]
 [ext_resource type="Texture2D" uid="uid://dkka7mu3mc6ln" path="res://assets/icone/coeur_brise.webp" id="4_yftia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2m8hv"]
@@ -90,9 +90,8 @@ theme_override_constants/separation = 207
 alignment = 1
 
 [node name="Gun" type="TextureRect" parent="Effect" unique_id=902178754]
-modulate = Color(0, 0, 0, 1)
 layout_mode = 2
-texture = ExtResource("3_3urdu")
+texture = ExtResource("4_8li3r")
 expand_mode = 2
 stretch_mode = 5
 
