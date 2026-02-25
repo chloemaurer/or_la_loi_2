@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+animation/reglements_v4.ogv.uid
+animation/reglements_v4.ogv

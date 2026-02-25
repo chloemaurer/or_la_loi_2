@@ -1084,11 +1084,12 @@ max_value = 15.0
 value = 5.0
 
 [node name="Panel3" type="Panel" parent="Map/Settings" unique_id=992239051]
+visible = false
 layout_mode = 0
-offset_left = 331.745
-offset_top = 250.42822
-offset_right = 979.2987
-offset_bottom = 898.93616
+offset_left = 328.28915
+offset_top = 250.42833
+offset_right = 975.8429
+offset_bottom = 929.8655
 theme_override_styles/panel = SubResource("StyleBoxFlat_2jao0")
 
 [node name="Chapter" type="VBoxContainer" parent="Map/Settings/Panel3" unique_id=718941195]

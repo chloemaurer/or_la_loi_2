@@ -12,7 +12,7 @@ var is_playing_section : bool = false
 
 func _on_button_pressed() -> void:
 	panel_settings.visible = !panel_settings.visible
-
+	panel_3.hide()
 
 func _on_reset_pressed() -> void:
 	DatabaseConfig.reset_game_start()
