@@ -45,7 +45,7 @@ var cible_duel_id : String = ""
 @onready var duel_result: Control = $Map/DuelResult
 @onready var give_card_effect: Control = $Map/GiveCardEffect
 @onready var map_visual: TextureRect = $Map/Panel2/MapVisual
-@onready var sand_tempest: VideoStreamPlayer = $Animations/SandTempest
+@onready var sand_tempest: VideoStreamPlayer = $Map/SandTempest
 
 
 

@@ -4,6 +4,8 @@ var joueur_actuel := 0
 @onready var dés: Control = $"../Dés"
 @onready var fin_jeu: Control = $"../../FinJeu"
 @onready var passturn: Button = $Passturn
+@onready var lose_end: VideoStreamPlayer = $"../../Animations/LoseEnd"
+@onready var win_end: VideoStreamPlayer = $"../../Animations/WinEnd"
 
 
 func lancer_evenement_mine():
@@ -33,10 +35,10 @@ func _passer_au_joueur_suivant():
 
 		if survivants_reels > 0 and survivants_reels == DatabaseConfig.players_alive:
 			print("FÉLICITATIONS : Victoire collective !")
-			fin_jeu.afficher_resultat(true)
+			afficher_resultat(true)
 		else:
 			print("DOMMAGE : Quelqu'un est resté au fond...")
-			fin_jeu.afficher_resultat(false)
+			afficher_resultat(false)
 		return
 
 	# --- ÉTAPE 2 : RÉCUPÉRATION DU PROFIL (GARDER LA SUITE) ---
@@ -83,11 +85,21 @@ func _on_joueur_a_fini():
 	joueur_actuel += 1
 	_passer_au_joueur_suivant()
 
+func afficher_resultat(victoire: bool):
+	if victoire:
+		win_end.show()
+		win_end.play()
+		
+	else:
+		lose_end.show()
+		lose_end.play()
+		
+		
 func _on_button_pressed() -> void:
 	dés.hide()
 	lancer_evenement_mine()
 	passturn.show()
 	
-	
+
 func _on_passturn_pressed() -> void:
 	fin_jeu.afficher_resultat(false)

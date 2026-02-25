@@ -1,7 +1,7 @@
 extends Control
 
 @onready var bg_music: AudioStreamPlayer = $"../BgMusic"
-@onready var sand_tempest: VideoStreamPlayer = $"../Animations/SandTempest"
+@onready var sand_tempest: VideoStreamPlayer = $"../Map/SandTempest"
 @onready var story: VideoStreamPlayer = $"../Animations/Story"
 @onready var rules: VideoStreamPlayer = $"../Animations/Rules"
 @onready var video_settings: Control = $"../Animations/VideoSettings"
