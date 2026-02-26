@@ -41,7 +41,7 @@ func refresh_interface() -> void:
 	if food_catalog.has(key):
 		var data = food_catalog[key]
 		food_name_label.text = str(data.get("nom", "Unknown"))
-		food_desc_label.text = "Effect: +" + str(data.get("effet", 0)) + " Food"
+		food_desc_label.text = "Effect: " + str(int(data.get("effet", 0)))
 
 func process_food_purchase():
 	var key = "ID" + str(current_food_id)

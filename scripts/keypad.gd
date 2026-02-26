@@ -108,7 +108,8 @@ func check_code():
 		if is_mine_mode:
 			# --- MINE LOGIC ---
 			mine_cards_counter += 1
-			DatabaseConfig.notify_error("Première carte équipement acceptée, veillez rentrer la deuxième")
+			if mine_cards_counter == 1:
+				DatabaseConfig.notify_error("Première carte équipement acceptée, veillez rentrer la deuxième")
 			DatabaseConfig.disable_card(id_to_disable)
 			reset_keypad()
 			
