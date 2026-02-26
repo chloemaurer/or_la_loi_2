@@ -44,7 +44,7 @@ var game_started = false
 @onready var map_container: Control = $Map # map
 @onready var start_action_menu: Control = $Map/StartAction # start_action
 @onready var mine_event: Control = $Map/Mine # mine
-@onready var round_transition_video: VideoStreamPlayer = $Map/MancheTransition # round_transition
+@onready var round_transition_video: VideoStreamPlayer = $Map/RoundTransition
 @onready var result_screen: Control = $Map/Result # result
 @onready var duel_result_screen: Control = $Map/DuelResult # duel_result
 @onready var gift_effect_overlay: Control = $Map/GiveCardEffect # give_card_effect
@@ -191,8 +191,8 @@ func _on_end_turn_pressed(current_index: int):
 		_consume_round_resources()
 		
 		# Update visual round counters
-		if has_node("Manches"): $Manches.fill_wagon()
-		if has_node("Manches2"): $Manches2.fill_wagon()
+		if has_node("Manches"): $Manches.update_train_display()
+		if has_node("Manches2"): $Manches2.update_train_display()
 		
 		# Trigger End Game Event
 		if DatabaseConfig.current_round >= 11:

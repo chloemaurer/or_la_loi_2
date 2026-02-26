@@ -30,7 +30,7 @@ func show_results(raw_scores: Array): # afficher_resultats
 	
 	# 2. Sort scores (from lowest time to highest)
 	# Using "time" key from the dictionaries sent by DatabaseConfig
-	raw_scores.sort_custom(func(a, b): return float(a["time"]) < float(b["time"]))
+	raw_scores.sort_custom(func(a, b): return float(a["temps"]) < float(b["temps"]))
 	
 	# 3. Update the display nodes
 	for i in range(winner_icons.size()):
@@ -38,7 +38,7 @@ func show_results(raw_scores: Array): # afficher_resultats
 			var data = raw_scores[i]
 			
 			var player_id = int(data["id"])
-			var player_time = float(data["time"])
+			var player_time = float(data["temps"])
 			
 			# Display time formatted to 2 decimals
 			winner_times[i].text = "%.2f" % player_time + "s"
@@ -62,5 +62,5 @@ func show_results(raw_scores: Array): # afficher_resultats
 
 func _on_fin_mini_jeu_pressed() -> void:
 	# Emit the global reward signal with the final score data
-	DatabaseConfig.rewards.emit(DatabaseConfig.score_data)
+	DatabaseConfig.rewards_received.emit(DatabaseConfig.scores_data)
 	self.hide()
