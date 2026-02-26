@@ -1,105 +1,107 @@
 extends Control
 
-var joueur_actuel := 0
-@onready var dés: Control = $"../Dés"
-@onready var fin_jeu: Control = $"../../FinJeu"
-@onready var passturn: Button = $Passturn
-@onready var lose_end: VideoStreamPlayer = $"../../Animations/LoseEnd"
-@onready var win_end: VideoStreamPlayer = $"../../Animations/WinEnd"
+# --- Logic Variables ---
+var current_player_idx := 0 # joueur_actuel
 
+# --- UI Nodes ---
+@onready var dice_control: Control = $"../Dés" # dés
+@onready var game_over_screen: Control = $"../../FinJeu" # fin_jeu
+@onready var pass_turn_button: Button = $Passturn # passturn
+@onready var lose_animation: VideoStreamPlayer = $"../../Animations/LoseEnd" # lose_end
+@onready var win_animation: VideoStreamPlayer = $"../../Animations/WinEnd" # win_end
 
-func lancer_evenement_mine():
-	joueur_actuel = 0
-	_passer_au_joueur_suivant()
+func start_mine_event():
+	current_player_idx = 0
+	_move_to_next_player()
 
-func _passer_au_joueur_suivant():
-	# --- ÉTAPE 1 : VÉRIFICATION DE LA VICTOIRE (MODIFIÉE) ---
-	if joueur_actuel >= 4:
-		print("[MINE] Tous les joueurs ont fini leur tour.")
-		DatabaseConfig.zone = "" 
+func _move_to_next_player():
+	# --- STEP 1: CHECK VICTORY CONDITIONS ---
+	if current_player_idx >= 4:
+		print("[MINE] All players have finished their turn.")
+		DatabaseConfig.current_zone = "" 
 
-		var survivants_reels = 0
-		for p in DatabaseConfig.script_general.profils_noeuds:
-			var a_vie = p.get_life() >= 2 
-			var a_boisson = p.get_drink() >= 1  
-			var a_nourriture = p.get_food() >= 1 
+		var real_survivors = 0
+		# Check if each player has enough resources to survive after the mine
+		for p in DatabaseConfig.script_general.profile_nodes:
+			var has_life = p.get_life() >= 2 
+			var has_drink = p.get_drink() >= 1  
+			var has_food = p.get_food() >= 1 
 			
-			if a_vie and a_boisson and a_nourriture:
-				survivants_reels += 1
-				DatabaseConfig.notifier_erreur("Vous avez assez de ressource pour rentrer")
+			if has_life and has_drink and has_food:
+				real_survivors += 1
+				DatabaseConfig.notify_error("Vous avez assez de ressources pour rentrer")
 			else:
-				DatabaseConfig.notifier_erreur("Vous n'avez pas assez de ressource pour rentrer")
-				print("Joueur ", p.name, " n'a pas assez de ressources pour survivre à l'après-mine !")
+				DatabaseConfig.notify_error("Vous n'avez pas assez de ressources pour rentrer")
+				print("Player ", p.name, " lacks resources to survive the aftermath!")
 		
-		print("MINE : Survivants = ", survivants_reels, " | Attendus = ", DatabaseConfig.players_alive)
+		print("MINE: Survivors = ", real_survivors, " | Expected = ", DatabaseConfig.players_alive)
 
-		if survivants_reels > 0 and survivants_reels == DatabaseConfig.players_alive:
-			print("FÉLICITATIONS : Victoire collective !")
-			afficher_resultat(true)
+		# Victory only if all alive players made it
+		if real_survivors > 0 and real_survivors == DatabaseConfig.players_alive:
+			print("CONGRATULATIONS: Collective Victory!")
+			display_result(true)
 		else:
-			print("DOMMAGE : Quelqu'un est resté au fond...")
-			afficher_resultat(false)
+			print("GAME OVER: Someone stayed behind...")
+			display_result(false)
 		return
 
-	# --- ÉTAPE 2 : RÉCUPÉRATION DU PROFIL (GARDER LA SUITE) ---
-	var profil_du_joueur = DatabaseConfig.script_general.profils_noeuds[joueur_actuel]
+	# --- STEP 2: GET PLAYER PROFILE ---
+	var player_profile = DatabaseConfig.script_general.profile_nodes[current_player_idx]
 
-	# 3. LOGIQUE DES MORTS : Si le joueur est déjà mort avant, on passe
-	if profil_du_joueur.get_life() <= 0:
-		joueur_actuel += 1
-		_passer_au_joueur_suivant()
+	# 3. DEATH LOGIC: If player is already dead, skip them
+	if player_profile.get_life() <= 0:
+		current_player_idx += 1
+		_move_to_next_player()
 		return
 
-	# 4. GESTION VISUELLE
-	_actualiser_visuel_profils(joueur_actuel)
+	# 4. VISUAL FEEDBACK
+	_update_profiles_visuals(current_player_idx)
 
-	# 5. CONFIGURATION ET OUVERTURE KEYPAD
-	DatabaseConfig.current_profil_id = str(joueur_actuel)
-	DatabaseConfig.zone = "mine"
+	# 5. KEYPAD CONFIGURATION
+	DatabaseConfig.current_profile_id = str(current_player_idx)
+	DatabaseConfig.current_zone = "mine"
 	
-	var keypad_local = profil_du_joueur.keypad
-	if is_instance_valid(keypad_local):
-		if not keypad_local.mine_terminee.is_connected(_on_joueur_a_fini):
-			keypad_local.mine_terminee.connect(_on_joueur_a_fini)
-		keypad_local.preparer_pour_mine()
+	var local_keypad = player_profile.keypad
+	if is_instance_valid(local_keypad):
+		# Connect to the mine_completed signal of the keypad
+		if not local_keypad.mine_completed.is_connected(_on_player_finished):
+			local_keypad.mine_completed.connect(_on_player_finished)
+		local_keypad.prepare_for_mine()
 
-func _actualiser_visuel_profils(id_actif: int):
-	# On parcourt tous les profils pour les griser, sauf celui qui doit jouer
+func _update_profiles_visuals(active_id: int):
+	# Dim all profiles except the one currently playing
 	for i in range(4):
-		var p = DatabaseConfig.script_general.profils_noeuds[i]
-		if i == id_actif:
-			p.modulate = Color(1, 1, 1, 1) # Allumé
+		var p = DatabaseConfig.script_general.profile_nodes[i]
+		if i == active_id:
+			p.modulate = Color(1, 1, 1, 1) # Full brightness
 		else:
-			# On le grise (plus sombre s'il est mort, un peu moins s'il attend juste son tour)
 			if p.get_life() <= 0:
-				p.modulate = Color(0.2, 0.2, 0.2, 0.8) # Mort
+				p.modulate = Color(0.2, 0.2, 0.2, 0.8) # Dead/Dark
 			else:
-				p.modulate = Color(0.3, 0.3, 0.3, 1) # En attente
+				p.modulate = Color(0.3, 0.3, 0.3, 1) # Waiting/Dimmed
 
-func _on_joueur_a_fini():
-	# déconnexion signal ancien joueur
-	var profil_precedent = DatabaseConfig.script_general.profils_noeuds[joueur_actuel]
-	if profil_precedent.keypad.mine_terminee.is_connected(_on_joueur_a_fini):
-		profil_precedent.keypad.mine_terminee.disconnect(_on_joueur_a_fini)
+func _on_player_finished():
+	# Disconnect signal from the player who just finished
+	var previous_profile = DatabaseConfig.script_general.profile_nodes[current_player_idx]
+	if previous_profile.keypad.mine_completed.is_connected(_on_player_finished):
+		previous_profile.keypad.mine_completed.disconnect(_on_player_finished)
 
-	joueur_actuel += 1
-	_passer_au_joueur_suivant()
+	current_player_idx += 1
+	_move_to_next_player()
 
-func afficher_resultat(victoire: bool):
-	if victoire:
-		win_end.show()
-		win_end.play()
-		
+func display_result(victory: bool):
+	if victory:
+		win_animation.show()
+		win_animation.play()
 	else:
-		lose_end.show()
-		lose_end.play()
-		
+		lose_animation.show()
+		lose_animation.play()
 		
 func _on_button_pressed() -> void:
-	dés.hide()
-	lancer_evenement_mine()
-	passturn.show()
-	
+	dice_control.hide()
+	start_mine_event()
+	pass_turn_button.show()
 
 func _on_passturn_pressed() -> void:
-	fin_jeu.afficher_resultat(false)
+	# Manual game over / concede
+	game_over_screen.display_result(false)

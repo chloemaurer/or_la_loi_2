@@ -1,124 +1,117 @@
 class_name Profil
 extends Control
 
-@onready var liste_des_coeurs: HBoxContainer = $Resources/Life
-@onready var liste_drink: HBoxContainer = $Resources/Drink
-@onready var liste_food: HBoxContainer = $Resources/Food
-@onready var money: Label = $Items/Items/Money
-@onready var nom_joueur: Label = $NomJoueur
-@onready var munition: Label = $Items/Items/Control/Munition
+# --- UI Nodes ---
+@onready var life_container: HBoxContainer = $Resources/Life # liste_des_coeurs
+@onready var drink_container: HBoxContainer = $Resources/Drink # liste_drink
+@onready var food_container: HBoxContainer = $Resources/Food # liste_food
+@onready var money_label: Label = $Items/Items/Money # money
+@onready var player_name: Label = $NomJoueur # nom_joueur
+@onready var ammo_label: Label = $Items/Items/Control/Munition # munition
 @onready var keypad: Node2D = $Keypad
-@onready var gun: TextureRect = $Items/Items/Control/Gun
-@onready var player_icone: TextureRect = $"PlayerIcon/Personnage"
-@onready var fond: TextureRect = $"TextureRect"
+@onready var weapon_icon: TextureRect = $Items/Items/Control/Gun # gun
+@onready var player_icon: TextureRect = $"PlayerIcon/Personnage" # player_icone
+@onready var background: TextureRect = $"TextureRect" # fond
 
-@onready var personnages = [
-	{"sprite": preload("uid://brntffde21jyb"), "fond": preload("uid://k8aqihjvcery")},
-	{"sprite": preload("uid://b56iwvx4nh63n"), "fond": preload("uid://cgvlmje6wxcwj")},
-	{"sprite": preload("uid://bg3rdqu4pcayv"), "fond": preload("uid://ge5n77q02fhq")},
-	{"sprite": preload("uid://d3hkmacsq0pag"), "fond": preload("uid://b7mfhv7byc41k")},
+# --- Assets ---
+@onready var characters = [
+	{"sprite": preload("uid://brntffde21jyb"), "background": preload("uid://k8aqihjvcery")},
+	{"sprite": preload("uid://b56iwvx4nh63n"), "background": preload("uid://cgvlmje6wxcwj")},
+	{"sprite": preload("uid://bg3rdqu4pcayv"), "background": preload("uid://ge5n77q02fhq")},
+	{"sprite": preload("uid://d3hkmacsq0pag"), "background": preload("uid://b7mfhv7byc41k")},
 ]
 
-const NIV_1_ICON = preload("uid://dwg03ruoyaydt")
-const NIV_2_ICON = preload("uid://dmcrgshg65fct")
-const NIV_3_ICON = preload("uid://v5lcdv6u4ott")
+const LVL_1_GUN = preload("uid://dwg03ruoyaydt") # NIV_1_ICON
+const LVL_2_GUN = preload("uid://dmcrgshg65fct") # NIV_2_ICON
+const LVL_3_GUN = preload("uid://v5lcdv6u4ott") # NIV_3_ICON
 
-# Variables internes pour mémoriser les stats (très important pour le Dispatcher)
-var _vie: int = 0
-var _food: int = 0
-var _drink: int = 0
-var _money: int = 0
-var _munition: int = 0
-var _arme: int = 0
+# --- Internal Stats (Mirrors for the Dispatcher) ---
+var _current_life: int = 0
+var _current_food: int = 0
+var _current_drink: int = 0
+var _current_money: int = 0
+var _current_ammo: int = 0
+var _current_weapon_lvl: int = 0
 
 
-func update_visuel(cle: String, valeur):
-	
-	match cle:
+# Called by DatabaseConfig's dispatcher to refresh visuals
+func update_visual(key: String, value):
+	match key:
 		"Icone":
-			var index = int(valeur)
-			if index >= 0 and index < personnages.size():
-				var design = personnages[index]
-				if player_icone: 
-					player_icone.texture = design["sprite"]
-					
-				if fond:
-					fond.texture = design["fond"]
-				else:
-					# Si ce message s'affiche, c'est que ton chemin @onready fond est faux
-					print("ERREUR : Le noeud 'fond' est introuvable sur ", name)
+			var index = int(value)
+			if index >= 0 and index < characters.size():
+				var design = characters[index]
+				if player_icon: 
+					player_icon.texture = design["sprite"]
+				if background:
+					background.texture = design["background"]
 			else:
-				print("ERREUR : Index d'icône invalide : ", index)
+				print("ERROR: Invalid icon index: ", index)
 				
 		"Vie":
-			_vie = int(valeur)
-			_update_hbox_icons(liste_des_coeurs, _vie)
+			_current_life = int(value)
+			_update_hbox_icons(life_container, _current_life)
 		"Nourriture":
-			_food = int(valeur)
-			_update_hbox_icons(liste_food, _food)
+			_current_food = int(value)
+			_update_hbox_icons(food_container, _current_food)
 		"Boisson":
-			_drink = int(valeur)
-			_update_hbox_icons(liste_drink, _drink)
+			_current_drink = int(value)
+			_update_hbox_icons(drink_container, _current_drink)
 		"Argent":
-			_money = int(valeur)
-			# SÉCURITÉ ICI : On vérifie si le Label est prêt
-			if money: 
-				money.text = str(_money)
+			_current_money = int(value)
+			if money_label: 
+				money_label.text = str(_current_money)
 		"Nom":
-			nom_joueur.text = str(valeur)
+			player_name.text = str(value)
 		"Munition":
-			_munition = int(valeur)
-			# SÉCURITÉ ICI : On vérifie si le Label est prêt
-			if munition: 
-				munition.text = str(_munition)
+			_current_ammo = int(value)
+			if ammo_label: 
+				ammo_label.text = str(_current_ammo)
 		"Arme":
-			_arme = int(valeur)
-			show_gun()
+			_current_weapon_lvl = int(value)
+			_show_weapon_visual()
 
-# Fonction utilitaire pour éviter de répéter les boucles
+# Helper function to dim/highlight resource icons
 func _update_hbox_icons(container: HBoxContainer, n: int):
 	if not container: return
-	var enfants = container.get_children()
-	for i in range(enfants.size()):
-		# Rose/Rouge si actif, noir si vide
-		enfants[i].modulate = Color(0.345, 0.345, 0.345) if i < n else Color(0.149, 0.149, 0.149)
+	var children = container.get_children()
+	for i in range(children.size()):
+		# Active color (greyish pink) vs Empty color (dark grey)
+		children[i].modulate = Color(0.345, 0.345, 0.345) if i < n else Color(0.149, 0.149, 0.149)
 
-# --- FONCTIONS DE LECTURE (Appelées par le script Principal) ---
-# Note : Les noms correspondent maintenant exactement à ton script Principal
+# --- GETTERS (Called by Main script and Mine script) ---
 
 func get_life(): 
-	return _vie
+	return _current_life
 
 func get_food(): 
-	return _food
+	return _current_food
 
 func get_drink(): 
-	return _drink
+	return _current_drink
 
 func get_money(): 
-	return _money
+	return _current_money
 	
 func get_munition(): 
-	return _munition
+	return _current_ammo
 	
 func get_gun():
-	return _arme
+	return _current_weapon_lvl
 
-func show_gun():
-	# On utilise la variable interne mise à jour par update_visuel
-	match _arme:
+# --- Visual updates ---
+
+func _show_weapon_visual():
+	match _current_weapon_lvl:
 		1:
-			gun.texture = NIV_1_ICON
-			print("Visuel : Arme Niveau 1")
+			weapon_icon.texture = LVL_1_GUN
+			print("Visual: Weapon Level 1")
 		2:
-			gun.texture = NIV_2_ICON
-			print("Visuel : Arme Niveau 2")
+			weapon_icon.texture = LVL_2_GUN
+			print("Visual: Weapon Level 2")
 		3:
-			gun.texture = NIV_3_ICON
-			print("Visuel : Arme Niveau 3")
-
+			weapon_icon.texture = LVL_3_GUN
+			print("Visual: Weapon Level 3")
 
 func _on_keypad_open_pressed() -> void:
-	# On inverse la visibilité
 	keypad.visible = !keypad.visible
-	

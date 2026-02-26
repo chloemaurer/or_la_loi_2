@@ -44,10 +44,10 @@
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
 [ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
-[ext_resource type="VideoStream" path="res://animation/finMauvaise.ogv" id="42_fvccq"]
-[ext_resource type="VideoStream" path="res://animation/histoire.ogv" id="42_ihcfc"]
+[ext_resource type="VideoStream" uid="uid://6s4hl28tk7lh" path="res://animation/finMauvaise.ogv" id="42_fvccq"]
+[ext_resource type="VideoStream" uid="uid://bcigcs1sdnj4p" path="res://animation/histoire.ogv" id="42_ihcfc"]
 [ext_resource type="AudioStream" uid="uid://bqbk8bj442cxn" path="res://son/Musique_jeu_mixage final.ogg" id="42_nc7xk"]
-[ext_resource type="VideoStream" path="res://animation/finBonne.ogv" id="43_cbgdg"]
+[ext_resource type="VideoStream" uid="uid://cxsmmo6l0qh4h" path="res://animation/finBonne.ogv" id="43_cbgdg"]
 [ext_resource type="VideoStream" path="res://animation/tempetesable.ogv" id="44_fvccq"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
 [ext_resource type="AudioStream" uid="uid://w1yxyfcdf6vc" path="res://son/get_resources.mp3" id="49_1qqir"]
@@ -91,6 +91,10 @@ font_size = 75
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
+content_margin_left = 20.0
+content_margin_top = 15.0
+content_margin_right = 20.0
+content_margin_bottom = 15.0
 bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -104,6 +108,21 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_meguh"]
 font = ExtResource("10_mh0tp")
 font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g42em"]
+content_margin_left = 20.0
+content_margin_top = 15.0
+content_margin_right = 20.0
+content_margin_bottom = 15.0
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meguh"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -161,6 +180,10 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwvs3"]
 bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
@@ -419,6 +442,7 @@ offset_top = 13.785715
 offset_right = 285.4286
 offset_bottom = 70.78571
 scale = Vector2(0.7203803, 0.7653786)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yftia")
@@ -616,7 +640,7 @@ offset_left = 308.0
 offset_top = 63.0
 offset_right = 830.0
 offset_bottom = 578.0
-theme_override_constants/separation = 40
+theme_override_constants/separation = 55
 
 [node name="Titre" type="Label" parent="Map/Armory/VBoxContainer" unique_id=1172683732]
 layout_mode = 2
@@ -690,7 +714,7 @@ theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 38
-theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g42em")
 text = "Acheter une munition"
 
 [node name="ArmoryUseCard" type="Button" parent="Map/Armory/VBoxContainer" unique_id=1362764953]
@@ -699,16 +723,16 @@ size_flags_horizontal = 4
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 38
-theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g42em")
 text = "Utiliser une carte armurerie"
 
 [node name="Mine" parent="Map" unique_id=970763158 instance=ExtResource("33_vdtr1")]
 visible = false
 layout_mode = 0
-offset_left = 793.0
-offset_top = 467.9997
-offset_right = 793.0
-offset_bottom = 557.9997
+offset_left = 805.0
+offset_top = 487.9997
+offset_right = 805.0
+offset_bottom = 577.9997
 scale = Vector2(0.6400012, 0.6400012)
 
 [node name="Duel" parent="Map" unique_id=1497874943 instance=ExtResource("9_v2y4t")]
@@ -974,17 +998,17 @@ visible = false
 layout_mode = 1
 anchor_right = 0.661
 anchor_bottom = 0.72200006
-offset_left = 728.9999
-offset_top = 451.9998
-offset_right = 742.4895
-offset_bottom = 468.04068
+offset_left = 694.99994
+offset_top = 459.99976
+offset_right = 708.4895
+offset_bottom = 516.3031
 scale = Vector2(0.64000136, 0.64000136)
 script = ExtResource("21_srya7")
 
 [node name="Panel" type="Panel" parent="Map/GiveCard" unique_id=461444429]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 43.54479
 scale = Vector2(19.383072, 12.068146)
 theme_override_styles/panel = SubResource("StyleBoxFlat_voqbm")
 
@@ -1077,9 +1101,9 @@ vertical_alignment = 1
 [node name="GiveCard" type="Button" parent="Map/GiveCard" unique_id=636693576]
 layout_mode = 0
 offset_left = 239.0621
-offset_top = 403.12402
+offset_top = 390.62405
 offset_right = 515.9436
-offset_bottom = 455.443
+offset_bottom = 442.94302
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_fonts/font = ExtResource("10_mh0tp")

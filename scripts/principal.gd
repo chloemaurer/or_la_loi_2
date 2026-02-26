@@ -1,430 +1,342 @@
 extends Control
 
-@onready var profils_noeuds = [
+# --- Player and UI Nodes ---
+@onready var profile_nodes = [
 	$Profils/Profil,
 	$Profils/Profil2,
 	$Profils/Profil3,
 	$Profils/Profil4
 ]
 
-@onready var boutons_fin_tour = [
+@onready var end_turn_buttons = [
 	$Profils/Profil/EndTurn1, 
 	$Profils/Profil2/EndTurn2, 
 	$Profils/Profil3/EndTurn3, 
 	$Profils/Profil4/EndTurn4
 ]
 
-@onready var keypad = [
+@onready var keypads = [
 	$Profils/Profil/Keypad, 
 	$Profils/Profil2/Keypad, 
 	$Profils/Profil3/Keypad,
 	$Profils/Profil4/Keypad
 ]
-@onready var labels_start = [
+
+@onready var start_labels = [
 	$Profils/Profil/StartProfil1,
 	$Profils/Profil2/StartProfil2,
 	$Profils/Profil3/StartProfil3,
 	$Profils/Profil4/StartProfil4
 ]
 
-var joueurs_prets = [false, false, false, false]
-var jeu_demarre = false
-var cible_duel_id : String = ""
-@onready var places: Node2D = $Map/Places
+# --- Logic Variables ---
+var players_ready = [false, false, false, false]
+var game_started = false
+
+# --- Map and Shop Nodes ---
+@onready var places_controller: Node2D = $Map/Places # places
 @onready var restaurant_shop: Control = $Map/RestaurantShop
 @onready var saloon_shop: Control = $Map/SaloonShop
 @onready var armory: Control = $Map/Armory
 @onready var bank: Control = $Map/Bank
 @onready var duel: Control = $Map/Duel
 @onready var give_card: Control = $Map/GiveCard
-@onready var map: Control = $Map
-@onready var start_action: Control = $Map/StartAction
-@onready var mine: Control = $Map/Mine
-@onready var manche_transition: VideoStreamPlayer = $Map/MancheTransition
-@onready var result: Control = $Map/Result
-@onready var duel_result: Control = $Map/DuelResult
-@onready var give_card_effect: Control = $Map/GiveCardEffect
+@onready var map_container: Control = $Map # map
+@onready var start_action_menu: Control = $Map/StartAction # start_action
+@onready var mine_event: Control = $Map/Mine # mine
+@onready var round_transition_video: VideoStreamPlayer = $Map/MancheTransition # round_transition
+@onready var result_screen: Control = $Map/Result # result
+@onready var duel_result_screen: Control = $Map/DuelResult # duel_result
+@onready var gift_effect_overlay: Control = $Map/GiveCardEffect # give_card_effect
 @onready var map_visual: TextureRect = $Map/Panel2/MapVisual
-@onready var sand_tempest: VideoStreamPlayer = $Map/SandTempest
-
-
+@onready var sand_storm_video: VideoStreamPlayer = $Map/SandTempest # sand_tempest
 
 func _ready() -> void:
+	# Reference this script in the global singleton
 	DatabaseConfig.script_general = self
 	
-	DatabaseConfig.script_saloon = $Map/SaloonShop
-	DatabaseConfig.script_restaurant = $Map/RestaurantShop
-	DatabaseConfig.script_bank = $Map/Bank
-	DatabaseConfig.script_armory = $Map/Armory
-	DatabaseConfig.script_duel = $Map/Duel
-	DatabaseConfig.script_don = $Map/GiveCard
-	DatabaseConfig.script_result = $Map/Result
-	DatabaseConfig.script_duel_result = $Map/DuelResult
-	DatabaseConfig.script_don_result = $Map/GiveCardEffect
+	# Set references for sub-scripts in the Singleton
+	DatabaseConfig.script_saloon = saloon_shop
+	DatabaseConfig.script_restaurant = restaurant_shop
+	DatabaseConfig.script_bank = bank
+	DatabaseConfig.script_armory = armory
+	DatabaseConfig.script_duel = duel
+	DatabaseConfig.script_don = give_card
+	DatabaseConfig.script_result = result_screen
+	DatabaseConfig.script_duel_result = duel_result_screen
+	DatabaseConfig.script_don_result = gift_effect_overlay
 	
 	give_card.hide()
 	
-	if DatabaseConfig.cache_cartes != null:
-		for kp in keypad:
-			if is_instance_valid(kp) and kp.has_method("mettre_a_jour_catalogue"):
-				kp.mettre_a_jour_catalogue("cartes", DatabaseConfig.cache_cartes)
-	# 4. Connexion des signaux UI
-	for i in range(profils_noeuds.size()):
-		profils_noeuds[i].gui_input.connect(_on_profil_clique.bind(i))
-		boutons_fin_tour[i].pressed.connect(_on_end_turn_pressed.bind(i))
-		boutons_fin_tour[i].hide()
-	# 5. Initialisation Firebase
+	# Initialize keypads with cached cards if available
+	if DatabaseConfig.cards_cache != null:
+		for kp in keypads:
+			if is_instance_valid(kp) and kp.has_method("update_catalog"):
+				kp.update_catalog("cards", DatabaseConfig.cards_cache)
+
+	# Connect Player Profile UI signals
+	for i in range(profile_nodes.size()):
+		profile_nodes[i].gui_input.connect(_on_profile_clicked.bind(i))
+		end_turn_buttons[i].pressed.connect(_on_end_turn_pressed.bind(i))
+		end_turn_buttons[i].hide()
+
+	# Start initialization if DB is ready, otherwise wait for signal
 	if DatabaseConfig.is_ready:
-		_initialisation_depart()
-		
+		_initialize_game_state()
 	else:
-		DatabaseConfig.db_ready.connect(_initialisation_depart)
+		DatabaseConfig.db_ready.connect(_initialize_game_state)
 
-func _initialisation_depart():
-	print("En attente des joueurs... Cliquez sur vos profils pour commencer.")
-	places.hide()
-	start_action.hide()
-	for i in range(profils_noeuds.size()):
-		profils_noeuds[i].modulate = Color(0.5, 0.5, 0.5, 1) 
-		if is_instance_valid(labels_start[i]):
-			labels_start[i].show()
+func _initialize_game_state():
+	print("[Main] Game ready. Waiting for players to join...")
+	places_controller.hide()
+	start_action_menu.hide()
+	for i in range(profile_nodes.size()):
+		profile_nodes[i].modulate = Color(0.5, 0.5, 0.5, 1) 
+		if is_instance_valid(start_labels[i]):
+			start_labels[i].show()
 		
-func distribuer_donnees(chemin: String, data):
-	if chemin == "profils" and typeof(data) == TYPE_DICTIONARY:
-		for profil_id in data.keys(): # profil_id sera "ID0", "ID1", etc.
-			var index = int(profil_id.replace("ID", ""))
-			if index < profils_noeuds.size():
-				var cible = profils_noeuds[index]
-				var stats = data[profil_id] # Le dictionnaire de stats du profil
+func distribute_data(path: String, data):
+	# Refresh visuals for all profiles or a specific stat
+	if path == "profils" and typeof(data) == TYPE_DICTIONARY:
+		for profile_id in data.keys():
+			var index = int(profile_id.replace("ID", ""))
+			if index < profile_nodes.size():
+				var target = profile_nodes[index]
+				var stats = data[profile_id]
 				if typeof(stats) == TYPE_DICTIONARY:
-					for cle in stats.keys():
-						cible.update_visuel(cle, stats[cle])
-
-	# CAS 2 : Mise à jour précise (ex: "profils/ID0/Vie")
+					for key in stats.keys():
+						target.update_visual(key, stats[key])
 	else:
-		for i in range(profils_noeuds.size()):
+		# Targeted update for specific paths (e.g., "profils/ID0/Vie")
+		for i in range(profile_nodes.size()):
 			var tag = "ID" + str(i)
-			if tag in chemin:
-				var cible = profils_noeuds[i]
+			if tag in path:
+				var target = profile_nodes[i]
 				if typeof(data) == TYPE_DICTIONARY:
-					for cle in data.keys():
-						cible.update_visuel(cle, data[cle])
+					for key in data.keys():
+						target.update_visual(key, data[key])
 				else:
-					var parties = chemin.split("/")
-					var cle_finale = parties[-1] 
-					cible.update_visuel(cle_finale, data)
+					var parts = path.split("/")
+					var final_key = parts[-1] 
+					target.update_visual(final_key, data)
 				break
 
-# --- LOGIQUE DE JEU ---
+# --- Turn and Round Logic ---
 
-func selectionner_profil(index_choisi: int):
-	print("Passage au profil : ", index_choisi)
-	start_action.show()
-	DatabaseConfig.current_profil_id = str(index_choisi)
-	DatabaseConfig.actions_faites = 0 
+func select_profile(chosen_index: int):
+	print("[Main] Switching to active profile: ", chosen_index)
+	start_action_menu.show()
+	DatabaseConfig.current_profile_id = str(chosen_index)
+	DatabaseConfig.actions_done = 0 
 	
-	if index_choisi == 2 or index_choisi == 3:
-		map.rotation_degrees = 180
+	# Rotate UI for local players seated on the other side of the screen
+	if chosen_index == 2 or chosen_index == 3:
+		map_container.rotation_degrees = 180
 	else:
-		map.rotation_degrees = 0
+		map_container.rotation_degrees = 0
 		
-	_synchroniser_stats_vers_global(index_choisi)
+	_sync_stats_to_global(chosen_index)
 	
-	for i in range(profils_noeuds.size()):
-		# CORRECTION : On vérifie si le mec est mort AVANT de changer sa couleur
-		if profils_noeuds[i].get_life() <= 0:
-			profils_noeuds[i].modulate.a = 0.3 # Il reste transparent
-			boutons_fin_tour[i].hide()
-		elif i == index_choisi:
-			profils_noeuds[i].modulate = Color(1, 1, 1, 1) 
-			boutons_fin_tour[i].disabled = false
-			boutons_fin_tour[i].show()
+	# Update visual focus and turn buttons
+	for i in range(profile_nodes.size()):
+		if profile_nodes[i].get_life() <= 0:
+			profile_nodes[i].modulate.a = 0.3 # Dead player styling
+			end_turn_buttons[i].hide()
+		elif i == chosen_index:
+			profile_nodes[i].modulate = Color(1, 1, 1, 1) # Active
+			end_turn_buttons[i].disabled = false
+			end_turn_buttons[i].show()
 		else:
-			profils_noeuds[i].modulate = Color(0.3, 0.3, 0.3, 1)
-			boutons_fin_tour[i].disabled = true
-			boutons_fin_tour[i].hide()
+			profile_nodes[i].modulate = Color(0.3, 0.3, 0.3, 1) # Dimmed
+			end_turn_buttons[i].disabled = true
+			end_turn_buttons[i].hide()
 			
-			
-func _synchroniser_stats_vers_global(index: int):
-	var cible = profils_noeuds[index]
+func _sync_stats_to_global(index: int):
+	var target = profile_nodes[index]
 	
-	# Si la cible n'existe pas ou n'a pas le script Profil attaché
-	if not is_instance_valid(cible) or not cible.has_method("get_life"):
-		print("Attente du script Profil sur le noeud : ", index)
-		await get_tree().process_frame # On attend une frame
-		_synchroniser_stats_vers_global(index) # On recommence
-		return # On arrête l'exécution ici pour ne pas lire la suite
+	# Small safety delay to ensure nodes are fully updated
+	if not is_instance_valid(target) or not target.has_method("get_life"):
+		await get_tree().process_frame
+		_sync_stats_to_global(index)
+		return
 
+	DatabaseConfig.local_life = target.get_life()
+	DatabaseConfig.local_food = target.get_food()
+	DatabaseConfig.local_drink = target.get_drink()
+	DatabaseConfig.local_money = target.get_money()
+	DatabaseConfig.local_munition = target.get_munition()
+	DatabaseConfig.current_gun_level = target.get_gun()
+	
+func _on_end_turn_pressed(current_index: int):
+	# Check resources for the player ending their turn
+	_check_and_punish_starvation()
+	
+	var next_profile = (current_index + 1) % profile_nodes.size()
+	var attempts = 0
+	var lone_survivor = false
 
-	DatabaseConfig.life_local = cible.get_life()
-	DatabaseConfig.food_local = cible.get_food()
-	DatabaseConfig.drink_local = cible.get_drink()
-	DatabaseConfig.money_local = cible.get_money()
-	DatabaseConfig.munition_local = cible.get_munition()
-	DatabaseConfig.actual_Gun = cible.get_gun()
-	
+	# Find next alive player
+	while profile_nodes[next_profile].get_life() <= 0 and attempts < profile_nodes.size():
+		next_profile = (next_profile + 1) % profile_nodes.size()
+		attempts += 1
 		
-func _on_end_turn_pressed(index_actuel: int):
-	check_resources_globale()
-	
-	var prochain_profil = (index_actuel + 1) % profils_noeuds.size()
-	var tentative = 0
-	var _seul_survivant = false
-	# Passer les joueurs morts
-	while profils_noeuds[prochain_profil].get_life() <= 0 and tentative < profils_noeuds.size():
-		print("Joueur ID", prochain_profil, " est mort, on saute...")
-		prochain_profil = (prochain_profil + 1) % profils_noeuds.size()
-		tentative += 1
+	if next_profile == current_index:
+		lone_survivor = true
 		
+	# New Round Detection (when the cycle returns to 0 or lone survivor finishes)
+	if next_profile <= current_index or lone_survivor:
+		DatabaseConfig.current_round += 1
+		round_transition_video.show()
+		round_transition_video.play()
+		_consume_round_resources()
 		
-	if prochain_profil == index_actuel:
-		_seul_survivant = true
-		print("Un seul survivant détecté (ID", index_actuel, "). Passage de manche forcé.")
-		
-	# Changement de manche détecté
-	if prochain_profil <= index_actuel or _seul_survivant:
-		DatabaseConfig.manches += 1
-		manche_transition.show()
-		manche_transition.play()
-		_consommer_ressources_manche()
-			
-		print("--- TOUS LES JOUEURS ONT JOUÉ ---")
-		print("DÉBUT DE LA MANCHE : ", DatabaseConfig.manches)
-		
-		# Mise à jour visuelle des wagons
+		# Update visual round counters
 		if has_node("Manches"): $Manches.fill_wagon()
 		if has_node("Manches2"): $Manches2.fill_wagon()
 		
-		##-----Changement Map et apparition de la mine
-		#if DatabaseConfig.manches == 6:
-			#
-			#sand_tempest.show()
-			#sand_tempest.play()
-			#map_visual.texture = preload("uid://b8lqmhaiis554")
-		# --- DÉCLENCHEMENT DE LA MINE (MANCHE 11) ---
-		if DatabaseConfig.manches >= 11:
-			print("!!! ÉVÉNEMENT MINE ACTIVÉ !!!")
+		# Trigger End Game Event
+		if DatabaseConfig.current_round >= 11:
+			start_action_menu.hide()
+			places_controller.hide()
+			places_controller.close_all()
+			DatabaseConfig.actions_done = 0 
+			mine_event.show()
+			return 
 			
-			# 1. On nettoie l'interface
-			start_action.hide()
-			places.hide()
-			places.close_all()
-			
-			# 2. On reset les actions pour le mode sacrifice
-			DatabaseConfig.actions_faites = 0 
-			
-			# 3. On affiche la mine
-			mine.show()
-
-			return # ON ARRÊTE TOUT ICI : On ne sélectionne pas de profil normal
-			
-	# --- LOGIQUE NORMALE (HORS MINE) ---
-	# 4. On active le nouveau joueur
-	selectionner_profil(prochain_profil)
-	
-	# 5. Reset de l'interface pour le nouveau tour
-	places.show()
-	places.close_all()
-	places.close_place()
+	# Move to next turn
+	select_profile(next_profile)
+	places_controller.show()
+	places_controller.close_all()
+	places_controller.close_place()
 		
-	# On change les menus des boutiques pour le nouveau joueur
-	if restaurant_shop: restaurant_shop.random_food()
-	if saloon_shop: saloon_shop.random_drink()
+	if restaurant_shop: restaurant_shop.randomize_food()
+	if saloon_shop: saloon_shop.randomize_drink()
 
-func check_resources_globale():
-	var i = int(DatabaseConfig.current_profil_id)
-	var joueur = profils_noeuds[i]
+# Checks if player is starving or thirsty and applies penalties
+func _check_and_punish_starvation():
+	var i = int(DatabaseConfig.current_profile_id)
+	var player = profile_nodes[i]
 	
-	if joueur.get_life() > 0:
+	if player.get_life() > 0:
 		var id_str = str(i)
-		var vie_a_perdre = 0
+		var life_to_lose = 0
 		
-		# Règle : Si 0 nourriture ou 0 boisson, on perd de la vie
-		if joueur.get_food() <= 0:
-			vie_a_perdre += 1
-		if joueur.get_drink() <= 0:
-			vie_a_perdre += 1
+		if player.get_food() <= 0: life_to_lose += 1
+		if player.get_drink() <= 0: life_to_lose += 1
 			
-		if vie_a_perdre > 0:
-			print("Joueur ", id_str, " n'a plus de ressources. Perte de ", vie_a_perdre, " vie(s).")
-			DatabaseConfig.lose_life(vie_a_perdre, id_str)
-			# Règle : On redonne 2 de chaque après une perte de vie
+		if life_to_lose > 0:
+			DatabaseConfig.lose_life(life_to_lose, id_str)
+			# Emergency relief to prevent instant death loop next turn
 			DatabaseConfig.get_food(2, id_str)
 			DatabaseConfig.get_drink(2, id_str)
 		
-		# Si le joueur est mort après la perte de vie
-		if joueur.get_life() <= 0:
-			Kill_player(i)
+		if player.get_life() <= 0:
+			kill_player(i)
 
-
-# --- 2. CONSOMMATION À LA FIN DE LA MANCHE (TOUT LE MONDE) ---
-func _consommer_ressources_manche():
-	print("--- Fin de manche : Consommation des ressources ---")
-	for i in range(profils_noeuds.size()):
-		var joueur = profils_noeuds[i]
+# Deduct resources for everyone alive at start of new round
+func _consume_round_resources():
+	for i in range(profile_nodes.size()):
+		var player = profile_nodes[i]
 		var id_str = str(i)
 		
-		if joueur.get_life() > 0:
-			# On retire 1 de chaque
+		if player.get_life() > 0:
 			DatabaseConfig.get_food(-1, id_str)
 			DatabaseConfig.get_drink(-1, id_str)
 			
-			# On vérifie s'ils sont tombés à 0 ou moins après le retrait
-			var vie_a_perdre_manche = 0
-			if joueur.get_food() <= 0:
-				vie_a_perdre_manche += 1
-			if joueur.get_drink() <= 0:
-				vie_a_perdre_manche += 1
+			# Check if this deduction killed them
+			var life_to_lose = 0
+			if player.get_food() <= 0: life_to_lose += 1
+			if player.get_drink() <= 0: life_to_lose += 1
 				
-			if vie_a_perdre_manche > 0:
-				print("Manche fatale pour ID", id_str, ". Perte de ", vie_a_perdre_manche, " PV.")
-				DatabaseConfig.lose_life(vie_a_perdre_manche, id_str)
-				# Règle : On redonne 2 de chaque
+			if life_to_lose > 0:
+				DatabaseConfig.lose_life(life_to_lose, id_str)
 				DatabaseConfig.get_food(2, id_str)
 				DatabaseConfig.get_drink(2, id_str)
 				
-			# Vérification finale de mort
-			if joueur.get_life() <= 0:
-				Kill_player(i)
+			if player.get_life() <= 0:
+				kill_player(i)
 				
-func Kill_player(index: int):
-	print("Le joueur ", index, " est éliminé.")
-	var cible = profils_noeuds[index]
+func kill_player(index: int):
+	var target = profile_nodes[index]
 	var id_str = str(index)
-	cible.modulate.a = 0.5
-	DatabaseConfig.get_food(-5,id_str) 
-	DatabaseConfig.get_drink(-5,id_str)
+	target.modulate.a = 0.5
+	# Reset resources for dead players
+	DatabaseConfig.get_food(-5, id_str) 
+	DatabaseConfig.get_drink(-5, id_str)
 	DatabaseConfig.players_alive -= 1
-	# Optionnel : On cache son bouton pour qu'il ne puisse plus cliquer
-	boutons_fin_tour[index].hide()
+	end_turn_buttons[index].hide()
 
-func revive_player():
-	# On remet la couleur normale (blanc = pas de filtre)
-	self.modulate = Color(1, 1, 1, 1)
-	# On s'assure que le bouton de fin de tour est à nouveau cliquable
-	if has_node("EndTurn1"):
-		get_node("EndTurn1").disabled = false
-	print("Le joueur ", name, " est revenu à la vie !")
-	
-	
-#---- Tour -------------------------------------------------------------------------
-func verifier_limite_actions():
-	if DatabaseConfig.actions_faites >= 2:
-		DatabaseConfig.notifier_erreur("Limite d'action atteinte pour votre tour")
-		print("[Tour] Limite atteinte, fermeture des lieux.")
-		places.close_all() # Ferme visuellement les accès aux boutiques
-		places.hide()
-		
-		
-#----------------------------------------
+func check_action_limit():
+	if DatabaseConfig.actions_done >= 2:
+		DatabaseConfig.notify_error("Limite d'action atteinte pour votre tour")
+		places_controller.close_all() 
+		places_controller.hide()
 
+# --- Interaction Handlers ---
 
-func _on_profil_clique(event: InputEvent, index: int):
-
-# Si le jeu est déjà lancé, on ignore les clics sur les profils
-
-	if jeu_demarre:
-
-		return
+func _on_profile_clicked(event: InputEvent, index: int):
+	if game_started: return
 
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if not players_ready[index]:
+			players_ready[index] = true
+			profile_nodes[index].modulate = Color(1, 1, 1, 1)
+			if is_instance_valid(start_labels[index]):
+				start_labels[index].hide()
 
-		if not joueurs_prets[index]:
-			joueurs_prets[index] = true
-			profils_noeuds[index].modulate = Color(1, 1, 1, 1) # On allume le profil
-			if is_instance_valid(labels_start[index]):
-					labels_start[index].hide()
-			print("Joueur ", index, " est prêt !")
+	_check_all_players_ready()
 
-	verifier_tous_les_joueurs_prets()
+func _check_all_players_ready():
+	if not players_ready.has(false):
+		game_started = true
+		for i in range(profile_nodes.size()):
+			if profile_nodes[i].gui_input.is_connected(_on_profile_clicked):
+				profile_nodes[i].gui_input.disconnect(_on_profile_clicked)
+		select_profile(0)
 
-func verifier_tous_les_joueurs_prets():
-	if not joueurs_prets.has(false): # Si plus aucun 'false' dans le tableau
-		jeu_demarre = true
-		print("TOUS LES JOUEURS SONT PRÊTS ! Lancement de la partie...")
-		
-		# On déconnecte les clics sur les profils pour le reste de la partie
-		for i in range(profils_noeuds.size()):
-			if profils_noeuds[i].gui_input.is_connected(_on_profil_clique):
-				profils_noeuds[i].gui_input.disconnect(_on_profil_clique)
-		
-		# On lance enfin le premier tour
-		selectionner_profil(0)
-
-func ouvrir_menu_duel():
-	# 1. On identifie qui est le joueur actif (ex: "0")
-	var mon_id = DatabaseConfig.current_profil_id
-	print("[Principal] Tentative d'ouverture du Duel pour l'ID : ", mon_id)
-	
-	# 2. Sécurité : on vérifie que le nœud Duel et sa méthode existent
-	if is_instance_valid(duel) and duel.has_method("remplir_selection"):
-		duel.remplir_selection(profils_noeuds, mon_id)
-		duel.show()
-		print("[Principal] Menu Duel affiché avec succès.")
-	else:
-		print("[Principal] ERREUR : Le menu Duel n'est pas prêt ou la méthode est absente.")
-
-		
-# La fonction liée au signal "pressed" de ton bouton Duel sur l'interface
 func _on_duel_pressed() -> void:
-	ouvrir_menu_duel()
+	var my_id = DatabaseConfig.current_profile_id
+	if is_instance_valid(duel) and duel.has_method("fill_selection"):
+		duel.fill_selection(profile_nodes, my_id)
+		duel.show()
 	
-func open_current_keypad():
-	# 1. On vérifie d'abord si le joueur a déjà fait ses 2 actions
-	if DatabaseConfig.actions_faites >= 2:
-		print("[Sécurité] Action refusée : Limite de 2 actions atteinte !")
-		return # On arrête tout ici, le keypad ne s'ouvrira pas
+func _open_current_keypad():
+	if DatabaseConfig.actions_done >= 2: return
 		
-	var mon_id = int(DatabaseConfig.current_profil_id)
-	if mon_id < keypad.size():
-		var keypad_actuel = keypad[mon_id]
-		if is_instance_valid(keypad_actuel):
-			keypad_actuel.show()
-			print("[Principal] Ouverture du Keypad pour le joueur : ", mon_id)
-	else:
-		print("[Principal] ERREUR : ID de profil hors limites pour le Keypad")
+	var my_id = int(DatabaseConfig.current_profile_id)
+	if my_id < keypads.size():
+		var current_keypad = keypads[my_id]
+		if is_instance_valid(current_keypad):
+			current_keypad.show()
 
-#----------------------------------------------------------------------------------------
+# --- Zone UI Triggers ---
+
 func _on_saloon_use_card_pressed() -> void:
-	DatabaseConfig.zone = "saloon"
-	open_current_keypad()
+	DatabaseConfig.current_zone = "saloon"
+	_open_current_keypad()
 
 func _on_restaurant_use_card_pressed() -> void:
-	DatabaseConfig.zone = "restaurant"
-	open_current_keypad()
+	DatabaseConfig.current_zone = "restaurant"
+	_open_current_keypad()
 
 func _on_armory_use_card_pressed() -> void:
-	DatabaseConfig.zone = "armurerie"
-	open_current_keypad()
+	DatabaseConfig.current_zone = "armurerie"
+	_open_current_keypad()
 
-#func _on_mine_use_card_pressed() -> void:
-	#DatabaseConfig.zone = "mine"
-	#open_current_keypad()
-#----------------------------------------------------------------------------
-
-#func _on_give_card_pressed() -> void:
-	#open_current_keypad()
-	
 func _on_saloon_give_card_pressed() -> void:
-	DatabaseConfig.zone = "saloon"
-	var mon_id = DatabaseConfig.current_profil_id
-	give_card.remplir_selection(profils_noeuds, mon_id)
+	DatabaseConfig.current_zone = "saloon"
+	give_card.fill_selection(profile_nodes, DatabaseConfig.current_profile_id)
 	give_card.show()
 
 func _on_restaurant_give_card_pressed() -> void:
-	DatabaseConfig.zone = "restaurant" # On définit la zone avant
-	var mon_id = DatabaseConfig.current_profil_id
-	give_card.remplir_selection(profils_noeuds, mon_id)
+	DatabaseConfig.current_zone = "restaurant"
+	give_card.fill_selection(profile_nodes, DatabaseConfig.current_profile_id)
 	give_card.show()
-	
-	
-#--------------------------------------------------------------------------------
 
-
-func _on_manche_transition_finished() -> void:
-	manche_transition.hide()
-	#-----Changement Map et apparition de la mine
-	if DatabaseConfig.manches == 6:
-		sand_tempest.show()
-		sand_tempest.play()
+func _on_round_transition_finished() -> void:
+	round_transition_video.hide()
+	# Mid-game visual update (Round 6)
+	if DatabaseConfig.current_round == 6:
+		sand_storm_video.show()
+		sand_storm_video.play()
 		map_visual.texture = preload("uid://b8lqmhaiis554")

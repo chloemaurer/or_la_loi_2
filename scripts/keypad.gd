@@ -1,53 +1,59 @@
 extends Node2D
 
-var icons = [preload("uid://bh2fl2jexuv11"),preload("uid://bigj6xlc0devs"),preload("uid://b01lqf5jf531"),
-preload("uid://cm7m7l86ey38f"),preload("uid://dmhx8f5xybayy"),preload("uid://dromh00wukg7r"),
-preload("uid://by34fmmkfdae3"),preload("uid://civ1gsrq8j33m"),preload("uid://du742y314x7w0")]
+# --- Assets ---
+var icons = [
+	preload("uid://bh2fl2jexuv11"), preload("uid://bigj6xlc0devs"), preload("uid://b01lqf5jf531"),
+	preload("uid://cm7m7l86ey38f"), preload("uid://dmhx8f5xybayy"), preload("uid://dromh00wukg7r"),
+	preload("uid://by34fmmkfdae3"), preload("uid://civ1gsrq8j33m"), preload("uid://du742y314x7w0")
+]
 
+# --- UI Nodes ---
 @onready var screen: Node2D = $Screen
-@onready var code: Node2D = $Code
-@onready var back: Button = $Actions/Back
+@onready var code_buttons: Node2D = $Code # code
+@onready var back_button: Button = $Actions/Back # back
 @onready var close_button: TextureButton = $CloseButton
-@onready var money_song: AudioStreamPlayer = $"../../../Son/Money"
+@onready var money_sound: AudioStreamPlayer = $"../../../Son/Money" # money_song
 
-
+# --- Logic Variables ---
 var current_index := 0
 var input_code := "" 
-var tous_les_codes := {} 
-var mode_mine := false
-var compteur_mines := 0
-signal mine_terminee
+var all_codes_catalog := {} # tous_les_codes
+var is_mine_mode := false # mode_mine
+var mine_cards_counter := 0 # compteur_mines
+
+signal mine_completed # mine_terminee
 
 func _ready():
-	for node in code.get_children():
+	# Connect all number buttons
+	for node in code_buttons.get_children():
 		if node is Button:
 			node.pressed.connect(_on_key_pressed.bind(node))
-	back.pressed.connect(_on_back_pressed)
+	
+	back_button.pressed.connect(_on_back_pressed)
 	close_button.pressed.connect(_on_close_button_pressed)
 	close_button.hide()
 
-func mettre_a_jour_catalogue(cle: String, valeur):
+# Updated by DatabaseConfig when Firebase data changes
+func update_catalog(_key: String, value):
 	var clean_val = func(v): return str(int(float(v))) if typeof(v) in [TYPE_FLOAT, TYPE_INT] else str(v)
-	if typeof(valeur) == TYPE_DICTIONARY:
-		for id_key in valeur.keys():
-			var data = valeur[id_key]
+	
+	if typeof(value) == TYPE_DICTIONARY:
+		for id_key in value.keys():
+			var data = value[id_key]
 			if typeof(data) == TYPE_DICTIONARY:
-				var est_dispo = data.get("disponible", true)
-				if str(est_dispo) == "false": est_dispo = false
-				if str(est_dispo) == "true": est_dispo = true
-				tous_les_codes[id_key] = {
+				all_codes_catalog[id_key] = {
 					"code": clean_val.call(data.get("code", "0")),
-					"effet": data.get("effet", "Inconnu"),
-					"categorie": data.get("categorie", "Inconnue"),
-					"disponible": data.get("disponible", true)
+					"effect": data.get("effet", "Unknown"),
+					"category": data.get("categorie", "Unknown"),
+					"is_available": data.get("disponible", true)
 				}
-	print("[Keypad] Catalogue mis à jour.")
+	print("[Keypad] Catalog updated.")
 
 func _on_key_pressed(button: Button):
 	if current_index > 3: return
-	var keypressed = int(button.name)
-	input_code += str(keypressed)
-	screen.get_child(current_index).texture = icons[keypressed - 1]
+	var key_pressed = int(button.name)
+	input_code += str(key_pressed)
+	screen.get_child(current_index).texture = icons[key_pressed - 1]
 	current_index += 1
 
 func _on_back_pressed():
@@ -64,100 +70,94 @@ func reset_keypad():
 func _on_check_pressed() -> void:
 	check_code()
 
-# Appelé par le script de Don pour afficher la croix
-func preparer_clavier_pour_don():
+# Called by GiveCard script to allow manual closing
+func prepare_keypad_for_gift():
 	self.show()
 	close_button.show()
-	print("[Keypad] Mode DON détecté : Bouton Close affiché.")
+	print("[Keypad] GIFT mode detected: Close button enabled.")
 
 func _on_close_button_pressed():
-	if DatabaseConfig.cible_don_id != "":
-		print("[Keypad] Fermeture manuelle : Action consommée.")
-		_consommer_action_et_quitter()
+	if DatabaseConfig.gift_target_id != "":
+		print("[Keypad] Manual close: Action consumed.")
+		_consume_action_and_quit()
 	else:
-		_finaliser_utilisation_keypad()
+		_finalize_keypad_usage()
 
 func check_code():
-	var carte_trouvee = null
-	var id_a_desactiver = ""
-	for id_name in tous_les_codes:
-		if str(tous_les_codes[id_name]["code"]) == input_code:
-			carte_trouvee = tous_les_codes[id_name]
-			id_a_desactiver = id_name
+	var found_card = null
+	var id_to_disable = ""
+	
+	for id_name in all_codes_catalog:
+		if str(all_codes_catalog[id_name]["code"]) == input_code:
+			found_card = all_codes_catalog[id_name]
+			id_to_disable = id_name
 			break
 
-	if not carte_trouvee:
-		DatabaseConfig.notifier_erreur("Vous vous êtes trompé de code")
-		print("❌ ÉCHEC : Code inconnu.")
+	if not found_card:
+		DatabaseConfig.notify_error("Le code rentré n'est pas bon")
 		reset_keypad()
 		return
 		
-	if carte_trouvee.get("disponible", true) == false:
-		DatabaseConfig.notifier_erreur("La carte a déjà été utilisé")
-		print("🚫 ÉCHEC : Déjà utilisée.")
-		_finaliser_utilisation_keypad()
+	if found_card.get("is_available", true) == false:
+		DatabaseConfig.notify_error("Cette carte a déjà été utilisé")
+		_finalize_keypad_usage()
 		return
 		
-	
-	if is_zone_valid(carte_trouvee["categorie"]):
-		print("✅ SUCCÈS.")
-		if mode_mine:
-			# --- LOGIQUE MINE ---
-			compteur_mines += 1
-			DatabaseConfig.notifier_erreur("Première carte acceptée, rentrez la deuxième ")
-			DatabaseConfig.disable_card(id_a_desactiver)
+	if is_zone_valid(found_card["category"]):
+		print("✅ SUCCESS.")
+		if is_mine_mode:
+			# --- MINE LOGIC ---
+			mine_cards_counter += 1
+			DatabaseConfig.notify_error("Première carte équipement acceptée, veillez rentrer la deuxième")
+			DatabaseConfig.disable_card(id_to_disable)
 			reset_keypad()
 			
-			if compteur_mines >= 2:
-				print("🎉 SURVIE : 2 cartes Mines données.")
-				_finaliser_mine_reussie()
+			if mine_cards_counter >= 2:
+				print("🎉 SURVIVAL: 2 Mine cards provided.")
+				_finalize_successful_mine()
 			return 
 			
 		else:
-			# --- LOGIQUE NORMALE ---
-			apply_card(carte_trouvee["categorie"], carte_trouvee["effet"], id_a_desactiver)
-			DatabaseConfig.disable_card(id_a_desactiver)
-			_consommer_action_et_quitter()
+			# --- NORMAL LOGIC ---
+			apply_card(found_card["category"], found_card["effect"], id_to_disable)
+			DatabaseConfig.disable_card(id_to_disable)
+			_consume_action_and_quit()
 	else:
-		DatabaseConfig.notifier_erreur("Mauvaise zone la carte ne fonctionne pas ici ")
-		print("🚫 MAUVAISE ZONE : ", carte_trouvee["categorie"], " ne marche pas ici (", DatabaseConfig.zone, ")")
+		DatabaseConfig.notify_error("Mauvaise zone ! Vous ne pouvez pas utiliser cette carte ici")
 		reset_keypad()
 
-	
-func _consommer_action_et_quitter():
-	DatabaseConfig.actions_faites += 1
+func _consume_action_and_quit():
+	DatabaseConfig.actions_done += 1
 	if DatabaseConfig.script_general:
-		DatabaseConfig.script_general.verifier_limite_actions()
-	_finaliser_utilisation_keypad()
+		DatabaseConfig.script_general.check_action_limit()
+	_finalize_keypad_usage()
 
-func _finaliser_utilisation_keypad():
-	# On stocke l'état avant de reset
-	var etait_en_mine = mode_mine 
+func _finalize_keypad_usage():
+	var was_in_mine = is_mine_mode 
 	
-	# Reset standard
-	mode_mine = false
-	compteur_mines = 0
-	DatabaseConfig.cible_don_id = "" 
+	# Standard Reset
+	is_mine_mode = false
+	mine_cards_counter = 0
+	DatabaseConfig.gift_target_id = "" 
 	close_button.hide()
 	reset_keypad()
 	self.hide()
 
-	if etait_en_mine:
-		DatabaseConfig.zone = "mine" 
+	if was_in_mine:
+		DatabaseConfig.current_zone = "mine" 
 	else:
-		DatabaseConfig.zone = "" 
+		DatabaseConfig.current_zone = "" 
 		
-	print("[Keypad] Clavier fermé. Zone actuelle : ", DatabaseConfig.zone)
+	print("[Keypad] Keypad closed. Current zone: ", DatabaseConfig.current_zone)
 
 func is_zone_valid(category: String) -> bool:
-	var player_zone = DatabaseConfig.zone
-	if mode_mine:
+	var player_zone = DatabaseConfig.current_zone
+	if is_mine_mode:
 		return category == "Mine"
 		
+	# Categories that work everywhere
 	if category in ["vie", "argent", "MiniJeux"]: 
-		_consommer_action_et_quitter()
 		return true
-		
 		
 	match category:
 		"Mine": return player_zone == "mine"
@@ -166,37 +166,38 @@ func is_zone_valid(category: String) -> bool:
 		"arme": return player_zone == "armurerie"
 	return false
 
-func apply_card(category: String, effet_valeur, id_carte: String):
-	var id_joueur = DatabaseConfig.current_profil_id
-	var effet = int(effet_valeur)
-	var id_final = DatabaseConfig.cible_don_id if DatabaseConfig.cible_don_id != "" else id_joueur
+func apply_card(category: String, effect_value, card_id: String):
+	var player_id = DatabaseConfig.current_profile_id
+	var effect = int(effect_value)
 	
-	if DatabaseConfig.cible_don_id != "" and DatabaseConfig.cible_don_id != id_joueur:
+	# If gift_target_id is set, the effect goes to the target
+	var final_id = DatabaseConfig.gift_target_id if DatabaseConfig.gift_target_id != "" else player_id
+	
+	# Show the gift popup if it's a donation to someone else
+	if DatabaseConfig.gift_target_id != "" and DatabaseConfig.gift_target_id != player_id:
 		if DatabaseConfig.script_don_result:
-			# On appelle la fonction de ton pop-up avec les bonnes références
-			DatabaseConfig.script_don_result.afficher_don(id_joueur, id_final, effet, category)
+			DatabaseConfig.script_don_result.show_gift_effect(player_id, final_id, effect, category)
 	
 	match category:
 		"MiniJeux": 
-			DatabaseConfig.play_minijeux(id_carte)
-		"saloon": DatabaseConfig.get_drink(effet, id_final)
-		"restaurant": DatabaseConfig.get_food(effet, id_final)
-		"vie": DatabaseConfig.get_life(effet, id_final)
+			DatabaseConfig.play_minigame(card_id)
+		"saloon": DatabaseConfig.get_drink(effect, final_id)
+		"restaurant": DatabaseConfig.get_food(effect, final_id)
+		"vie": DatabaseConfig.get_life(effect, final_id)
 		"argent": 
-			DatabaseConfig.get_money(effet, id_final)
-			money_song.play()
-		"arme": DatabaseConfig.update_gun(effet, id_final)
+			DatabaseConfig.get_money(effect, final_id)
+			money_sound.play()
+		"arme": DatabaseConfig.update_gun(effect, final_id)
 
-
-func preparer_pour_mine():
-	mode_mine = true
-	compteur_mines = 0
-	close_button.hide() # On ne peut pas fuir la mine !
+func prepare_for_mine():
+	is_mine_mode = true
+	mine_cards_counter = 0
+	close_button.hide() # Cannot escape the mine!
 	self.show()
-	print("[Keypad] MODE MINE : Sacrifiez 2 cartes !")
+	print("[Keypad] MINE MODE: Sacrifice 2 cards!")
 	
-func _finaliser_mine_reussie():
-	mode_mine = false
-	compteur_mines = 0
-	mine_terminee.emit()
-	_finaliser_utilisation_keypad()
+func _finalize_successful_mine():
+	is_mine_mode = false
+	mine_cards_counter = 0
+	mine_completed.emit()
+	_finalize_keypad_usage()

@@ -1,12 +1,14 @@
 extends Control
 
-@onready var hearts: Array = $Effect/Life.get_children() 
-@onready var gagnant_rect: TextureRect = $Duel/Gagnant
-@onready var perdant_rect: TextureRect = $Duel/Perdant
-@onready var gun: TextureRect = $Effect/Gun
-@onready var fin_duel: AudioStreamPlayer = $"../../Son/FinDuel"
+# --- UI Nodes ---
+@onready var hearts_container: Array = $Effect/Life.get_children() # hearts
+@onready var winner_rect: TextureRect = $Duel/Gagnant
+@onready var loser_rect: TextureRect = $Duel/Perdant
+@onready var weapon_visual: TextureRect = $Effect/Gun # gun
+@onready var duel_end_sound: AudioStreamPlayer = $"../../Son/FinDuel"
 
-@onready var gun_shoot = [
+# --- Assets ---
+@onready var gun_shoot_textures = [
 	preload("uid://bs5swbvmuugrl"), 
 	preload("uid://c6i2pqsx3aw7p"),  
 	preload("uid://b1j22bf1ehjt2"), 
@@ -15,29 +17,32 @@ extends Control
 func _ready() -> void:
 	self.hide()
 	
-func afficher_duel_resultat(id_gagnant: int, id_perdant: int, degats: int):
-	fin_duel.play()
-	# 1. Récupérer les icônes des personnages
-	var nodes_profils = DatabaseConfig.script_general.profils_noeuds
+# This function is called by DatabaseConfig after a duel
+func show_duel_result(winner_id: int, loser_id: int, damage_dealt: int):
+	duel_end_sound.play()
 	
-	if nodes_profils.size() > id_gagnant:
-		var tex_gagnant = nodes_profils[id_gagnant].get_node("PlayerIcon/Personnage").texture
-		gagnant_rect.texture = tex_gagnant
+	# 1. Fetch character icons from the main profile nodes
+	var profile_nodes = DatabaseConfig.script_general.profile_nodes
+	
+	if profile_nodes.size() > winner_id:
+		# Accessing the icon through the node structure
+		var winner_tex = profile_nodes[winner_id].get_node("PlayerIcon/Personnage").texture
+		winner_rect.texture = winner_tex
 		
-	if nodes_profils.size() > id_perdant:
-		var tex_perdant = nodes_profils[id_perdant].get_node("PlayerIcon/Personnage").texture
-		perdant_rect.texture = tex_perdant
+	if profile_nodes.size() > loser_id:
+		var loser_tex = profile_nodes[loser_id].get_node("PlayerIcon/Personnage").texture
+		loser_rect.texture = loser_tex
 
-	# 2. Mise à jour de l'image du Gun selon le niveau
-	# degats vaut 1, 2 ou 3. On fait -1 pour correspondre aux index 0, 1, 2
-	var level_index = clampi(degats - 1, 0, 2) 
-	gun.texture = gun_shoot[level_index]
+	# 2. Update the Weapon visual based on damage level
+	# Damage is 1, 2, or 3. Map to array index 0, 1, 2
+	var level_index = clampi(damage_dealt - 1, 0, 2) 
+	weapon_visual.texture = gun_shoot_textures[level_index]
 
-	# 3. Gérer la visibilité des cœurs selon les dégâts
-	for i in range(hearts.size()):
-		hearts[i].visible = (i < degats)
+	# 3. Handle heart visibility based on damage points
+	for i in range(hearts_container.size()):
+		hearts_container[i].visible = (i < damage_dealt)
 
-	# 4. Afficher le Pop-up
+	# 4. Display the Pop-up
 	self.show()
 
 func _on_close_pressed() -> void:

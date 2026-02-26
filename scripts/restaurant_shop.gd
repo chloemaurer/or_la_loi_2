@@ -1,79 +1,86 @@
 extends Control
 
-var foods = [
+# --- Assets ---
+var food_textures = [
 	preload("uid://uquodl1cy3my"), preload("uid://03gr4lta6i66"),
 	preload("uid://fcengsh4b1qa"), preload("uid://qiism03hwew0"), 
 	preload("uid://b3wf0jsr51id"), preload("uid://wvsewo06pnvq")
 ]
 
+# --- UI Nodes ---
 @onready var food_roller: TextureRect = $VBoxContainer/FoodRoller
-@onready var food_name: Label = $VBoxContainer/FoodName
-@onready var food_description: Label = $VBoxContainer/FoodDescription
-@onready var restaurant: Control = $"../Restaurant"
-@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
+@onready var food_name_label: Label = $VBoxContainer/FoodName # food_name
+@onready var food_desc_label: Label = $VBoxContainer/FoodDescription # food_description
+@onready var restaurant_menu: Control = $"../Restaurant" # restaurant
+@onready var money_sound: AudioStreamPlayer = $"../../Son/Money" # money_song
 
-var catalogue = {}  
-var current_id = 0  
+# --- Logic Variables ---
+var food_catalog = {} # catalogue
+var current_food_id = 0 # current_id
 
 func _ready() -> void:
-	random_food()
+	randomize_food()
 
-func mettre_a_jour_catalogue(cle: String, valeur):
-	if cle == "restaurant" and typeof(valeur) == TYPE_DICTIONARY:
-		catalogue = valeur
+# Updated by DatabaseConfig Dispatcher
+func update_catalog(key: String, value):
+	if key == "restaurant" and typeof(value) == TYPE_DICTIONARY:
+		food_catalog = value
 	else:
-		catalogue[cle] = valeur
+		food_catalog[key] = value
 	
-	print("Restaurant mis à jour pour : ", cle)
-	actualiser_interface()
+	print("Restaurant catalog updated for: ", key)
+	refresh_interface()
 
-func random_food() -> void:
-	current_id = randi() % foods.size()
-	food_roller.texture = foods[current_id]
-	actualiser_interface()
+func randomize_food() -> void:
+	current_food_id = randi() % food_textures.size()
+	food_roller.texture = food_textures[current_food_id]
+	refresh_interface()
 
-func actualiser_interface() -> void:
-	var key = "ID" + str(current_id)
-	if catalogue.has(key):
-		var data = catalogue[key]
-		food_name.text = str(data.get("nom", "Inconnu"))
-		food_description.text = "Effet : " + str(data.get("effet", 0)) + " Nourriture"
+func refresh_interface() -> void:
+	var key = "ID" + str(current_food_id)
+	if food_catalog.has(key):
+		var data = food_catalog[key]
+		food_name_label.text = str(data.get("nom", "Unknown"))
+		food_desc_label.text = "Effect: +" + str(data.get("effet", 0)) + " Food"
 
-func update_food():
-	var key = "ID" + str(current_id)
-	if catalogue.has(key):
-		var data = catalogue[key] 
+func process_food_purchase():
+	var key = "ID" + str(current_food_id)
+	if food_catalog.has(key):
+		var data = food_catalog[key] 
 		var food_effect = data.get("effet", 0)
-		var id_joueur = DatabaseConfig.current_profil_id
+		var player_id = DatabaseConfig.current_profile_id
 		
-		# On définit le prix ici (1 pièce)
-		var prix_food = 1
+		# Price is fixed at 1 gold
+		var food_price = 1
 		
-		print("Achat nourriture : Essai pour Profil ", id_joueur)
+		print("Restaurant: Attempting purchase for Profile ", player_id)
 		
-		# 1. On demande au Singleton de dépenser l'argent
-		var succes = DatabaseConfig.spend_money(prix_food, id_joueur)
+		# 1. Ask Singleton to spend money
+		var success = DatabaseConfig.spend_money(food_price, player_id)
 
-		if succes:
-			money_song.play()
-			print("Achat validé. Application de l'effet : ", food_effect)
-			# 2. Si l'argent est retiré, on donne la nourriture
-			DatabaseConfig.get_food(food_effect, id_joueur)
-
+		if success:
+			money_sound.play()
+			print("Restaurant: Purchase validated. Applying effect: ", food_effect)
+			# 2. Give food to the player
+			DatabaseConfig.get_food(food_effect, player_id)
 		else:
-			DatabaseConfig.notifier_erreur("Achat échoué : Pas assez d'argent")
-			print("Achat échoué : Fonds insuffisants")
+			DatabaseConfig.notify_error("Achat échoué ! Vous n'avez pas assez d'argent")
 
 func _on_food_buy_card_pressed() -> void:
-	update_food()
-
-
+	process_food_purchase()
 
 func _on_get_food_receive_pressed() -> void:
-	DatabaseConfig.actions_faites += 1
+	# Increment global action counter
+	DatabaseConfig.actions_done += 1
 	self.hide()
-	random_food()
+	
+	# Prepare next food for the next time the shop opens
+	randomize_food()
+	
+	# Check turn limit
 	if DatabaseConfig.script_general:
-		DatabaseConfig.script_general.verifier_limite_actions()
-	if DatabaseConfig.actions_faites < 2:
-		restaurant.show()
+		DatabaseConfig.script_general.check_action_limit()
+	
+	# If actions are still available (less than 2), show the main restaurant menu
+	if DatabaseConfig.actions_done < 2:
+		restaurant_menu.show()

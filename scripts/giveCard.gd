@@ -1,123 +1,118 @@
 extends Control
 
-@onready var emplacements = [
+# --- UI Nodes ---
+@onready var slots = [
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur1, "label": $VBoxContainer/Joueurs/Joueurs/Joueur1/Nomjoueur1},
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur2, "label": $VBoxContainer/Joueurs/Joueurs/Joueur2/Nomjoueur2},
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur3, "label": $VBoxContainer/Joueurs/Joueurs/Joueur3/Nomjoueur3}
 ]
 
-var cible_choisie_id : String = ""
+# --- Logic Variables ---
+var chosen_target_id : String = "" # cible_choisie_id
 
 
-func remplir_selection(tous_les_profils: Array, mon_id_actuel: String) -> void:
-	var index_slot = 0
-	cible_choisie_id = "" # Reset de la sélection précédente
+func fill_selection(all_profiles: Array, my_current_id: String) -> void:
+	var slot_index = 0
+	chosen_target_id = "" # Reset previous selection
 
-	# 1. On cache tous les slots au départ
-	for s in emplacements:
+	# 1. Hide all slots initially
+	for s in slots:
 		s.rect.hide()
 
-	# 2. On boucle sur les 4 profils reçus
-	for i in range(tous_les_profils.size()):
-		var id_adversaire = str(i)
+	# 2. Loop through the profiles
+	for i in range(all_profiles.size()):
+		var opponent_id = str(i)
 		
-		# SI l'ID est celui du joueur actuel, on l'ignore (on ne se bat pas contre soi-même)
-		if id_adversaire == mon_id_actuel:
+		# Skip self
+		if opponent_id == my_current_id:
 			continue
 		
-		if index_slot < emplacements.size():
-			var slot = emplacements[index_slot]
-			var profil_data = tous_les_profils[i]
+		if slot_index < slots.size():
+			var current_slot = slots[slot_index]
+			var profile_data = all_profiles[i]
 			
-			# --- RÉCUPÉRATION DU NOM ---
-			slot.label.text = profil_data.nom_joueur.text
+			# --- SET PLAYER NAME ---
+			current_slot.label.text = profile_data.player_name.text
 			
-			# --- RÉCUPÉRATION DE L'ICÔNE (Méthode fiable) ---
-			if profil_data.player_icone and profil_data.player_icone.texture:
-				slot.rect.texture = profil_data.player_icone.texture
+			# --- SET PLAYER ICON ---
+			if profile_data.player_icon and profile_data.player_icon.texture:
+				current_slot.rect.texture = profile_data.player_icon.texture
 			else:
-				# Sécurité : on pioche dans le tableau si le visuel n'est pas encore prêt
-				slot.rect.texture = profil_data.personnages[i]["sprite"]
+				# Security fallback
+				current_slot.rect.texture = profile_data.characters[i]["sprite"]
 
-			# --- GESTION DU CLIC (Déconnexion propre puis connexion) ---
-			if slot.rect.gui_input.is_connected(_on_adversaire_clique):
-				slot.rect.gui_input.disconnect(_on_adversaire_clique)
-			slot.rect.gui_input.connect(_on_adversaire_clique.bind(index_slot))
+			# --- INPUT HANDLING ---
+			if current_slot.rect.gui_input.is_connected(_on_opponent_clicked):
+				current_slot.rect.gui_input.disconnect(_on_opponent_clicked)
+			current_slot.rect.gui_input.connect(_on_opponent_clicked.bind(slot_index))
 			
-			# --- METADATA ET AFFICHAGE ---
-			slot.rect.set_meta("joueur_id", id_adversaire)
+			# --- METADATA AND VISUALS ---
+			current_slot.rect.set_meta("player_id", opponent_id)
 			
-			# OPTIONNEL : Si le joueur est mort, on rend son icône grise aussi dans le menu
-			slot.rect.modulate = profil_data.modulate
-			slot.rect.show()
-			index_slot += 1
+			# Match profile modulation (transparency if dead)
+			current_slot.rect.modulate = profile_data.modulate
+			current_slot.rect.show()
+			slot_index += 1
 
-func _on_adversaire_clique(event: InputEvent, index: int) -> void:
+func _on_opponent_clicked(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		accept_event()
-		var slot_clique = emplacements[index]
+		var clicked_slot = slots[index]
 		
-		print("[Duel] Clic détecté sur Slot ", index)
-		
-		if slot_clique.rect.has_meta("joueur_id"):
-			var nouvelle_cible = str(slot_clique.rect.get_meta("joueur_id"))
+		if clicked_slot.rect.has_meta("player_id"):
+			var new_target = str(clicked_slot.rect.get_meta("player_id"))
 	
-	# 1. RÉINITIALISATION : On enlève le shader de TOUT LE MONDE
-			for slot in emplacements:
+			# 1. RESET: Remove shader outline from all slots
+			for slot in slots:
 				var tr : TextureRect = slot.rect
 				if tr.material is ShaderMaterial:
 					tr.material.set("shader_parameter/thickness", 0.0)
 
-	# 2. LOGIQUE DE TOGGLE : 
-	# Si on clique sur celui qui est déjà sélectionné, on le désactive (Toggle Off)
-			if cible_choisie_id == nouvelle_cible:
-				cible_choisie_id = "" # On vide la sélection
-				print("[Duel] Sélection annulée.")
+			# 2. TOGGLE LOGIC
+			if chosen_target_id == new_target:
+				chosen_target_id = "" # Deselect
+				print("[GiveCard] Selection canceled.")
 			else:
-				# Sinon, on active le nouveau (Toggle On)
-				cible_choisie_id = nouvelle_cible
-				var texture_rect : TextureRect = slot_clique.rect
+				# Select and show outline
+				chosen_target_id = new_target
+				var texture_rect : TextureRect = clicked_slot.rect
 				if texture_rect.material is ShaderMaterial:
 					texture_rect.material.set("shader_parameter/thickness", 5.0)
 		
-			print("[Duel] SUCCÈS : Cible choisie = ", cible_choisie_id)
-		else:
-			print("[Duel] ERREUR : Le Slot ", index, " n'a pas de Meta joueur_id au moment du clic !")
-
-	
+			print("[GiveCard] Target chosen = ", chosen_target_id)
 
 func _on_give_card_pressed() -> void:
-	if cible_choisie_id == "":
-		DatabaseConfig.notifier_erreur("Sélectionne un allié d'abord !")
+	if chosen_target_id == "":
+		DatabaseConfig.notify_error("Selectionner un adversaire d'abord")
 		return
 	
-	# Vérification : Est-ce que la cible est en vie ?
-	var idx_cible = int(cible_choisie_id)
-	if DatabaseConfig.script_general.profils_noeuds[idx_cible].get_life() <= 0:
-		DatabaseConfig.notifier_erreur("Ce joueur est KO, tu ne peux rien lui donner.")
+	# Verify if target is still alive
+	var target_idx = int(chosen_target_id)
+	if DatabaseConfig.script_general.profile_nodes[target_idx].get_life() <= 0:
+		DatabaseConfig.notify_error("Ce joueur est mort vous ne pouvez pas l'affronter")
 		return
 
-	# 1. Enregistrement de l'ID pour le Singleton
-	DatabaseConfig.cible_don_id = cible_choisie_id
-	print("[GiveCard] Cible enregistrée : ", DatabaseConfig.cible_don_id)
+	# 1. Register ID in Singleton
+	DatabaseConfig.gift_target_id = chosen_target_id
+	print("[GiveCard] Target registered: ", DatabaseConfig.gift_target_id)
 	
-	# 2. Fermeture et ouverture Keypad
+	# 2. Close menu and open Keypad
 	self.hide()
 	
-	var principal = DatabaseConfig.script_general
-	principal.open_current_keypad() 
+	var main_script = DatabaseConfig.script_general
+	main_script.open_current_keypad() 
 
-	# 3. Préparer le keypad
-	var id_joueur = int(DatabaseConfig.current_profil_id)
-	if principal.keypad.size() > id_joueur:
-		principal.keypad[id_joueur].preparer_clavier_pour_don()
+	# 3. Prepare keypad for giving mode
+	var player_id = int(DatabaseConfig.current_profile_id)
+	if main_script.keypads.size() > player_id:
+		main_script.keypads[player_id].prepare_keypad_for_gift()
 	
-	# 4. RESET du visuel pour la prochaine fois
-	_reset_visuel_selection()
+	# 4. RESET visuals for next time
+	_reset_selection_visuals()
 
-func _reset_visuel_selection():
-	cible_choisie_id = ""
-	for slot in emplacements:
+func _reset_selection_visuals():
+	chosen_target_id = ""
+	for slot in slots:
 		var tr : TextureRect = slot.rect
 		if tr.material is ShaderMaterial:
 			tr.material.set("shader_parameter/thickness", 0.0)

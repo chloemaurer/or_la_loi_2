@@ -1,48 +1,54 @@
 extends Control
 
-@onready var panel_settings: Panel = $Panel2
+# --- UI Nodes ---
+@onready var settings_panel: Panel = $Panel2 # panel_settings
+@onready var rules_panel: Panel = $Panel3 # panel_3
 @onready var bg_music: AudioStreamPlayer = $"../../BgMusic"
-@onready var volume: HSlider = $Panel2/VBoxContainer/Control/Volume
-@onready var panel_3: Panel = $Panel3
-@onready var rules: VideoStreamPlayer = $"../../Animations/Rules"
+@onready var volume_slider: HSlider = $Panel2/VBoxContainer/Control/Volume # volume
+@onready var rules_video: VideoStreamPlayer = $"../../Animations/Rules" # rules
 
+# --- Logic Variables ---
 var stop_at_time : float = 0.0
 var is_playing_section : bool = false
 
+func _ready() -> void:
+	settings_panel.hide()
+	rules_panel.hide()
 
 func _on_button_pressed() -> void:
-	panel_settings.visible = !panel_settings.visible
-	panel_3.hide()
+	settings_panel.visible = !settings_panel.visible
+	rules_panel.hide()
 
 func _on_reset_pressed() -> void:
-	DatabaseConfig.reset_game_start()
-
+	# Calls the global reset in the Singleton
+	DatabaseConfig.reset_game()
 
 func _on_volume_value_changed(value: float) -> void:
+	# Adjust background music volume (db)
 	bg_music.set_volume_db(value)
 
-
 func _on_video_pressed() -> void:
-	panel_3.visible = !panel_3.visible
-
+	rules_panel.visible = !rules_panel.visible
 
 func _process(_delta):
-	# Si on joue une section et qu'on dépasse le temps imparti
-	if is_playing_section and rules.stream_position >= stop_at_time:
-		rules.stop()
+	# Monitor video playback to stop at the specific timestamp
+	if is_playing_section and rules_video.stream_position >= stop_at_time:
+		rules_video.stop()
+		rules_video.hide() # We hide the player when the section is over
 		is_playing_section = false
-		print("Section terminée à : ", rules.stream_position)
+		print("Section finished at: ", rules_video.stream_position)
 
-# Fonction générique pour lancer une section
+# Generic function to play a specific video segment
 func play_section(start: float, end: float):
-	print("video lancé")
-	rules.stream_position = start
+	print("Video section started: ", start, "s to ", end, "s")
+	rules_video.stream_position = start
 	stop_at_time = end
 	is_playing_section = true
-	rules.show()
-	rules.play()
+	rules_video.show()
+	rules_video.play()
 
-# ---  BOUTONS ---
+# --- RULE SECTION BUTTONS ---
+# Using the specific timestamps provided in your edit
 
 func _on_vidéo_1_pressed():
 	play_section(0.0, 33.0)
@@ -51,25 +57,23 @@ func _on_vidéo_2_pressed():
 	play_section(33.0, 43.0)
 
 func _on_vidéo_3_pressed():
-	play_section(43.0, 80.0) # 01:20 = 80s
+	play_section(43.0, 80.0) # 01:20
 
 func _on_vidéo_4_pressed():
-	play_section(80.0, 108.0) # 01:48 = 108s
+	play_section(80.0, 108.0) # 01:48
 
 func _on_vidéo_5_pressed():
-	play_section(108.0, 200.0) # 03:20 = 200s
+	play_section(108.0, 200.0) # 03:20
 
 func _on_vidéo_6_pressed():
-	play_section(200.0, 246.0) # 04:06 = 246s
+	play_section(200.0, 246.0) # 04:06
 
 func _on_vidéo_7_pressed():
-	play_section(246.0, 260.0) # 04:20 = 260s
+	play_section(246.0, 260.0) # 04:20
 
 func _on_vidéo_8_pressed():
-	play_section(260.0, 275.0) # 04:35 = 275s
+	play_section(260.0, 275.0) # 04:35
 
 func _on_vidéo_9_pressed():
-	# Joue de 04:35 jusqu'à la fin (on met un temps très long)
+	# Play from 04:35 until the end
 	play_section(275.0, 9999.0)
-	
-	

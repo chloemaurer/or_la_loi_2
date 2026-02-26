@@ -17,12 +17,34 @@ font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 font = ExtResource("3_24jpf")
 font_size = 50
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24jpf"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkbjb"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 15.0
+expand_margin_top = 10.0
+expand_margin_right = 15.0
+expand_margin_bottom = 10.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
 bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_xwtro"]
 font = ExtResource("3_24jpf")
@@ -87,7 +109,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
+theme_override_styles/normal = SubResource("StyleBoxFlat_24jpf")
 text = "  -  "
 
 [node name="Count" type="Label" parent="VBoxContainer/Control/HBoxContainer" unique_id=597573427]
@@ -102,7 +124,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
+theme_override_styles/normal = SubResource("StyleBoxFlat_24jpf")
 text = "  +  "
 
 [node name="Prix" type="Label" parent="VBoxContainer/Control/HBoxContainer" unique_id=111727295]
@@ -136,7 +158,7 @@ size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("3_24jpf")
 theme_override_font_sizes/font_size = 38
-theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkbjb")
 text = "Acheter une vie"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1654016954]
@@ -161,10 +183,10 @@ anchor_left = 0.791
 anchor_top = 1.7450001
 anchor_right = 0.791
 anchor_bottom = 1.7450001
-offset_left = -321.76
-offset_top = -61.970016
-offset_right = 282.24
-offset_bottom = -26.970016
+offset_left = -288.165
+offset_top = -29.560013
+offset_right = 315.835
+offset_bottom = 5.439987
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4

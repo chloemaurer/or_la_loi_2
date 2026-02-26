@@ -1,104 +1,108 @@
 extends Control
 
-@onready var emplacements = [
+# --- UI Nodes ---
+@onready var slots = [
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur1, "label": $VBoxContainer/Joueurs/Joueurs/Joueur1/Nomjoueur1},
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur2, "label": $VBoxContainer/Joueurs/Joueurs/Joueur2/Nomjoueur2},
 	{"rect": $VBoxContainer/Joueurs/Joueurs/Joueur3, "label": $VBoxContainer/Joueurs/Joueurs/Joueur3/Nomjoueur3}
 ]
-@onready var duel_start: AudioStreamPlayer = $"../../Son/DuelStart"
+@onready var duel_start_sound: AudioStreamPlayer = $"../../Son/DuelStart"
 
-var cible_choisie_id : String = ""
+# --- Logic Variables ---
+var chosen_target_id : String = "" # cible_choisie_id
 
+func fill_selection(all_profiles: Array, my_current_id: String) -> void:
+	var slot_index = 0
+	chosen_target_id = "" # Reset selection
 
-func remplir_selection(tous_les_profils: Array, mon_id_actuel: String) -> void:
-	var index_slot = 0
-	cible_choisie_id = "" # Reset de la sélection précédente
-
-	# 1. On cache tous les slots au départ
-	for s in emplacements:
+	# 1. Hide all slots at start
+	for s in slots:
 		s.rect.hide()
 
-	# 2. On boucle sur les 4 profils reçus
-	for i in range(tous_les_profils.size()):
-		var id_adversaire = str(i)
+	# 2. Loop through the 4 profiles
+	for i in range(all_profiles.size()):
+		var opponent_id = str(i)
 		
-		# SI l'ID est celui du joueur actuel, on l'ignore (on ne se bat pas contre soi-même)
-		if id_adversaire == mon_id_actuel:
+		# Skip if it's the current player (can't fight yourself)
+		if opponent_id == my_current_id:
 			continue
 		
-		# Si on a encore de la place dans nos 3 slots d'affichage
-		if index_slot < emplacements.size():
-			var slot = emplacements[index_slot]
-			var profil_data = tous_les_profils[i] # Référence au script Profil.gd
+		# Fill the 3 display slots
+		if slot_index < slots.size():
+			var current_slot = slots[slot_index]
+			var profile_data = all_profiles[i] 
 			
-			# NOM : Récupéré directement du label du profil
-			slot.label.text = profil_data.nom_joueur.text
+			# NAME: Taken from the profile label
+			current_slot.label.text = profile_data.player_name.text
 			
-			# IMAGE : Récupérée du TextureRect "personnage" du profil
-			if profil_data.player_icone and profil_data.player_icone.texture:
-				slot.rect.texture = profil_data.player_icone.texture
+			# IMAGE: Taken from the profile's TextureRect
+			if profile_data.player_icon and profile_data.player_icon.texture:
+				current_slot.rect.texture = profile_data.player_icon.texture
 			else:
-				# Sécurité si le visuel n'est pas encore prêt
-				slot.rect.texture = profil_data.personnages[i]["sprite"]
+				# Security fallback
+				current_slot.rect.texture = profile_data.characters[i]["sprite"]
 
-			# COULEUR/VIE : Si le joueur est mort (gris), il apparaît gris ici aussi
-			slot.rect.modulate = profil_data.modulate
+			# COLOR/LIFE: Match the profile's modulation (e.g., grey if dead)
+			current_slot.rect.modulate = profile_data.modulate
 
-			# SIGNAL : Nettoyage avant connexion pour éviter les doubles clics
-			if slot.rect.gui_input.is_connected(_on_adversaire_clique):
-				slot.rect.gui_input.disconnect(_on_adversaire_clique)
-			slot.rect.gui_input.connect(_on_adversaire_clique.bind(index_slot))
+			# SIGNAL: Clean and connect input signal
+			if current_slot.rect.gui_input.is_connected(_on_opponent_clicked):
+				current_slot.rect.gui_input.disconnect(_on_opponent_clicked)
+			current_slot.rect.gui_input.connect(_on_opponent_clicked.bind(slot_index))
 			
-			# META & AFFICHAGE
-			slot.rect.set_meta("joueur_id", id_adversaire)
-			slot.rect.show()
+			# META & DISPLAY
+			current_slot.rect.set_meta("player_id", opponent_id)
+			current_slot.rect.show()
 			
-			index_slot += 1
+			slot_index += 1
 		
 
-func _on_adversaire_clique(event: InputEvent, index: int) -> void:
+func _on_opponent_clicked(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		accept_event()
-		var slot_clique = emplacements[index]
+		var clicked_slot = slots[index]
 		
-		print("[Duel] Clic détecté sur Slot ", index)
-		
-		if slot_clique.rect.has_meta("joueur_id"):
-			var nouvelle_cible = str(slot_clique.rect.get_meta("joueur_id"))
+		if clicked_slot.rect.has_meta("player_id"):
+			var new_target = str(clicked_slot.rect.get_meta("player_id"))
 	
-	# 1. RÉINITIALISATION : On enlève le shader de TOUT LE MONDE
-			for slot in emplacements:
+			# 1. RESET: Remove shader outline from everyone
+			for slot in slots:
 				var tr : TextureRect = slot.rect
 				if tr.material is ShaderMaterial:
 					tr.material.set("shader_parameter/thickness", 0.0)
 
-	# 2. LOGIQUE DE TOGGLE : 
-	# Si on clique sur celui qui est déjà sélectionné, on le désactive (Toggle Off)
-			if cible_choisie_id == nouvelle_cible:
-				cible_choisie_id = "" # On vide la sélection
-				print("[Duel] Sélection annulée.")
+			# 2. TOGGLE LOGIC: 
+			if chosen_target_id == new_target:
+				chosen_target_id = "" # Deselect
+				print("[Duel] Selection canceled.")
 			else:
-				# Sinon, on active le nouveau (Toggle On)
-				cible_choisie_id = nouvelle_cible
-				var texture_rect : TextureRect = slot_clique.rect
+				# Select new target and show outline
+				chosen_target_id = new_target
+				var texture_rect : TextureRect = clicked_slot.rect
 				if texture_rect.material is ShaderMaterial:
 					texture_rect.material.set("shader_parameter/thickness", 5.0)
 		
-			print("[Duel] SUCCÈS : Cible choisie = ", cible_choisie_id)
+			print("[Duel] Target chosen = ", chosen_target_id)
 		else:
-			print("[Duel] ERREUR : Le Slot ", index, " n'a pas de Meta joueur_id au moment du clic !")
+			print("[Duel] ERROR: Slot meta player_id missing!")
 
 func _on_versus_pressed() -> void:
-	if cible_choisie_id == "":
-		DatabaseConfig.notifier_erreur("Aucun adversaire sélectionné !")
-		print("Erreur : Aucune cible sélectionnée !")
+	if chosen_target_id == "":
+		DatabaseConfig.notify_error("Aucun adversaire sélectionné")
 		return
 	
-	var mon_id = DatabaseConfig.current_profil_id
-	duel_start.play()
-	DatabaseConfig.duel_versus(mon_id, cible_choisie_id)
-	DatabaseConfig.actions_faites += 1
+	var my_id = DatabaseConfig.current_profile_id
+	duel_start_sound.play()
+	
+	# Start duel logic in Global
+	DatabaseConfig.start_duel(my_id, chosen_target_id)
+	
+	# Increment action count
+	DatabaseConfig.actions_done += 1
+	
+	# Check turn limit
 	if DatabaseConfig.script_general:
-		DatabaseConfig.script_general.verifier_limite_actions()
+		DatabaseConfig.script_general.check_action_limit()
+		
 	self.hide()
-	cible_choisie_id = ""
+	chosen_target_id = ""

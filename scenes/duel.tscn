@@ -56,6 +56,10 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [node name="Duel" type="Control" unique_id=754705929]
 layout_mode = 3
@@ -63,8 +67,8 @@ anchor_right = 0.661
 anchor_bottom = 0.72200006
 offset_left = 3.0
 offset_top = 3.0
-offset_right = -758.47205
-offset_bottom = -464.85605
+offset_right = -493.12
+offset_bottom = -290.76007
 script = ExtResource("1_rsfa2")
 
 [node name="Panel" type="Panel" parent="." unique_id=2135885993]
@@ -159,10 +163,10 @@ vertical_alignment = 1
 
 [node name="Versus" type="Button" parent="." unique_id=1466034684]
 layout_mode = 0
-offset_left = 251.0
-offset_top = 398.0
-offset_right = 534.0
-offset_bottom = 449.0
+offset_left = 237.0
+offset_top = 399.0
+offset_right = 520.0
+offset_bottom = 450.0
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_colors/font_color = Color(0.8392157, 0.7647059, 0.6509804, 1)

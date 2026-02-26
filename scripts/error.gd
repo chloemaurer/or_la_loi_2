@@ -1,24 +1,27 @@
 extends Control
 
-@onready var error_text: Label = $ErrorText
-@onready var timer: Timer = $Timer
+# --- UI Nodes ---
+@onready var error_label: Label = $ErrorText # error_text
+@onready var display_timer: Timer = $Timer # timer
 
 func _ready():
-	#self.hide()
-	DatabaseConfig.demande_affichage_erreur.connect(_afficher_message)
+	# Connect to the global error signal from DatabaseConfig
+	DatabaseConfig.error_display_requested.connect(_show_message)
 
-func _afficher_message():
-	error_text.text = DatabaseConfig.error_message
+func _show_message():
+	# Set the text from the global error message variable
+	error_label.text = DatabaseConfig.error_message
 	
 	self.show()
-	timer.start()
+	display_timer.start()
 	
-	# Ton animation
+	# Fade-in Animation
 	self.modulate.a = 0
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1.0, 0.2)
 	
 func _on_timer_timeout():
+	# Fade-out Animation
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	await tween.finished

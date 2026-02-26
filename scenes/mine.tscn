@@ -66,6 +66,7 @@ offset_right = 424.0
 offset_bottom = 306.0
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("3_m55k0")
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Rentrer dans la mine"
 
@@ -78,6 +79,7 @@ offset_right = 426.0
 offset_bottom = 378.0
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("3_m55k0")
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Passer mon tour"
 

@@ -1,74 +1,84 @@
 extends Control
 
-@onready var moins: Button = $VBoxContainer/Control/HBoxContainer/moins
-@onready var count: Label = $VBoxContainer/Control/HBoxContainer/Count
-@onready var plus: Button = $VBoxContainer/Control/HBoxContainer/plus
-@onready var prix: Label = $VBoxContainer/Control/HBoxContainer/Prix
-@onready var buy_card: Control = $"../BuyCard"
-@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
+# --- UI Nodes ---
+@onready var minus_button: Button = $VBoxContainer/Control/HBoxContainer/moins
+@onready var count_label: Label = $VBoxContainer/Control/HBoxContainer/Count
+@onready var plus_button: Button = $VBoxContainer/Control/HBoxContainer/plus
+@onready var price_label: Label = $VBoxContainer/Control/HBoxContainer/Prix
+@onready var buy_card_menu: Control = $"../BuyCard"
+@onready var money_sound: AudioStreamPlayer = $"../../Son/Money"
 
-
-var num := 1
-var nb_prix := 2
-var prix_pioche := 3
-var life_multiply
-var pioche
+# --- Logic Variables ---
+var current_quantity := 1
+var total_price := 2
+var drawing_price := 3
+var life_multiplication # life_multiply
+var card_draw # pioche
 
 func _ready() -> void:
-	count.text = str(num)
-	prix.text = str(nb_prix)
+	_update_labels()
 
 func _on_moins_pressed() -> void:
-	prix.modulate = Color(1.0, 0.647, 0.0) 
-	if num >= 2:
-		num -= 1
-		nb_prix -= 1
-		_actualiser_labels()
+	price_label.modulate = Color(1.0, 0.647, 0.0) # Orange
+	if current_quantity >= 2:
+		current_quantity -= 1
+		total_price -= 1
+		_update_labels()
 
 func _on_plus_pressed() -> void:
-	# On vérifie si le joueur actif a assez d'argent via le Global
-	if num <= 2 && nb_prix < DatabaseConfig.money_local:
-		prix.modulate = Color(1.0, 0.647, 0.0) 
-		num += 1
-		nb_prix += 1
-		_actualiser_labels()
+	# Check if player has enough money via Global
+	if current_quantity <= 2 && total_price < DatabaseConfig.local_money:
+		price_label.modulate = Color(1.0, 0.647, 0.0) 
+		current_quantity += 1
+		total_price += 1
+		_update_labels()
 	else:
-		prix.modulate = Color.RED
+		price_label.modulate = Color.RED
 
-func _actualiser_labels() -> void:
-	count.text = str(num)
-	prix.text = str(nb_prix)
+func _update_labels() -> void:
+	count_label.text = str(current_quantity)
+	price_label.text = str(total_price)
 
 func _on_bank_buy_card_pressed() -> void:
-	var id_joueur = DatabaseConfig.current_profil_id
-	print("Banque : Essai d'achat de ", num, " jetons pour ", nb_prix, " gold par Profil ", id_joueur)
-	var succes = DatabaseConfig.spend_money(nb_prix, id_joueur)
+	var player_id = DatabaseConfig.current_profile_id
+	print("Bank: Attempting purchase of ", current_quantity, " health for ", total_price, " gold by Profile ", player_id)
+	
+	var success = DatabaseConfig.spend_money(total_price, player_id)
 
-	if succes:
-		money_song.play()
-		print("Banque : Achat validé pour le profil ", id_joueur)
-		life_multiply = DatabaseConfig.get_life(num,id_joueur)
-		DatabaseConfig.actions_faites += 1
-	# On demande au script principal de vérifier si on doit fermer les places
+	if success:
+		money_sound.play()
+		print("Bank: Purchase validated for profile ", player_id)
+		# Add life points
+		DatabaseConfig.get_life(current_quantity, player_id)
+		
+		# Record turn action
+		DatabaseConfig.actions_done += 1
+		
+		# Check turn limit
 		if DatabaseConfig.script_general:
-			DatabaseConfig.script_general.verifier_limite_actions()
-
+			DatabaseConfig.script_general.check_action_limit()
 	else:
-		DatabaseConfig.notifier_erreur("Achat échoué : Pas assez d'argent")
-		print("Banque : Échec de l'achat (fonds insuffisants)")
-		prix.modulate = Color.RED
+		DatabaseConfig.notify_error("Achat échoué ! Vous n'avez pas assez d'argent")
+		price_label.modulate = Color.RED
 
- 
 func _on_get_card_pressed() -> void:
-	var id_joueur = DatabaseConfig.current_profil_id
-	buy_card.show()
-	pioche = DatabaseConfig.spend_money(prix_pioche,id_joueur)
-	money_song.play()
-	DatabaseConfig.actions_faites += 1
-	# On demande au script principal de vérifier si on doit fermer les places
+	var player_id = DatabaseConfig.current_profile_id
+	buy_card_menu.show()
+	
+	# Attempt to spend money for drawing a card
+	card_draw = DatabaseConfig.spend_money(drawing_price, player_id)
+	money_sound.play()
+	
+	# Record turn action
+	DatabaseConfig.actions_done += 1
+	
+	# Check turn limit
 	if DatabaseConfig.script_general:
-		DatabaseConfig.script_general.verifier_limite_actions()
-
+		DatabaseConfig.script_general.check_action_limit()
 
 func _on_close_pressed() -> void:
-	buy_card.hide()
+	buy_card_menu.hide()
+
+# --- Interface update for DatabaseConfig ---
+func update_interface():
+	_update_labels()

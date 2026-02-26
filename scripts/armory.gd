@@ -1,53 +1,64 @@
 extends Control
 
-@onready var moins: Button = $VBoxContainer/HBoxContainer/moins
-@onready var count: Label = $VBoxContainer/HBoxContainer/Count
-@onready var plus: Button = $VBoxContainer/HBoxContainer/plus
-@onready var prix: Label = $VBoxContainer/HBoxContainer/Prix
-@onready var money_song: AudioStreamPlayer = $"../../Son/Money"
+# --- UI Nodes ---
+@onready var minus_button: Button = $VBoxContainer/HBoxContainer/moins
+@onready var count_label: Label = $VBoxContainer/HBoxContainer/Count
+@onready var plus_button: Button = $VBoxContainer/HBoxContainer/plus
+@onready var price_label: Label = $VBoxContainer/HBoxContainer/Prix
+@onready var money_sound: AudioStreamPlayer = $"../../Son/Money"
 
-var num := 1
-var nb_prix := 2
-var prix_pioche := 3
-var munition
+# --- Logic Variables ---
+var current_quantity := 1
+var total_price := 2
+var drawing_price := 3 # Unused for now but kept for logic
+var ammo_count # munition
 
 func _ready() -> void:
-	count.text = str(num)
-	prix.text = str(nb_prix)
+	_update_labels()
 
 func _on_moins_pressed() -> void:
-	prix.modulate = Color(1.0, 0.647, 0.0) 
-	if num >= 2:
-		num -= 1
-		nb_prix -= 1
-		_actualiser_labels()
+	price_label.modulate = Color(1.0, 0.647, 0.0) # Orange color
+	if current_quantity >= 2:
+		current_quantity -= 1
+		total_price -= 1
+		_update_labels()
 
 func _on_plus_pressed() -> void:
-	# On vérifie si le joueur actif a assez d'argent via le Global
-	if num <= 2 && nb_prix < DatabaseConfig.money_local:
-		prix.modulate = Color(1.0, 0.647, 0.0) 
-		num += 1
-		nb_prix += 1
-		_actualiser_labels()
+	# Check if the active player has enough money via Global config
+	if current_quantity <= 2 && total_price < DatabaseConfig.local_money:
+		price_label.modulate = Color(1.0, 0.647, 0.0) 
+		current_quantity += 1
+		total_price += 1
+		_update_labels()
 
-
-func _actualiser_labels() -> void:
-	count.text = str(num)
-	prix.text = str(nb_prix)
-
+func _update_labels() -> void:
+	count_label.text = str(current_quantity)
+	price_label.text = str(total_price)
 
 func _on_armory_buy_card_pressed() -> void:
-	var id_actuel = DatabaseConfig.current_profil_id
-	print("Armurerie : Essai d'achat pour Profil ", id_actuel)
-	var succes = DatabaseConfig.spend_money(nb_prix, id_actuel)
+	var current_id = DatabaseConfig.current_profile_id
+	print("Armory: Attempting purchase for Profile ", current_id)
 	
-	if succes:
-		money_song.play()
-		print("Armurerie : Achat validé pour le profil ", id_actuel)
-		DatabaseConfig.get_munition(num, id_actuel)
-		DatabaseConfig.actions_faites += 1
-	# On demande au script principal de vérifier si on doit fermer les places
+	# Try to spend money through Global
+	var success = DatabaseConfig.spend_money(total_price, current_id)
+	
+	if success:
+		money_sound.play()
+		print("Armory: Purchase validated for profile ", current_id)
+		
+		# Give ammo to the player
+		DatabaseConfig.get_munition(current_quantity, current_id)
+		
+		# Increment action count
+		DatabaseConfig.actions_done += 1
+		
+		# Check if the turn should end (limit of 2 actions)
 		if DatabaseConfig.script_general:
-			DatabaseConfig.script_general.verifier_limite_actions()
+			DatabaseConfig.script_general.check_action_limit()
 	else :
-		DatabaseConfig.notifier_erreur("Achat échoué : Pas assez d'argent")
+		DatabaseConfig.notify_error("Achat échoué ! Vous n'avez pas assez d'argent")
+
+# --- Interface update for DatabaseConfig ---
+func update_interface():
+	# Useful if we need to refresh the display when the DB updates
+	_update_labels()
