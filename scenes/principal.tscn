@@ -43,19 +43,21 @@
 [ext_resource type="PackedScene" uid="uid://cvjvuytfbacf8" path="res://scenes/mine.tscn" id="33_vdtr1"]
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
-[ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
 [ext_resource type="VideoStream" uid="uid://6s4hl28tk7lh" path="res://animation/finMauvaise.ogv" id="42_fvccq"]
 [ext_resource type="VideoStream" uid="uid://bcigcs1sdnj4p" path="res://animation/histoire.ogv" id="42_ihcfc"]
 [ext_resource type="AudioStream" uid="uid://bqbk8bj442cxn" path="res://son/Musique_jeu_mixage final.ogg" id="42_nc7xk"]
 [ext_resource type="VideoStream" uid="uid://cxsmmo6l0qh4h" path="res://animation/finBonne.ogv" id="43_cbgdg"]
 [ext_resource type="VideoStream" path="res://animation/tempetesable.ogv" id="44_fvccq"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
-[ext_resource type="AudioStream" uid="uid://w1yxyfcdf6vc" path="res://son/get_resources.mp3" id="49_1qqir"]
+[ext_resource type="Script" uid="uid://cerafsbvs8675" path="res://scripts/begin_scene.gd" id="49_meguh"]
+[ext_resource type="VideoStream" uid="uid://ten7pgyex3kb" path="res://animation/accueil.ogv" id="50_g42em"]
 [ext_resource type="AudioStream" uid="uid://cbxqm6i2jnkdf" path="res://son/argent2.ogg" id="50_w31y2"]
+[ext_resource type="AudioStream" uid="uid://b4ca4hrqhnlr4" path="res://son/ressources.ogg" id="51_meguh"]
 [ext_resource type="AudioStream" uid="uid://d1eu3lpejnqk1" path="res://son/lose_resources.mp3" id="51_mh0tp"]
 [ext_resource type="AudioStream" uid="uid://bukxkhxg37ohi" path="res://son/finDuel.mp3" id="52_meguh"]
 [ext_resource type="AudioStream" uid="uid://bmvuvw0l5eqhq" path="res://son/Duel.ogg" id="52_mh0tp"]
 [ext_resource type="AudioStream" uid="uid://dqkuyxthnfib5" path="res://son/finMiniJeux.mp3" id="53_g42em"]
+[ext_resource type="AudioStream" uid="uid://1hpitlu572tu" path="res://son/musiqueMinijeu.mp3" id="56_g42em"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -263,6 +265,17 @@ corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6kj7"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [node name="Principal" type="Control" unique_id=684752956]
 layout_mode = 3
@@ -1246,7 +1259,7 @@ scale = Vector2(3.3498602, 3.3498602)
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_f8urn")
 min_value = -30.0
 max_value = 15.0
-value = 5.0
+value = -7.0
 
 [node name="Panel3" type="Panel" parent="Map/Settings" unique_id=992239051]
 visible = false
@@ -1451,6 +1464,7 @@ offset_top = 0.00044589135
 offset_right = 1920.0004
 offset_bottom = 1080.0005
 stream = ExtResource("44_fvccq")
+volume_db = 20.0
 
 [node name="Error" type="Control" parent="Map" unique_id=654894452]
 visible = false
@@ -3201,20 +3215,57 @@ offset_top = -17.0
 offset_right = 424.0
 offset_bottom = 201.0
 
-[node name="BeginScene" parent="." unique_id=1431948896 instance=ExtResource("36_rrv1i")]
+[node name="BeginScene" type="Control" parent="." unique_id=1431948896]
 visible = false
 layout_mode = 1
-offset_right = -1280.2561
-offset_bottom = -720.14404
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -966.5
+offset_top = -544.5
+offset_right = -966.5
+offset_bottom = -544.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("49_meguh")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="BeginScene" unique_id=1420572183]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+stream = ExtResource("50_g42em")
+volume_db = -80.0
+loop = true
+
+[node name="StartGame" type="Button" parent="BeginScene" unique_id=1066806255]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 894.0
+offset_right = 1513.0
+offset_bottom = 1025.0
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.8392157, 0.7647059, 0.6509804, 1)
+theme_override_fonts/font = ExtResource("36_dr6sg")
+theme_override_font_sizes/font_size = 85
+theme_override_styles/normal = SubResource("StyleBoxFlat_r6kj7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_r6kj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r6kj7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_r6kj7")
+text = "DÉMARER L'AVENTURE"
 
 [node name="Son" type="Node" parent="." unique_id=1260097317]
 
 [node name="GetResources" type="AudioStreamPlayer" parent="Son" unique_id=1921405149]
-stream = ExtResource("49_1qqir")
-parameters/looping = true
+stream = ExtResource("51_meguh")
+pitch_scale = 1.5
 
 [node name="Money" type="AudioStreamPlayer" parent="Son" unique_id=1798171056]
 stream = ExtResource("50_w31y2")
+volume_db = 20.0
 
 [node name="DuelStart" type="AudioStreamPlayer" parent="Son" unique_id=958040386]
 stream = ExtResource("52_mh0tp")
@@ -3225,6 +3276,9 @@ parameters/looping = true
 
 [node name="FinDuel" type="AudioStreamPlayer" parent="Son" unique_id=599739199]
 stream = ExtResource("52_meguh")
+
+[node name="Minijeux" type="AudioStreamPlayer" parent="Son" unique_id=353267492]
+stream = ExtResource("56_g42em")
 
 [node name="FinMiniJeux" type="AudioStreamPlayer" parent="Son" unique_id=994773408]
 stream = ExtResource("53_g42em")
@@ -3285,3 +3339,4 @@ parameters/looping = true
 [connection signal="gui_input" from="Animations/Rules" to="BeginScene" method="_on_rules_gui_input"]
 [connection signal="pressed" from="Animations/VideoSettings/Panel2/StopPlay2" to="BeginScene" method="_on_stop_play_pressed"]
 [connection signal="pressed" from="Animations/VideoSettings/Panel/Skip" to="BeginScene" method="_on_skip_pressed"]
+[connection signal="pressed" from="BeginScene/StartGame" to="BeginScene" method="_on_start_game_pressed"]

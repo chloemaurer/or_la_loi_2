@@ -13,6 +13,7 @@ var drink_textures = [
 @onready var drink_name_label: Label = $VBoxContainer/DrinkName # drink_name
 @onready var drink_desc_label: Label = $VBoxContainer/DrinkDescription # drink_description
 @onready var money_sound: AudioStreamPlayer = $"../../Son/Money" # money_song
+@onready var get_resources: AudioStreamPlayer = $"../../Son/GetResources"
 
 # --- Logic Variables ---
 var drink_catalog = {} # catalogue
@@ -63,6 +64,7 @@ func process_drink_purchase():
 			print("Saloon: Purchase validated. Applying effect: ", drink_effect)
 			# 2. Give drink to the player
 			DatabaseConfig.get_drink(drink_effect, player_id)
+			get_resources.play()
 		else:
 			DatabaseConfig.notify_error("Achat échoué ! Vous n'avez pas assez d'argent")
 

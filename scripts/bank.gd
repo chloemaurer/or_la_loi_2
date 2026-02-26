@@ -7,6 +7,7 @@ extends Control
 @onready var price_label: Label = $VBoxContainer/Control/HBoxContainer/Prix
 @onready var buy_card_menu: Control = $"../BuyCard"
 @onready var money_sound: AudioStreamPlayer = $"../../Son/Money"
+@onready var get_resources: AudioStreamPlayer = $"../../Son/GetResources"
 
 # --- Logic Variables ---
 var current_quantity := 1
@@ -50,7 +51,7 @@ func _on_bank_buy_card_pressed() -> void:
 		print("Bank: Purchase validated for profile ", player_id)
 		# Add life points
 		DatabaseConfig.get_life(current_quantity, player_id)
-		
+		get_resources.play()
 		# Record turn action
 		DatabaseConfig.actions_done += 1
 		

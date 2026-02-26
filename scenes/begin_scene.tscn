@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://hhxtjw1cuhpp"]
 
 [ext_resource type="Script" uid="uid://cerafsbvs8675" path="res://scripts/begin_scene.gd" id="1_nqbx0"]
-[ext_resource type="Texture2D" uid="uid://dw1c1ox4dnyw7" path="res://assets/acueil.webp" id="2_u0j4m"]
+[ext_resource type="VideoStream" uid="uid://ten7pgyex3kb" path="res://animation/accueil.ogv" id="2_u0j4m"]
+[ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="3_ncs0v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6kj7"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 15.0
+expand_margin_right = 20.0
+expand_margin_bottom = 15.0
 
 [node name="BeginScene" type="Control" unique_id=1431948896]
 layout_mode = 3
@@ -12,26 +24,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nqbx0")
 
-[node name="Panel" type="Panel" parent="." unique_id=252108773]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1420572183]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_u0j4m")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=14684447]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_u0j4m")
-
-[node name="StartGame" type="Button" parent="." unique_id=1742458958]
-modulate = Color(1, 1, 1, 0)
+[node name="StartGame" type="Button" parent="." unique_id=1066806255]
 layout_mode = 0
-offset_left = 582.0
-offset_top = 921.0
-offset_right = 1339.0
-offset_bottom = 1026.0
+offset_left = 431.0
+offset_top = 894.0
+offset_right = 1507.0
+offset_bottom = 1025.0
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.8392157, 0.7647059, 0.6509804, 1)
+theme_override_fonts/font = ExtResource("3_ncs0v")
+theme_override_font_sizes/font_size = 85
+theme_override_styles/normal = SubResource("StyleBoxFlat_r6kj7")
+text = "DÉMARER L'AVENTURE"
 
 [connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]

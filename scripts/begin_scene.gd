@@ -13,6 +13,7 @@ func _ready() -> void:
 	rules.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _on_start_game_pressed() -> void:
+	
 	self.hide()
 	_jouer_video(story)
 

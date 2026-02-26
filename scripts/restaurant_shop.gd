@@ -13,6 +13,8 @@ var food_textures = [
 @onready var food_desc_label: Label = $VBoxContainer/FoodDescription # food_description
 @onready var restaurant_menu: Control = $"../Restaurant" # restaurant
 @onready var money_sound: AudioStreamPlayer = $"../../Son/Money" # money_song
+@onready var get_resources: AudioStreamPlayer = $"../../Son/GetResources"
+
 
 # --- Logic Variables ---
 var food_catalog = {} # catalogue
@@ -63,6 +65,7 @@ func process_food_purchase():
 			print("Restaurant: Purchase validated. Applying effect: ", food_effect)
 			# 2. Give food to the player
 			DatabaseConfig.get_food(food_effect, player_id)
+			get_resources.play()
 		else:
 			DatabaseConfig.notify_error("Achat échoué ! Vous n'avez pas assez d'argent")
 

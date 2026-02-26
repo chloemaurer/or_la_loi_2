@@ -2,6 +2,7 @@ extends Control
 
 # --- UI Nodes ---
 @onready var end_minigame_sound: AudioStreamPlayer = $"../../Son/FinMiniJeux" # fin_mini_jeux
+@onready var minigame_sound: AudioStreamPlayer = $"../../Son/Minijeux"
 
 @onready var winner_icons = [
 	$"Control/VBoxContainer/1er/Icon", 
@@ -22,6 +23,7 @@ func _ready() -> void:
 
 # This function is called by the Minigame Controller once all scores are in
 func show_results(raw_scores: Array): # afficher_resultats
+	minigame_sound.stop()
 	end_minigame_sound.play()
 	
 	# 1. Safety check

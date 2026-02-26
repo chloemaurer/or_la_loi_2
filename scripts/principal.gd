@@ -50,6 +50,8 @@ var game_started = false
 @onready var gift_effect_overlay: Control = $Map/GiveCardEffect # give_card_effect
 @onready var map_visual: TextureRect = $Map/Panel2/MapVisual
 @onready var sand_storm_video: VideoStreamPlayer = $Map/SandTempest # sand_tempest
+@onready var get_resources: AudioStreamPlayer = $Son/GetResources
+
 
 func _ready() -> void:
 	# Reference this script in the global singleton
@@ -188,6 +190,7 @@ func _on_end_turn_pressed(current_index: int):
 		DatabaseConfig.current_round += 1
 		round_transition_video.show()
 		round_transition_video.play()
+		get_resources.play()
 		_consume_round_resources()
 		
 		# Update visual round counters

@@ -13,6 +13,8 @@ var icons = [
 @onready var back_button: Button = $Actions/Back # back
 @onready var close_button: TextureButton = $CloseButton
 @onready var money_sound: AudioStreamPlayer = $"../../../Son/Money" # money_song
+@onready var get_resources: AudioStreamPlayer = $"../../../Son/GetResources"
+@onready var minijeux: AudioStreamPlayer = $"../../../Son/Minijeux"
 
 # --- Logic Variables ---
 var current_index := 0
@@ -182,13 +184,21 @@ func apply_card(category: String, effect_value, card_id: String):
 	match category:
 		"MiniJeux": 
 			DatabaseConfig.play_minigame(card_id)
-		"saloon": DatabaseConfig.get_drink(effect, final_id)
-		"restaurant": DatabaseConfig.get_food(effect, final_id)
-		"vie": DatabaseConfig.get_life(effect, final_id)
+			minijeux.play()
+		"saloon": 
+			DatabaseConfig.get_drink(effect, final_id)
+			get_resources.play()
+		"restaurant": 
+			DatabaseConfig.get_food(effect, final_id)
+			get_resources.play()
+		"vie": 
+			DatabaseConfig.get_life(effect, final_id)
+			get_resources.play()
 		"argent": 
 			DatabaseConfig.get_money(effect, final_id)
 			money_sound.play()
-		"arme": DatabaseConfig.update_gun(effect, final_id)
+		"arme": 
+			DatabaseConfig.update_gun(effect, final_id)
 
 func prepare_for_mine():
 	is_mine_mode = true
