@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="2_j65gr"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_mgajk"]
 [ext_resource type="Shader" uid="uid://6bmmgs1kn515" path="res://ennemyselect.gdshader" id="3_b72to"]
+[ext_resource type="FontFile" uid="uid://ct1l5a8cxoec8" path="res://fonts/Bethany Elingston.otf" id="5_7teeq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -165,6 +166,7 @@ offset_bottom = 449.0
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_colors/font_color = Color(0.8392157, 0.7647059, 0.6509804, 1)
+theme_override_fonts/font = ExtResource("5_7teeq")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Affronter en duel"

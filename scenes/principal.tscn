@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bwib1drxiulqp" path="res://scripts/armory.gd" id="8_v2y4t"]
 [ext_resource type="PackedScene" uid="uid://dxvc5gry51wxq" path="res://scenes/bank.tscn" id="9_ckosc"]
 [ext_resource type="PackedScene" uid="uid://ckv603t1ewodj" path="res://scenes/duel.tscn" id="9_v2y4t"]
+[ext_resource type="FontFile" uid="uid://ct1l5a8cxoec8" path="res://fonts/Bethany Elingston.otf" id="10_mh0tp"]
 [ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="10_t8783"]
 [ext_resource type="Script" uid="uid://2e700233qs4k" path="res://scripts/profil.gd" id="11_t8783"]
 [ext_resource type="Texture2D" uid="uid://7nrwkrwc1tok" path="res://assets/profil/coeur.webp" id="12_x2ui6"]
@@ -43,13 +44,12 @@
 [ext_resource type="PackedScene" uid="uid://bxmsp1r2b3b05" path="res://scenes/fin_jeu.tscn" id="34_yd7e0"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="36_dr6sg"]
 [ext_resource type="PackedScene" uid="uid://hhxtjw1cuhpp" path="res://scenes/begin_scene.tscn" id="36_rrv1i"]
-[ext_resource type="VideoStream" uid="uid://6s4hl28tk7lh" path="res://animation/finMauvaise.ogv" id="42_fvccq"]
-[ext_resource type="VideoStream" uid="uid://bcigcs1sdnj4p" path="res://animation/histoire.ogv" id="42_ihcfc"]
+[ext_resource type="VideoStream" path="res://animation/finMauvaise.ogv" id="42_fvccq"]
+[ext_resource type="VideoStream" path="res://animation/histoire.ogv" id="42_ihcfc"]
 [ext_resource type="AudioStream" uid="uid://bqbk8bj442cxn" path="res://son/Musique_jeu_mixage final.ogg" id="42_nc7xk"]
-[ext_resource type="VideoStream" uid="uid://cxsmmo6l0qh4h" path="res://animation/finBonne.ogv" id="43_cbgdg"]
+[ext_resource type="VideoStream" path="res://animation/finBonne.ogv" id="43_cbgdg"]
 [ext_resource type="VideoStream" path="res://animation/tempetesable.ogv" id="44_fvccq"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
-[ext_resource type="VideoStream" uid="uid://bes631ewutua6" path="res://animation/reglements_v4.ogv" id="46_cbgdg"]
 [ext_resource type="AudioStream" uid="uid://w1yxyfcdf6vc" path="res://son/get_resources.mp3" id="49_1qqir"]
 [ext_resource type="AudioStream" uid="uid://cbxqm6i2jnkdf" path="res://son/argent2.ogg" id="50_w31y2"]
 [ext_resource type="AudioStream" uid="uid://d1eu3lpejnqk1" path="res://son/lose_resources.mp3" id="51_mh0tp"]
@@ -97,6 +97,23 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_j4qwv"]
+font = ExtResource("10_mh0tp")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_meguh"]
+font = ExtResource("10_mh0tp")
+font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meguh"]
+bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lts5a"]
+load_path = "res://.godot/imported/joueur.png-66194a0b20ce75fbe0e586d1bdeb4c67.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pb1uw"]
+load_path = "res://.godot/imported/joueur.png-66194a0b20ce75fbe0e586d1bdeb4c67.ctex"
+
 [sub_resource type="LabelSettings" id="LabelSettings_rno4q"]
 font = ExtResource("36_dr6sg")
 font_size = 35
@@ -138,6 +155,13 @@ shader_parameter/square_border = false
 shader_parameter/offset = Vector2(0, 0)
 shader_parameter/max_or_add = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mh0tp"]
+bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwvs3"]
 bg_color = Color(0.78895694, 0.54169035, 0.23833492, 1)
 corner_radius_top_left = 200
@@ -169,8 +193,9 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 shadow_offset = Vector2(5, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meguh"]
-bg_color = Color(0.18431373, 0.09411765, 0.050980393, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_mh0tp"]
+font = ExtResource("10_mh0tp")
+font_size = 45
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h7na"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -448,6 +473,7 @@ label_settings = SubResource("LabelSettings_voqbm")
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte"
@@ -456,6 +482,7 @@ text = "Utiliser une carte"
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
@@ -468,6 +495,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une carte"
@@ -499,14 +527,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "À vos risque et périls"
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="RestaurantShop" type="Control" parent="Map" unique_id=253302142]
 visible = false
 anchors_preset = 0
-offset_left = 598.99994
-offset_top = 390.99976
-offset_right = 598.99994
-offset_bottom = 390.99976
+offset_left = 585.99994
+offset_top = 380.9998
+offset_right = 585.99994
+offset_bottom = 380.9998
 scale = Vector2(0.6626349, 0.6626349)
 script = ExtResource("8_0at3r")
 
@@ -543,11 +572,13 @@ stretch_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="FoodDescription" type="Label" parent="Map/RestaurantShop/VBoxContainer" unique_id=1567450442]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="GetFoodReceive" type="Button" parent="Map/RestaurantShop" unique_id=1026148313]
 layout_mode = 0
@@ -556,6 +587,7 @@ offset_top = 516.1212
 offset_right = 724.64417
 offset_bottom = 560.1212
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Récupéré"
@@ -605,6 +637,7 @@ size_flags_horizontal = 4
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 50
 text = "Munitions"
+label_settings = SubResource("LabelSettings_meguh")
 
 [node name="moins" type="Button" parent="Map/Armory/VBoxContainer/HBoxContainer" unique_id=1757239059]
 layout_mode = 2
@@ -655,6 +688,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 38
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une munition"
@@ -663,6 +697,7 @@ text = "Acheter une munition"
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_focus_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 38
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte armurerie"
@@ -723,6 +758,7 @@ label_settings = SubResource("LabelSettings_voqbm")
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Utiliser une carte"
@@ -731,6 +767,7 @@ text = "Utiliser une carte"
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Donner une carte"
@@ -744,6 +781,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Acheter une carte"
@@ -775,6 +813,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "À vos risque et périls"
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="SaloonShop" type="Control" parent="Map" unique_id=798128194]
 visible = false
@@ -819,11 +858,13 @@ stretch_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="DrinkDescription" type="Label" parent="Map/SaloonShop/VBoxContainer" unique_id=443216180]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
+label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="GetDrinkReceive" type="Button" parent="Map/SaloonShop" unique_id=1261152745]
 layout_mode = 0
@@ -832,6 +873,7 @@ offset_top = 477.66022
 offset_right = 724.4553
 offset_bottom = 521.6602
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Récupéré"
@@ -845,6 +887,88 @@ offset_right = 680.99994
 offset_bottom = 435.9997
 scale = Vector2(0.48132288, 0.48132288)
 
+[node name="GiveCardEffect" type="Control" parent="Map" unique_id=450712904]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_left = 692.0
+offset_top = 487.99976
+offset_right = 1427.648
+offset_bottom = 859.58984
+scale = Vector2(0.68, 0.68)
+script = ExtResource("31_w31y2")
+
+[node name="Panel" type="Panel" parent="Map/GiveCardEffect" unique_id=1683501090]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_meguh")
+
+[node name="Control" type="Control" parent="Map/GiveCardEffect" unique_id=275878204]
+anchors_preset = 0
+offset_left = 54.0
+offset_top = 38.0
+offset_right = 685.0
+offset_bottom = 303.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/GiveCardEffect/Control" unique_id=935656350]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.001
+anchor_bottom = 0.95000005
+offset_right = 0.26898193
+offset_bottom = -0.05001831
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="GivePlayer" type="TextureRect" parent="Map/GiveCardEffect/Control/HBoxContainer" unique_id=1922662855]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("CompressedTexture2D_lts5a")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/GiveCardEffect/Control/HBoxContainer" unique_id=1097262004]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Map/GiveCardEffect/Control/HBoxContainer/VBoxContainer" unique_id=465378647]
+layout_mode = 2
+alignment = 1
+
+[node name="Effect" type="Label" parent="Map/GiveCardEffect/Control/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=127184694]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "-1"
+
+[node name="Type" type="TextureRect" parent="Map/GiveCardEffect/Control/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=513379889]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("14_aojn8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Arrow" type="TextureRect" parent="Map/GiveCardEffect/Control/HBoxContainer/VBoxContainer" unique_id=68585774]
+modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
+layout_mode = 2
+texture = ExtResource("33_mh0tp")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="GetPlayer" type="TextureRect" parent="Map/GiveCardEffect/Control/HBoxContainer" unique_id=219874437]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("CompressedTexture2D_pb1uw")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Timer" type="Timer" parent="Map/GiveCardEffect" unique_id=2128117720]
+wait_time = 4.0
+
 [node name="GiveCard" type="Control" parent="Map" unique_id=502793126]
 visible = false
 layout_mode = 1
@@ -852,8 +976,8 @@ anchor_right = 0.661
 anchor_bottom = 0.72200006
 offset_left = 728.9999
 offset_top = 451.9998
-offset_right = 702.5598
-offset_bottom = 423.11957
+offset_right = 742.4895
+offset_bottom = 468.04068
 scale = Vector2(0.64000136, 0.64000136)
 script = ExtResource("21_srya7")
 
@@ -869,7 +993,7 @@ layout_mode = 1
 offset_left = 2.0
 offset_top = 21.0
 offset_right = 768.0
-offset_bottom = 462.0
+offset_bottom = 446.87494
 theme_override_constants/separation = 40
 
 [node name="question" type="Label" parent="Map/GiveCard/VBoxContainer" unique_id=1772955947]
@@ -950,12 +1074,17 @@ theme_override_font_sizes/font_size = 55
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GiveCard" type="Button" parent="Map/GiveCard/VBoxContainer" unique_id=636693576]
-modulate = Color(3.1229057, 3.1229057, 3.1229057, 1)
-layout_mode = 2
+[node name="GiveCard" type="Button" parent="Map/GiveCard" unique_id=636693576]
+layout_mode = 0
+offset_left = 239.0621
+offset_top = 403.12402
+offset_right = 515.9436
+offset_bottom = 455.443
 size_flags_horizontal = 4
 size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_mh0tp")
 text = "Donner une carte"
 
 [node name="Settings" type="Control" parent="Map" unique_id=487688044]
@@ -1328,6 +1457,7 @@ offset_right = 1327.0
 offset_bottom = 245.0
 theme_override_colors/font_color = Color(0.9566836, 0.8767748, 0.73369735, 1)
 theme_override_font_sizes/font_size = 45
+label_settings = SubResource("LabelSettings_mh0tp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1350,85 +1480,6 @@ offset_left = 593.99994
 offset_top = 286.99976
 offset_right = -567.9972
 offset_bottom = -192.84265
-
-[node name="GiveCardEffect" type="Control" parent="Map" unique_id=450712904]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 933.99994
-offset_top = 612.9997
-offset_right = -217.16705
-offset_bottom = -33.592773
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("31_w31y2")
-
-[node name="Panel" type="Panel" parent="Map/GiveCardEffect" unique_id=1683501090]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_meguh")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Map/GiveCardEffect" unique_id=935656350]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 56.0
-offset_top = 48.0
-offset_right = -47.0
-offset_bottom = -66.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="GivePlayer" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer" unique_id=1922662855]
-layout_mode = 2
-texture = ExtResource("10_t8783")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Map/GiveCardEffect/HBoxContainer" unique_id=1097262004]
-layout_mode = 2
-alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer" unique_id=465378647]
-layout_mode = 2
-alignment = 1
-
-[node name="Effect" type="Label" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=127184694]
-modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "-1"
-
-[node name="Type" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=513379889]
-modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
-layout_mode = 2
-texture = ExtResource("14_aojn8")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="Arrow" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer/VBoxContainer" unique_id=68585774]
-modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
-layout_mode = 2
-texture = ExtResource("33_mh0tp")
-expand_mode = 1
-stretch_mode = 2
-
-[node name="GetPlayer" type="TextureRect" parent="Map/GiveCardEffect/HBoxContainer" unique_id=219874437]
-layout_mode = 2
-texture = ExtResource("10_t8783")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="Timer" type="Timer" parent="Map/GiveCardEffect" unique_id=2128117720]
-wait_time = 4.0
 
 [node name="BuyCard" type="Control" parent="Map" unique_id=1319103514]
 visible = false
@@ -1477,6 +1528,7 @@ offset_top = 279.0
 offset_right = 347.0
 offset_bottom = 346.0
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxFlat_gxb3x")
 text = "Fermer"
@@ -3059,7 +3111,6 @@ offset_left = 0.00012207031
 offset_top = 0.00014863047
 offset_right = 1920.0001
 offset_bottom = 1080.0001
-stream = ExtResource("46_cbgdg")
 paused = true
 
 [node name="VideoSettings" type="Control" parent="Animations" unique_id=1944974994]
@@ -3181,7 +3232,8 @@ parameters/looping = true
 [connection signal="pressed" from="Map/Saloon/VBoxContainer/HBoxContainer/DrinkBuyCard" to="Map/Places" method="_on_drink_buy_card_pressed"]
 [connection signal="pressed" from="Map/Saloon/VBoxContainer/HBoxContainer/DrinkBuyCard" to="Map/SaloonShop" method="_on_drink_buy_card_pressed"]
 [connection signal="pressed" from="Map/SaloonShop/GetDrinkReceive" to="Map/SaloonShop" method="_on_get_drink_receive_pressed"]
-[connection signal="pressed" from="Map/GiveCard/VBoxContainer/GiveCard" to="Map/GiveCard" method="_on_give_card_pressed"]
+[connection signal="timeout" from="Map/GiveCardEffect/Timer" to="Map/GiveCardEffect" method="_on_timer_timeout"]
+[connection signal="pressed" from="Map/GiveCard/GiveCard" to="Map/GiveCard" method="_on_give_card_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel/Button" to="Map/Settings" method="_on_button_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel2/VBoxContainer/Reset" to="Map/Settings" method="_on_reset_pressed"]
 [connection signal="pressed" from="Map/Settings/Panel2/VBoxContainer/Video" to="Map/Settings" method="_on_video_pressed"]
@@ -3198,7 +3250,6 @@ parameters/looping = true
 [connection signal="finished" from="Map/MancheTransition" to="." method="_on_manche_transition_finished"]
 [connection signal="finished" from="Map/SandTempest" to="BeginScene" method="_on_sand_tempest_finished"]
 [connection signal="timeout" from="Map/Error/Timer" to="Map/Error" method="_on_timer_timeout"]
-[connection signal="timeout" from="Map/GiveCardEffect/Timer" to="Map/GiveCardEffect" method="_on_timer_timeout"]
 [connection signal="pressed" from="Map/BuyCard/Close" to="Map/Bank" method="_on_close_pressed"]
 [connection signal="pressed" from="Profils/Profil/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil" method="_on_keypad_open_pressed"]
 [connection signal="pressed" from="Profils/Profil2/Items/Items/KeypadIcon/KeypadOpen" to="Profils/Profil2" method="_on_keypad_open_pressed"]

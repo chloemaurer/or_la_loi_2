@@ -1,9 +1,9 @@
 extends Control
 
-@onready var effect: Label = $HBoxContainer/VBoxContainer/HBoxContainer2/Effect
-@onready var type: TextureRect = $HBoxContainer/VBoxContainer/HBoxContainer2/Type
-@onready var give_player: TextureRect = $HBoxContainer/GivePlayer
-@onready var get_player: TextureRect = $HBoxContainer/GetPlayer
+@onready var give_player: TextureRect = $Control/HBoxContainer/GivePlayer
+@onready var effect: Label = $Control/HBoxContainer/VBoxContainer/HBoxContainer2/Effect
+@onready var type: TextureRect = $Control/HBoxContainer/VBoxContainer/HBoxContainer2/Type
+@onready var get_player: TextureRect = $Control/HBoxContainer/GetPlayer
 @onready var timer: Timer = $Timer
 
 

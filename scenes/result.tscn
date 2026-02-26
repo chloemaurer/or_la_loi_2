@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://demcavp0vstbd" path="res://assets/icone/1.webp" id="2_0t31f"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_3xsjk"]
 [ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="2_55jci"]
+[ext_resource type="FontFile" uid="uid://ct1l5a8cxoec8" path="res://fonts/Bethany Elingston.otf" id="3_35ldr"]
 [ext_resource type="Texture2D" uid="uid://vcohqkjwjaaf" path="res://assets/profil/or.webp" id="4_wierg"]
 [ext_resource type="Texture2D" uid="uid://dc2nloh7qpaq3" path="res://assets/icone/2.webp" id="5_mgphi"]
 [ext_resource type="Texture2D" uid="uid://dvoho76ux16is" path="res://assets/icone/3.webp" id="6_y4w2m"]
@@ -17,6 +18,10 @@ bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
 font = ExtResource("2_3xsjk")
 font_size = 80
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1v002"]
+font = ExtResource("3_35ldr")
+font_size = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0t31f"]
 bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
@@ -55,6 +60,7 @@ offset_right = 993.0
 offset_bottom = 185.0
 theme_override_font_sizes/font_size = 35
 text = "Le premier vole une carte de la main du premier"
+label_settings = SubResource("LabelSettings_1v002")
 
 [node name="Control" type="Control" parent="." unique_id=764897820]
 anchors_preset = 0
@@ -345,11 +351,12 @@ expand_mode = 5
 
 [node name="FinMiniJeu" type="Button" parent="." unique_id=1586381380]
 layout_mode = 0
-offset_left = 334.0
+offset_left = 328.0
 offset_top = 935.0
-offset_right = 856.0
+offset_right = 850.0
 offset_bottom = 1045.0
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("3_35ldr")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
 text = "Récupérer les récompenses"

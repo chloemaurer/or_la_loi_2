@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bplxuggdh62p2" path="res://scripts/start_action.gd" id="1_vtkbs"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_kehs7"]
 [ext_resource type="Texture2D" uid="uid://d3q8mek75cmag" path="res://assets/icone/dés.webp" id="3_dw5uq"]
+[ext_resource type="FontFile" uid="uid://ct1l5a8cxoec8" path="res://fonts/Bethany Elingston.otf" id="4_s4n0k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -14,6 +15,10 @@ font_size = 36
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dw5uq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qndhi"]
+font = ExtResource("4_s4n0k")
+font_size = 25
 
 [node name="StartAction" type="Control" unique_id=651877005]
 layout_mode = 3
@@ -41,13 +46,14 @@ layout_mode = 0
 offset_left = 35.0
 offset_top = 116.0
 offset_right = 536.0
-offset_bottom = 321.0
+offset_bottom = 345.0
 theme_override_constants/separation = 25
 alignment = 1
 
 [node name="piocher" type="VBoxContainer" parent="Choix" unique_id=2043761240]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 20
 
 [node name="IconePioche" type="TextureRect" parent="Choix/piocher" unique_id=1071572412]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
@@ -70,21 +76,24 @@ modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Piocher"
+label_settings = SubResource("LabelSettings_qndhi")
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="Choix/piocher/Label" unique_id=428342803]
 layout_mode = 0
 offset_left = 71.0
-offset_top = 24.0
+offset_top = 30.0
 offset_right = 166.0
-offset_bottom = 59.0
+offset_bottom = 65.0
 theme_override_font_sizes/font_size = 25
 text = "2 cartes"
+label_settings = SubResource("LabelSettings_qndhi")
 horizontal_alignment = 1
 
 [node name="dés" type="VBoxContainer" parent="Choix" unique_id=409947028]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 20
 
 [node name="Icone dé" type="TextureRect" parent="Choix/dés" unique_id=1259680828]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
@@ -98,7 +107,7 @@ stretch_mode = 5
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 0
 offset_top = -20.0
-offset_right = 226.0
+offset_right = 242.0
 offset_bottom = 234.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dw5uq")
 
@@ -107,6 +116,7 @@ modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Lancer les dés"
+label_settings = SubResource("LabelSettings_qndhi")
 horizontal_alignment = 1
 
 [connection signal="pressed" from="Choix/piocher/IconePioche/Piocher" to="." method="_on_piocher_pressed"]

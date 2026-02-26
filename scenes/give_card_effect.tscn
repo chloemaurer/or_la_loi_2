@@ -1,22 +1,23 @@
 [gd_scene format=3 uid="uid://cci83b0uexl5k"]
 
 [ext_resource type="Script" uid="uid://bseixtygakgm2" path="res://scripts/give_card_effect.gd" id="1_kmnm1"]
-[ext_resource type="Texture2D" uid="uid://b0hrtmg55c17b" path="res://assets/profil/joueur.png" id="2_c6ynf"]
 [ext_resource type="Texture2D" uid="uid://bdrhkb0vaf44i" path="res://assets/icone/flecheDuel.webp" id="3_smboq"]
 [ext_resource type="Texture2D" uid="uid://jpvdd31q8et" path="res://assets/profil/nourriture.webp" id="4_c6ynf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smboq"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lts5a"]
+load_path = "res://.godot/imported/joueur.png-66194a0b20ce75fbe0e586d1bdeb4c67.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pb1uw"]
+load_path = "res://.godot/imported/joueur.png-66194a0b20ce75fbe0e586d1bdeb4c67.ctex"
+
 [node name="GiveCardEffect" type="Control" unique_id=450712904]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1401.0
-offset_bottom = -821.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 735.0
+offset_bottom = 333.0
 script = ExtResource("1_kmnm1")
 
 [node name="Panel" type="Panel" parent="." unique_id=1683501090]
@@ -28,57 +29,63 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_smboq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=935656350]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 56.0
-offset_top = 48.0
-offset_right = -47.0
-offset_bottom = -66.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
+[node name="Control" type="Control" parent="." unique_id=275878204]
+anchors_preset = 0
+offset_left = 54.0
+offset_top = 38.0
+offset_right = 685.0
+offset_bottom = 303.0
 
-[node name="GivePlayer" type="TextureRect" parent="HBoxContainer" unique_id=1922662855]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=935656350]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.001
+anchor_bottom = 0.95000005
+offset_right = 0.26898193
+offset_bottom = -0.05001831
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="GivePlayer" type="TextureRect" parent="Control/HBoxContainer" unique_id=1922662855]
 layout_mode = 2
-texture = ExtResource("2_c6ynf")
-expand_mode = 3
+size_flags_horizontal = 3
+texture = SubResource("CompressedTexture2D_lts5a")
+expand_mode = 2
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1097262004]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer" unique_id=1097262004]
 layout_mode = 2
 alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=465378647]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/HBoxContainer/VBoxContainer" unique_id=465378647]
 layout_mode = 2
 alignment = 1
 
-[node name="Effect" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=127184694]
+[node name="Effect" type="Label" parent="Control/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=127184694]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "-1"
 
-[node name="Type" type="TextureRect" parent="HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=513379889]
+[node name="Type" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=513379889]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 texture = ExtResource("4_c6ynf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Arrow" type="TextureRect" parent="HBoxContainer/VBoxContainer" unique_id=68585774]
+[node name="Arrow" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer" unique_id=68585774]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 texture = ExtResource("3_smboq")
 expand_mode = 1
 stretch_mode = 2
 
-[node name="GetPlayer" type="TextureRect" parent="HBoxContainer" unique_id=219874437]
+[node name="GetPlayer" type="TextureRect" parent="Control/HBoxContainer" unique_id=219874437]
 layout_mode = 2
-texture = ExtResource("2_c6ynf")
-expand_mode = 3
+size_flags_horizontal = 3
+texture = SubResource("CompressedTexture2D_pb1uw")
+expand_mode = 2
 stretch_mode = 5
 
 [node name="Timer" type="Timer" parent="." unique_id=2128117720]

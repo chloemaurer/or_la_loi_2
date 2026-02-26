@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dvvlcehf8ykx7" path="res://scripts/bank.gd" id="1_070a6"]
 [ext_resource type="FontFile" uid="uid://ceuddnykp7mjd" path="res://fonts/Saddlebag.ttf" id="2_3bwp7"]
 [ext_resource type="Texture2D" uid="uid://vcohqkjwjaaf" path="res://assets/profil/or.webp" id="2_v0kt3"]
+[ext_resource type="FontFile" uid="uid://ct1l5a8cxoec8" path="res://fonts/Bethany Elingston.otf" id="3_24jpf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwn4v"]
 bg_color = Color(0.1764706, 0.09411765, 0.050980393, 1)
@@ -12,12 +13,20 @@ font = ExtResource("2_3bwp7")
 font_size = 75
 font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_dkbjb"]
+font = ExtResource("3_24jpf")
+font_size = 50
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yftia"]
 bg_color = Color(0.49019608, 0.2901961, 0.11764706, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_xwtro"]
+font = ExtResource("3_24jpf")
+font_size = 25
 
 [node name="Bank" type="Control" unique_id=1553416461]
 layout_mode = 3
@@ -71,6 +80,7 @@ size_flags_horizontal = 4
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 50
 text = "Vie"
+label_settings = SubResource("LabelSettings_dkbjb")
 
 [node name="moins" type="Button" parent="VBoxContainer/Control/HBoxContainer" unique_id=1438290950]
 layout_mode = 2
@@ -124,6 +134,7 @@ offset_right = 482.0
 offset_bottom = 175.0
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("3_24jpf")
 theme_override_font_sizes/font_size = 38
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Acheter une vie"
@@ -136,6 +147,7 @@ theme_override_constants/separation = 35
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
+theme_override_fonts/font = ExtResource("3_24jpf")
 theme_override_font_sizes/font_size = 38
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 text = "Acheter trois cartes 
@@ -158,6 +170,8 @@ grow_vertical = 0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 25
 text = "vous pouvez utiliser les cartes piochés diretement"
+label_settings = SubResource("LabelSettings_xwtro")
+horizontal_alignment = 1
 
 [node name="Prix" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=59943307]
 modulate = Color(1, 0.64705884, 0, 1)
