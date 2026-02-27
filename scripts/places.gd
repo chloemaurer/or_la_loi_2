@@ -1,17 +1,18 @@
 extends Node2D
 
-# --- UI Popups (Interaction Menus) ---
-@onready var saloon_menu: Control = $"../Saloon" # saloon
+# --- Noeuds UI (Menus d'interaction) ---
+# Ces menus apparaissent au centre de l'écran quand on clique sur un lieu
+@onready var saloon_menu: Control = $"../Saloon"
 @onready var saloon_shop: Control = $"../SaloonShop"
 @onready var restaurant_shop: Control = $"../RestaurantShop"
-@onready var restaurant_menu: Control = $"../Restaurant" # restaurant
-@onready var bank_menu: Control = $"../Bank" # bank
-@onready var armory_menu: Control = $"../Armory" # armory
-@onready var duel_menu: Control = $"../Duel" # duel
-@onready var dice_control: Control = $"../Dés" # dés
-@onready var mine_event: Control = $"../Mine" # mine
+@onready var restaurant_menu: Control = $"../Restaurant"
+@onready var bank_menu: Control = $"../Bank"
+@onready var armory_menu: Control = $"../Armory"
+@onready var duel_menu: Control = $"../Duel"
+@onready var dice_control: Control = $"../Dés"
+@onready var mine_event: Control = $"../Mine"
 
-# --- Map Buttons (The actual icons on the board) ---
+# --- Boutons de la Carte (Les icônes sur le plateau) ---
 @onready var saloon_button: Button = $Saloon
 @onready var mine_button: Button = $Mine
 @onready var restaurant_button: Button = $Restaurant
@@ -20,9 +21,10 @@ extends Node2D
 @onready var duel_button: Button = $Duel
 
 func _ready():
+	# Au démarrage, on s'assure que tout est propre et fermé
 	close_all()
 
-# Closes all interaction menus and shops
+# Ferme tous les menus d'interaction et les boutiques
 func close_all():
 	saloon_menu.hide()
 	saloon_shop.hide()
@@ -33,7 +35,7 @@ func close_all():
 	duel_menu.hide()
 	mine_event.hide()
 
-# Hides all location icons on the map
+# Cache les icônes de lieux sur la carte (utilisé lors des transitions)
 func close_place():
 	saloon_button.hide()
 	mine_button.hide()
@@ -42,12 +44,13 @@ func close_place():
 	bank_button.hide()
 	duel_button.hide()
 
-# --- LOCATION BUTTON LOGIC ---
+# --- LOGIQUE DES BOUTONS DE LIEUX ---
+# Chaque fonction gère le nettoyage de l'écran et l'affichage du menu correspondant
 
 func _on_saloon_pressed() -> void:
 	close_all()
 	close_place()
-	saloon_button.show()
+	saloon_button.show() # On garde le bouton du lieu actif visible
 	saloon_menu.show()
 	dice_control.hide()	
 
@@ -73,21 +76,23 @@ func _on_armory_pressed() -> void:
 	dice_control.hide()
 	
 func _on_duel_pressed() -> void:
+	# Le duel est spécial : on vérifie d'abord si le joueur a de quoi tirer
 	_check_ammo_and_open_duel()
 
-# Duel requires at least 1 ammo in local stats
+# Vérifie les munitions dans les stats locales avant d'autoriser le duel
 func _check_ammo_and_open_duel():
 	var ammo_count = DatabaseConfig.local_munition
 	if ammo_count > 0:
-		print("[DUEL] Ammo detected: ", ammo_count)
+		print("[DUEL] Munitions détectées : ", ammo_count)
 		close_all()
 		close_place()
 		duel_button.show()
 		duel_menu.show()
 		dice_control.hide()
 	else:
+		# Si le joueur n'a pas de balles, on bloque l'action et on l'informe
 		DatabaseConfig.notify_error("Pas de munitions ! Vous ne pouvez pas commencer un duel")
-		print("[DUEL] Refused: Player has no ammo.")
+		print("[DUEL] Refusé : Le joueur n'a pas de munitions.")
 		duel_menu.hide() 
 		
 func _on_mine_pressed() -> void:
@@ -97,12 +102,14 @@ func _on_mine_pressed() -> void:
 	mine_event.show()
 	dice_control.hide()
 	
-# --- SHOP NAVIGATION LOGIC ---
+# --- LOGIQUE DE NAVIGATION VERS LES BOUTIQUES ---
 
+# Ouvre la boutique du Saloon (Achat de cartes de boisson)
 func _on_drink_buy_card_pressed() -> void:
 	saloon_shop.show()
-	saloon_menu.hide() # Hide the small menu to show the full shop
+	saloon_menu.hide() # On cache le petit menu pour laisser place à la boutique complète
 
+# Ouvre la boutique du Restaurant (Achat de cartes de nourriture)
 func _on_food_buy_card_pressed() -> void:
 	restaurant_shop.show()
 	restaurant_menu.hide()

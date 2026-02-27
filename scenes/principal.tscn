@@ -459,6 +459,8 @@ theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxFlat_yftia")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yftia")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yftia")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_yftia")
 text = "Lancer les dés"
 script = ExtResource("4_6ndk6")
 

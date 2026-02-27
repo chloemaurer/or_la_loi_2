@@ -1,14 +1,16 @@
 extends Control
 
-# --- UI Nodes (The 10 wagon slots) ---
+# --- Noeuds UI (Les 10 emplacements de wagons) ---
+# Chaque variable correspond à un Sprite ou une TextureRect dans ton interface
 @onready var wagon_slots = [
 	$MancheUnVide, $MancheDeuxVide, $MancheTroisVide, $MancheQuatreVide, $MancheCinqVide, 
 	$MancheSixVide, $MancheSeptVide, $MancheHuitVide, $MancheNeufVide, $MancheDixVide
 ]
 
-# --- Assets: Empty/Base Wagons ---
+# --- Assets : Wagons Vides / État de base ---
+# Ces textures sont affichées pour les manches qui n'ont pas encore eu lieu
 @onready var empty_wagon_textures = [
-	 preload("uid://eu77wppshotv"),
+	 preload("uid://eu77wppshotv"), # Locomotive (Base)
 	 preload("uid://cxi4w0adl10gf"),
 	 preload("uid://d1tok5ke3hiyx"),
 	 preload("uid://btchig2cm0ebn"),
@@ -20,9 +22,10 @@ extends Control
 	 preload("uid://bmh4qx47anx7t"),
 ]
 
-# --- Assets: Filled/Active Wagons ---
+# --- Assets : Wagons Remplis / État Actif ---
+# Ces textures remplacent les wagons vides pour marquer la progression
 @onready var filled_wagon_textures = [
-	preload("uid://eu77wppshotv"), # Locomotive (usually doesn't change)
+	preload("uid://eu77wppshotv"), # La locomotive reste généralement identique
 	preload("uid://dup5x38jho7t6"),
 	preload("uid://dn52d3tfcxhsq"),
 	preload("uid://d24bekjlqj123"),
@@ -34,21 +37,23 @@ extends Control
 	preload("uid://b8vrupdagj82x")
 ]
 
-# Updates the train display based on the current round
+# Met à jour l'affichage du train en fonction de la manche actuelle stockée dans DatabaseConfig
 func update_train_display():
 	var current_round = DatabaseConfig.current_round
 	
+	# On parcourt les 10 emplacements de wagons
 	for i in range(wagon_slots.size()):
 		if i < current_round:
-			# Fill the wagons for rounds already completed or current
+			# Si l'index est inférieur à la manche actuelle, on affiche le wagon "rempli"
+			# (On vérifie par sécurité que l'index existe dans le tableau de textures)
 			if i < filled_wagon_textures.size():
 				wagon_slots[i].texture = filled_wagon_textures[i]
 		else:
-			# Reset the future wagons to their empty state
+			# Pour les manches futures, on s'assure que le wagon est à l'état "vide"
 			if i < empty_wagon_textures.size():
 				wagon_slots[i].texture = empty_wagon_textures[i]
 
-# Visually clears all wagons (useful for a hard reset)
+# Réinitialise visuellement tous les wagons à l'état vide (ex: pour une nouvelle partie)
 func reset_all_wagons():
 	for i in range(wagon_slots.size()):
 		wagon_slots[i].texture = empty_wagon_textures[i]
