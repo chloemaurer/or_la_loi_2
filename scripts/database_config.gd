@@ -211,7 +211,10 @@ func lose_life(amount: int, profile_id: String):
 
 		if new_total <= 0:
 			script_general.kill_player(index)
-			
+			if profile_id == current_profile_id:
+				print("[Database] Le joueur actif est mort. Passage automatique au suivant.")
+				script_general._on_end_turn_pressed(index)
+				
 func get_drink(val: int, profile_id: String):
 	var target_node = script_general.profile_nodes[int(profile_id)]
 	var current_val = target_node.get_drink()
