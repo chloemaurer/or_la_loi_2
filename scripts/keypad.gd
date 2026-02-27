@@ -15,6 +15,7 @@ var icons = [
 @onready var money_sound: AudioStreamPlayer = $"../../../Son/Money" # money_song
 @onready var get_resources: AudioStreamPlayer = $"../../../Son/GetResources"
 @onready var minijeux: AudioStreamPlayer = $"../../../Son/Minijeux"
+@onready var bg_music: AudioStreamPlayer = $"../../../BgMusic"
 
 # --- Logic Variables ---
 var current_index := 0
@@ -184,6 +185,7 @@ func apply_card(category: String, effect_value, card_id: String):
 	match category:
 		"MiniJeux": 
 			DatabaseConfig.play_minigame(card_id)
+			bg_music.stop()
 			minijeux.play()
 		"saloon": 
 			DatabaseConfig.get_drink(effect, final_id)

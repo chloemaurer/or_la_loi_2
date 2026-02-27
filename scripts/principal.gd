@@ -170,8 +170,6 @@ func _sync_stats_to_global(index: int):
 	DatabaseConfig.current_gun_level = target.get_gun()
 	
 func _on_end_turn_pressed(current_index: int):
-	# Check resources for the player ending their turn
-	_check_and_punish_starvation()
 	
 	var next_profile = (current_index + 1) % profile_nodes.size()
 	var attempts = 0
@@ -215,50 +213,41 @@ func _on_end_turn_pressed(current_index: int):
 	if restaurant_shop: restaurant_shop.randomize_food()
 	if saloon_shop: saloon_shop.randomize_drink()
 
-# Checks if player is starving or thirsty and applies penalties
-func _check_and_punish_starvation():
-	var i = int(DatabaseConfig.current_profile_id)
-	var player = profile_nodes[i]
-	
-	if player.get_life() > 0:
-		var id_str = str(i)
-		var life_to_lose = 0
-		
-		if player.get_food() <= 0: life_to_lose += 1
-		if player.get_drink() <= 0: life_to_lose += 1
-			
-		if life_to_lose > 0:
-			DatabaseConfig.lose_life(life_to_lose, id_str)
-			# Emergency relief to prevent instant death loop next turn
-			DatabaseConfig.get_food(2, id_str)
-			DatabaseConfig.get_drink(2, id_str)
-		
-		if player.get_life() <= 0:
-			kill_player(i)
 
-# Deduct resources for everyone alive at start of new round
+
 func _consume_round_resources():
 	for i in range(profile_nodes.size()):
 		var player = profile_nodes[i]
 		var id_str = str(i)
 		
+		# On ne traite que les joueurs vivants
 		if player.get_life() > 0:
+			# 1. Tout le monde perd 1 ressource
 			DatabaseConfig.get_food(-1, id_str)
 			DatabaseConfig.get_drink(-1, id_str)
 			
-			# Check if this deduction killed them
-			var life_to_lose = 0
-			if player.get_food() <= 0: life_to_lose += 1
-			if player.get_drink() <= 0: life_to_lose += 1
+			# 2. On attend un tout petit peu que les stats soient à jour (optionnel mais plus sûr)
+			# 3. Vérification immédiate de la famine/soif
+			var damage = 0
+			if player.get_food() <= 0: damage += 1
+			if player.get_drink() <= 0: damage += 1
 				
-			if life_to_lose > 0:
-				DatabaseConfig.lose_life(life_to_lose, id_str)
-				DatabaseConfig.get_food(2, id_str)
-				DatabaseConfig.get_drink(2, id_str)
+			if damage > 0:
+				# Perte de vie
+				DatabaseConfig.lose_life(damage, id_str)
 				
+				# Secours d'urgence : on remet à 2 ressources
+				# On calcule combien ajouter pour arriver exactement à 2
+				var food_to_add = 2 - player.get_food()
+				var drink_to_add = 2 - player.get_drink()
+				DatabaseConfig.get_food(food_to_add, id_str)
+				DatabaseConfig.get_drink(drink_to_add, id_str)
+				
+			# 4. Si le joueur n'a plus de vie après la punition
 			if player.get_life() <= 0:
 				kill_player(i)
-				
+
+
 func kill_player(index: int):
 	var target = profile_nodes[index]
 	var id_str = str(index)

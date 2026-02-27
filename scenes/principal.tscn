@@ -3238,6 +3238,7 @@ offset_bottom = 40.0
 mouse_filter = 2
 stream = ExtResource("50_g42em")
 volume_db = -80.0
+autoplay = true
 loop = true
 
 [node name="StartGame" type="Button" parent="BeginScene" unique_id=1066806255]
