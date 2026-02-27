@@ -566,7 +566,7 @@ modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
-text = "À vos risque et périls"
+text = "À vos risques et périls"
 label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="RestaurantShop" type="Control" parent="Map" unique_id=253302142]
@@ -630,7 +630,7 @@ theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
-text = "Récupéré"
+text = "Récupérer"
 
 [node name="Armory" type="Control" parent="Map" unique_id=1680406120]
 visible = false
@@ -852,7 +852,7 @@ modulate = Color(0.88235295, 0.80784315, 0.6901961, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
-text = "À vos risque et périls"
+text = "À vos risques et périls"
 label_settings = SubResource("LabelSettings_j4qwv")
 
 [node name="SaloonShop" type="Control" parent="Map" unique_id=798128194]
@@ -916,7 +916,7 @@ theme_override_colors/font_color = Color(0.9607843, 0.8901961, 0.7647059, 1)
 theme_override_fonts/font = ExtResource("10_mh0tp")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_0t31f")
-text = "Récupéré"
+text = "Récupérer"
 
 [node name="Bank" parent="Map" unique_id=2118626797 instance=ExtResource("9_ckosc")]
 visible = false
