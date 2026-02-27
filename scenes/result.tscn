@@ -54,12 +54,12 @@ label_settings = SubResource("LabelSettings_35ldr")
 [node name="Label2" type="Label" parent="." unique_id=111993789]
 modulate = Color(0.9607843, 0.8901961, 0.7647059, 1)
 layout_mode = 0
-offset_left = 177.0
+offset_left = 170.0
 offset_top = 136.0
-offset_right = 993.0
+offset_right = 986.0
 offset_bottom = 185.0
 theme_override_font_sizes/font_size = 35
-text = "Le premier vole une carte de la main du premier"
+text = "Le premier vole une carte de la main du dernier"
 label_settings = SubResource("LabelSettings_1v002")
 
 [node name="Control" type="Control" parent="." unique_id=764897820]

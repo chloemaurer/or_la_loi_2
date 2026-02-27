@@ -100,4 +100,17 @@ func _show_weapon_visual():
 
 # Permet d'ouvrir/fermer le pavé numérique du profil
 func _on_keypad_open_pressed() -> void:
-	keypad.visible = !keypad.visible
+	# 1. On récupère l'ID du joueur actif depuis le Singleton
+	var active_id = DatabaseConfig.current_profile_id
+	
+	# Version sécurisée : on vérifie si ce profil est bien celui qui a le tour
+	if str(get_index()) == active_id:
+		keypad.visible = !keypad.visible
+		
+		# Optionnel : si on ouvre le keypad, on s'assure que les autres sont fermés
+		if keypad.visible:
+			DatabaseConfig.script_general._open_current_keypad() 
+	else:
+		# Feedback si un joueur essaie d'ouvrir son menu alors que ce n'est pas son tour
+		DatabaseConfig.notify_error("Ce n'est pas votre tour !")
+		print("[Profil] Accès refusé : Ce n'est pas le tour du joueur ", get_index())

@@ -302,6 +302,10 @@ func _open_current_keypad():
 	if DatabaseConfig.actions_done >= 2: return
 		
 	var my_id = int(DatabaseConfig.current_profile_id)
+	for kp in keypads:
+		if is_instance_valid(kp):
+			kp.hide()
+			
 	if my_id < keypads.size():
 		var current_keypad = keypads[my_id]
 		if is_instance_valid(current_keypad):
