@@ -62,6 +62,10 @@ func _on_opponent_clicked(event: InputEvent, index: int) -> void:
 		accept_event()
 		var clicked_slot = slots[index]
 		
+		if clicked_slot.rect.modulate.a < 1.0: 
+			DatabaseConfig.notify_error("impossible cet adversaire est mort")
+			return
+			
 		if clicked_slot.rect.has_meta("player_id"):
 			var new_target = str(clicked_slot.rect.get_meta("player_id"))
 	
