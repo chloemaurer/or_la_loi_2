@@ -75,4 +75,5 @@ func _on_skip_pressed() -> void:
 	elif sand_tempest.visible: video_actuelle = sand_tempest
 
 	if video_actuelle:
+		video_actuelle.stop()
 		video_actuelle.emit_signal("finished")

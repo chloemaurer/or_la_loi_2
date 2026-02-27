@@ -100,7 +100,7 @@ func _on_give_card_pressed() -> void:
 	self.hide()
 	
 	var main_script = DatabaseConfig.script_general
-	main_script.open_current_keypad() 
+	main_script._open_current_keypad() 
 
 	# 3. Prepare keypad for giving mode
 	var player_id = int(DatabaseConfig.current_profile_id)
