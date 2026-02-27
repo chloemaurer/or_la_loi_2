@@ -262,6 +262,7 @@ func kill_player(index: int):
 func check_action_limit():
 	if DatabaseConfig.actions_done >= 2:
 		DatabaseConfig.notify_error("Limite d'action atteinte pour votre tour")
+		start_action_menu.hide()
 		places_controller.close_all() 
 		places_controller.hide()
 
