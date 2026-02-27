@@ -47,7 +47,7 @@ func refresh_interface() -> void:
 	if food_catalog.has(key):
 		var data = food_catalog[key]
 		food_name_label.text = str(data.get("nom", "Inconnu"))
-		food_desc_label.text = "Effet : +" + str(int(data.get("effet", 0)))
+		food_desc_label.text = "Effet : " + str(int(data.get("effet", 0)))
 
 # Gère la transaction financière et l'attribution de la ressource
 func process_food_purchase():

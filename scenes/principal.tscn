@@ -49,6 +49,7 @@
 [ext_resource type="VideoStream" uid="uid://cxsmmo6l0qh4h" path="res://animation/finBonne.ogv" id="43_cbgdg"]
 [ext_resource type="VideoStream" path="res://animation/tempetesable.ogv" id="44_fvccq"]
 [ext_resource type="Texture2D" uid="uid://u74vh4xmeega" path="res://assets/icone/pause1.webp" id="44_voqbm"]
+[ext_resource type="VideoStream" uid="uid://bes631ewutua6" path="res://animation/reglements_v4.ogv" id="48_d7330"]
 [ext_resource type="Script" uid="uid://cerafsbvs8675" path="res://scripts/begin_scene.gd" id="49_meguh"]
 [ext_resource type="VideoStream" uid="uid://ten7pgyex3kb" path="res://animation/accueil.ogv" id="50_g42em"]
 [ext_resource type="AudioStream" uid="uid://cbxqm6i2jnkdf" path="res://son/argent2.ogg" id="50_w31y2"]
@@ -3151,6 +3152,7 @@ offset_left = 0.00012207031
 offset_top = 0.00014863047
 offset_right = 1920.0001
 offset_bottom = 1080.0001
+stream = ExtResource("48_d7330")
 paused = true
 
 [node name="VideoSettings" type="Control" parent="Animations" unique_id=1944974994]
@@ -3218,7 +3220,6 @@ offset_right = 424.0
 offset_bottom = 201.0
 
 [node name="BeginScene" type="Control" parent="." unique_id=1431948896]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

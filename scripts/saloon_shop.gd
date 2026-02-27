@@ -47,7 +47,7 @@ func refresh_interface() -> void:
 	if drink_catalog.has(key):
 		var data = drink_catalog[key]
 		drink_name_label.text = str(data.get("nom", "Inconnu"))
-		drink_desc_label.text = "Effet : +" + str(int(data.get("effet", 0)))
+		drink_desc_label.text = "Effet : " + str(int(data.get("effet", 0)))
 
 # Gère la transaction financière et l'ajout de la boisson aux stats du joueur
 func process_drink_purchase():
