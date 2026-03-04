@@ -3,6 +3,7 @@ extends Control
 # --- Noeuds UI ---
 @onready var end_minigame_sound: AudioStreamPlayer = $"../../Son/FinMiniJeux"
 @onready var minigame_sound: AudioStreamPlayer = $"../../Son/Minijeux"
+@onready var bg_music: AudioStreamPlayer = $"../../BgMusic"
 
 # Tableaux pour gérer les 4 emplacements du classement (podium)
 @onready var winner_icons = [
@@ -71,4 +72,5 @@ func show_results(raw_scores: Array):
 func _on_fin_mini_jeu_pressed() -> void:
 	# Émet un signal global pour distribuer les récompenses basées sur le classement
 	DatabaseConfig.rewards_received.emit(DatabaseConfig.scores_data)
+	bg_music.play()
 	self.hide()

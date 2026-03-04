@@ -9,6 +9,7 @@ var current_player_idx := 0 # Index du joueur en train de passer son test de sur
 @onready var pass_turn_button: Button = $Passturn
 @onready var lose_animation: VideoStreamPlayer = $"../../Animations/LoseEnd"
 @onready var win_animation: VideoStreamPlayer = $"../../Animations/WinEnd"
+@onready var bg_music: AudioStreamPlayer = $"../../BgMusic"
 
 # Initialise l'événement de la mine
 func start_mine_event():
@@ -90,6 +91,7 @@ func _on_player_finished():
 
 # Affiche la vidéo de fin (Gagné ou Perdu)
 func display_result(victory: bool):
+	bg_music.stop()
 	if victory:
 		win_animation.show()
 		win_animation.play()
@@ -105,4 +107,4 @@ func _on_button_pressed() -> void:
 
 # Permet d'abandonner ou de forcer la fin
 func _on_passturn_pressed() -> void:
-	game_over_screen.display_result(false)
+	display_result(false)

@@ -107,7 +107,7 @@ func check_code():
 		return
 		
 	if found_card.get("is_available", true) == false:
-		DatabaseConfig.notify_error("Cette carte a déjà été utilisé")
+		DatabaseConfig.notify_error("Cette carte a déjà été utilisée")
 		_finalize_keypad_usage()
 		return
 		

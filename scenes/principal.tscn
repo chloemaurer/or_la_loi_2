@@ -3126,6 +3126,7 @@ offset_top = 0.0023780875
 offset_right = 1920.002
 offset_bottom = 1080.0023
 stream = ExtResource("42_fvccq")
+volume_db = 5.0
 
 [node name="WinEnd" type="VideoStreamPlayer" parent="Animations" unique_id=80503608]
 visible = false
@@ -3135,6 +3136,7 @@ offset_top = 0.0011890437
 offset_right = 1920.001
 offset_bottom = 1080.0012
 stream = ExtResource("43_cbgdg")
+volume_db = 5.0
 
 [node name="Story" type="VideoStreamPlayer" parent="Animations" unique_id=680427380]
 visible = false
@@ -3144,6 +3146,7 @@ offset_top = 0.00029726094
 offset_right = 1920.0002
 offset_bottom = 1080.0002
 stream = ExtResource("42_ihcfc")
+volume_db = 10.0
 
 [node name="Rules" type="VideoStreamPlayer" parent="Animations" unique_id=1211032366]
 visible = false
@@ -3153,6 +3156,7 @@ offset_top = 0.00014863047
 offset_right = 1920.0001
 offset_bottom = 1080.0001
 stream = ExtResource("48_d7330")
+volume_db = 10.0
 paused = true
 
 [node name="VideoSettings" type="Control" parent="Animations" unique_id=1944974994]
@@ -3289,6 +3293,7 @@ stream = ExtResource("53_g42em")
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="." unique_id=2044894860]
 stream = ExtResource("42_nc7xk")
+volume_db = -5.0
 parameters/looping = true
 
 [connection signal="pressed" from="Map/Places/Saloon" to="Map/Places" method="_on_saloon_pressed"]

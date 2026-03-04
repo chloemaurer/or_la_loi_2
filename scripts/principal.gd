@@ -55,6 +55,7 @@ var game_started = false
 
 
 func _ready() -> void:
+	DatabaseConfig.reset_game()
 	# On enregistre ce script dans le Singleton global pour un accès facile
 	DatabaseConfig.script_general = self
 	
@@ -198,16 +199,18 @@ func _on_end_turn_pressed(current_index: int):
 		if has_node("Manches2"): $Manches2.update_train_display()
 		
 		# Événement de fin de jeu (Manche 11+)
-		if DatabaseConfig.current_round >= 11:
-			start_action_menu.hide()
-			places_controller.hide()
-			places_controller.close_all()
-			DatabaseConfig.actions_done = 0 
-			mine_event.show()
-			return 
 			
 	# On passe au tour du joueur suivant
 	select_profile(next_profile)
+	
+	if DatabaseConfig.current_round >= 11:
+		start_action_menu.hide()
+		places_controller.hide()
+		places_controller.close_all()
+		DatabaseConfig.actions_done = 0 
+		mine_event.show()
+		return 
+		
 	places_controller.show()
 	places_controller.close_all()
 	places_controller.close_place()
